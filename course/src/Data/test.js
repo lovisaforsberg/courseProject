@@ -11,18 +11,19 @@ function Test() {
   const loadMoreCommit = () => {
     setPage(page + 1);
   };
-
+  const proxy = 'https://cors-anywhere.herokuapp.com/'
+  const url = `https://api.kth.se/api/kopps/v2/courses`
   useEffect(() => {
-    fetch(
-      `https://api.kth.se/api/kopps/v2/courses`,
+    fetch(proxy+url
+      ,
       {
         method: "GET",
-        headers: "Origin"
         
       }
     )
       .then(res => res.json())
       .then(response => {
+        console.log(response)
         setCommitHistory(response.items);
         setIsLoading(false);
       })
@@ -34,20 +35,6 @@ function Test() {
       <h1> API calls with React Hooks </h1>
       {isLoading && <p>Wait I'm Loading comments for you</p>}
 
-      {commitHistory.map((c, index) => (
-        <div key={index}>
-          {c.code && (
-            <>
-              <div>
-                <h2 style={{ textDecoration: "Underline" }}>
-                  {c.department}
-                </h2>
-              </div>
-              <hr />
-            </>
-          )}
-        </div>
-      ))}
     </div>
   );
 }

@@ -19,7 +19,7 @@ const TestElin = () =>{
   const url = 'https://api.kth.se/api/kopps/v2/courses?l=en'
   const urlSchools = 'https://api.kth.se/api/kopps/v2/schools'
   const urlCourse = 'https://api.kth.se/api/kopps/v2/course/'
-  const urlProg = 'http://api.kth.se/api/kopps/v2/programme/academic-year-plan/CSAMH/HT16'
+  const urlProg = 'http://api.kth.se/api/kopps/v2/programme/academic-year-plan/CMETE/HT16'
 
   var fetched_courses = [];
   var fetched_schools = [];
@@ -61,10 +61,10 @@ const TestElin = () =>{
                 if(element.SpecCode === track || !("SpecCode" in element)){
                 course.ConnectedRound.periodInfos.forEach(period =>{
                   if(element.StudyYear === 1){
-                       if(period.code === 'P1'){bachelor_courses.year1P1.push({name: course.Name, size:4})}
-                       if(period.code === 'P2'){bachelor_courses.year1P2.push({name: course.Name, size:4})}
-                       if(period.code === 'P3'){bachelor_courses.year1P3.push({name: course.Name, size:4})}
-                       if(period.code === 'P4'){bachelor_courses.year1P4.push({name: course.Name, size:4})}
+                       if(period.code === 'P1'){bachelor_courses.year1P1.push({name: course.Name, size:period.credits})}
+                       if(period.code === 'P2'){bachelor_courses.year1P2.push({name: course.Name, size:period.credits})}
+                       if(period.code === 'P3'){bachelor_courses.year1P3.push({name: course.Name, size:period.credits})}
+                       if(period.code === 'P4'){bachelor_courses.year1P4.push({name: course.Name, size:period.credits})}
                   }
                   if(element.StudyYear === 2){
                     if(period.code === 'P1'){bachelor_courses.year2P1.push({name: course.Name, size:period.credits})}
@@ -111,8 +111,8 @@ var years = [{name: 'year1', children: periods1},
     {name: 'year2', children: periods2}, 
     {name: 'year3', children: periods3}]        
 
-     dataset.name = "year1";
-     dataset.children = periods1;
+     dataset.name = "all_courses";
+     dataset.children = [{name: 'bachelor', children: years}, {name: 'master', children: []}];
     return dataset
   }
 

@@ -108,8 +108,8 @@ const Test = () =>{
     useEffect(()=>{
         fetchAll();
 
-      //const data = createDataset(prog_list);
-      //console.log(data)
+     // const data = createDataset(prog_list);
+      console.log(data)
 
       var data = {
         "name": "TOPICS", "children": [{
@@ -124,6 +124,7 @@ const Test = () =>{
             "children": [{"name": "Sub A1", "size": 4}, {"name": "Sub A2", "size": 4}]
         }]
     };
+    console.log(data)
 
        const width = 932;
        const radius = width / 8;
@@ -154,6 +155,7 @@ const Test = () =>{
       
 
         const root = partition(data);
+
       
         root.each(d => d.current = d);
       
@@ -171,7 +173,7 @@ const Test = () =>{
           .data(root.descendants().slice(1))
           .enter().append("path")
 
-            .attr("fill", d => { while (d.depth > 1) d = d.parent; return color(d.data.name);})
+            .attr("fill", d => { while (d.depth > 1) d = d.parent; console.log(d.data.name); return color(d.data.name); })
 
             .attr("fill-opacity", d => arcVisible(d.current) ? (d.children ? 0.6 : 0.4) : 0)
             .attr("d", d => {arc(d.current); console.log(d.current);});

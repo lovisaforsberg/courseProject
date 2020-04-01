@@ -1,6 +1,7 @@
 import React from 'react'
 import {Route, Switch} from 'react-router-dom'
-import test from './Data/testLovisa'
+import sunburst from './Components/sunburst'
+import test from './Data/testElin'
 const Router = () => {
   return (
     <Switch>

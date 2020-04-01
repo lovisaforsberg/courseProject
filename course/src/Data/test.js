@@ -46,8 +46,8 @@ const Test = () =>{
     setSchools(schools_json);
     setCourses(courses_json);
     setIsLoading(false);  
-    console.log(schools_json);
-    console.log(courses_json);
+    //console.log(schools_json);
+    //console.log(courses_json);
   }
 
   async function fetchSchools(){
@@ -55,7 +55,7 @@ const Test = () =>{
     const schools_json = await response.json();
     setSchools(schools_json);
     setIsLoading(false);
-    console.log(schools_json)
+   // console.log(schools_json)
 
   }
 

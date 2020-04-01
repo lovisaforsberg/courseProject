@@ -1,6 +1,6 @@
 import React from 'react'
 import {Route, Switch} from 'react-router-dom'
-import test from './Data/test'
+import test from './Data/testLovisa'
 const Router = () => {
   return (
     <Switch>

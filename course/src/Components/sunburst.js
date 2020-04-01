@@ -12,7 +12,7 @@ console.log(data.children)
 
 useEffect(()=>{
 setData(props);
-
+/*
  var nodeData = {
     name: "TOPICS", children: [{
         name: "Topic A",
@@ -25,7 +25,7 @@ setData(props);
         name: "Topic C",
         children: [{name: "Sub A1", size: 7.5}, {name: "Sub A2", size: 7.5}]
     }]
-};
+};*/
 
 
 var width = 500;  // <-- 1
@@ -67,7 +67,10 @@ g.selectAll('path')
     .attr("display", function (d) { return d.depth ? null : "none"; })
     .attr("d", arc)
     .style('stroke', '#fff')
-    .style("fill", function (d) { return color((d.children ? d : d.parent).data.name); });
+    .style("fill", function (d) { return color((d.children ? d : d.parent).data.name); })
+    .on('click', function(d) {console.log((d.children ? d : d.parent).data.name)});
+
+
 
 
 

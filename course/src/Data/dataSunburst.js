@@ -5,7 +5,7 @@ import Sunburst from "../Components/sunburst";
 
 
 
-const TestElin = () =>{
+const DataSunburst = () =>{
   const [page, setPage] = useState(1);
   const [Courses, setCourses] = useState([]);
   const [Prog_course, setProg_course] = useState([]);
@@ -139,4 +139,4 @@ var years = [{name: 'Year 1', children: periods1},
   );
 }
 
-export default TestElin
+export default DataSunburst

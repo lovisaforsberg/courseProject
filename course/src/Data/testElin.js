@@ -5,7 +5,7 @@ import Sunburst from "../Components/sunburst";
 
 
 
-const DataSunburst = () =>{
+const TestElin = () =>{
   const [page, setPage] = useState(1);
   const [Courses, setCourses] = useState([]);
   const [Prog_course, setProg_course] = useState([]);
@@ -19,7 +19,7 @@ const DataSunburst = () =>{
   const url = 'https://api.kth.se/api/kopps/v2/courses?l=en'
   const urlSchools = 'https://api.kth.se/api/kopps/v2/schools'
   const urlCourse = 'https://api.kth.se/api/kopps/v2/course/'
-  const urlProg = 'http://api.kth.se/api/kopps/v2/programme/academic-year-plan/TIMTM/HT19'
+  const urlProg = 'http://api.kth.se/api/kopps/v2/programme/academic-year-plan/CING/HT16'
 
   var fetched_courses = [];
   var fetched_schools = [];
@@ -49,40 +49,41 @@ const DataSunburst = () =>{
 
   const createDataset = (list) =>{
     //for now
-    let track = "VLM"
+    //let track = "INMT"
 
     let bachelor_courses = { year1P1: [], year1P2: [], year1P3: [], year1P4: [],
                     year2P1: [], year2P2: [], year2P3: [], year2P4: [],
                     year3P1: [], year3P2: [], year3P3: [], year3P4: [],}
 
       list.forEach(element => {
+        console.log(element)
            element.Electivity[0].Courses.forEach(course =>{
                if("ConnectedRound" in course){
-                //if(!("SpecCode" in element)){
-                if(element.SpecCode === track || !("SpecCode" in element)){
-                //course.ConnectedRound.periodInfos.forEach(period =>{
+                if(!("SpecCode" in element)){
+                  //if(element.SpecCode === track || !("SpecCode" in element)){
+                course.ConnectedRound.periodInfos.forEach(period =>{
                   if(element.StudyYear === 1){
-                       if("P1" in course.ConnectedRound){bachelor_courses.year1P1.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P1']})}
-                       if("P2" in course.ConnectedRound){bachelor_courses.year1P2.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P2']})}
-                       if("P3" in course.ConnectedRound){bachelor_courses.year1P3.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P3']})}
-                       if("P4" in course.ConnectedRound){bachelor_courses.year1P4.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P4']})}
+                       if(period.code === 'P1'){bachelor_courses.year1P1.push({name: course.Code, courseName:course.Name, size:period.credits})}
+                       if(period.code === 'P2'){bachelor_courses.year1P2.push({name: course.Code, courseName:course.Name, size:period.credits})}
+                       if(period.code === 'P3'){bachelor_courses.year1P3.push({name: course.Code, courseName:course.Name, size:period.credits})}
+                       if(period.code === 'P4'){bachelor_courses.year1P4.push({name: course.Code, courseName:course.Name, size:period.credits})}
                   }
                   if(element.StudyYear === 2){
-                    if("P1" in course.ConnectedRound){bachelor_courses.year2P1.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P1']})}
-                    if("P2" in course.ConnectedRound){bachelor_courses.year2P2.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P2']})}
-                    if("P3" in course.ConnectedRound){bachelor_courses.year2P3.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P3']})}
-                    if("P4" in course.ConnectedRound){bachelor_courses.year2P4.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P4']})}
+                    if(period.code === 'P1'){bachelor_courses.year2P1.push({name: course.Code, courseName:course.Name, size:period.credits})}
+                    if(period.code === 'P2'){bachelor_courses.year2P2.push({name: course.Code, courseName:course.Name, size:period.credits})}
+                    if(period.code === 'P3'){bachelor_courses.year2P3.push({name: course.Code, courseName:course.Name, size:period.credits})}
+                    if(period.code === 'P4'){bachelor_courses.year2P4.push({name: course.Code, courseName:course.Name, size:period.credits})}
                   }
                   if(element.StudyYear === 3){
                     
-                      if("P1" in course.ConnectedRound){bachelor_courses.year3P1.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P1']})}
-                      if("P2" in course.ConnectedRound){bachelor_courses.year3P2.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P2']})}
-                      if("P3" in course.ConnectedRound){bachelor_courses.year3P3.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P3']})}
-                      if("P4" in course.ConnectedRound){bachelor_courses.year3P4.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P4']})}
+                      if(period.code === 'P1'){bachelor_courses.year3P1.push({name: course.Code, courseName:course.Name, size:period.credits})}
+                      if(period.code === 'P2'){bachelor_courses.year3P2.push({name: course.Code, courseName:course.Name, size:period.credits})}
+                      if(period.code === 'P3'){bachelor_courses.year3P3.push({name: course.Code, courseName:course.Name, size:period.credits})}
+                      if(period.code === 'P4'){bachelor_courses.year3P4.push({name: course.Code, courseName:course.Name, size:period.credits})}
                     
                   }
                   
-              // })
+               })
               }
            }
            })
@@ -139,4 +140,4 @@ var years = [{name: 'Year 1', children: periods1},
   );
 }
 
-export default DataSunburst
+export default TestElin

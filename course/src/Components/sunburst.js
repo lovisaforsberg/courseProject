@@ -71,7 +71,7 @@ const path = g.append("g")
   .selectAll("path")
   .data(root.descendants().slice(1))
   .enter().append("path")
-  .on('click', function(d){console.log(d.data.courseName)})
+  .on('click', function(d){console.log(d.data.courseName +' '+ d.data.size)})
     .attr("fill", d => { while (d.depth > 1) d = d.parent; return color(d.data.name); })
     .attr("fill-opacity", d => arcVisible(d.current) ? (d.children ? 0.6 : 0.4) : 0)
     .attr("d", d => arc(d.current));
@@ -81,7 +81,9 @@ path.filter(d => d.children)
     .on("click", clicked);
 
 path.append("title")
-    .text(d => `${d.ancestors().map(d => d.data.name).reverse().join("/")}\n${format(d.value)}`);
+   // .text(d => `${d.ancestors().map(d => d.data.name).reverse().join("/")}\n${format(d.value)}`);
+    .text(d => `${d.data.courseName}`);
+
 
 const label = g.append("g")
     .attr("pointer-events", "none")

@@ -4,11 +4,12 @@ import sunburst from './Components/sunburst'
 import dataSunburst from './Data/dataSunburst'
 import CounterView from "./Views/counter-view";
 import ContactView from "./Views/contact-view";
-import DataFetching from "./Data/dataFetching"
+import SunburstView from "./Views/studyplan-view"
+import DataFetching from "./Data/sunburst-context"
 const Router = () => {
   return (
     <Switch>
-      <Route exact path='/' component={DataFetching} />
+      <Route exact path='/' component={dataSunburst} />
     </Switch>
   )
 }

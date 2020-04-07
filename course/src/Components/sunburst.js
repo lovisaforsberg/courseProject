@@ -1,31 +1,94 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import ReactDOM from "react-dom";
 import * as d3 from 'd3'
+import useFetch from "../Data/useFetch"
+import {SunburstContext} from "../Data/sunburst-context"
 
 
 
-const Sunburst = props =>{
-//console.log(data.data.name);
+
+export default function Sunburst(props) {
+
+  //useContext
+//const [state, dispatch] = useContext(SunburstContext);
+//const proxy = 'https://cors-anywhere.herokuapp.com/'
+//const urlProg = 'http://api.kth.se/api/kopps/v2/programme/academic-year-plan/'
+//const urlFetch = proxy + urlProg + state.bachelor + "/" + state.start_year
+//useFetch(urlFetch)
+
+
+const [data,setData] = useState(props);
 const d3Container = useRef(null)
-const [data, setData] = useState(props);
-console.log(data.children)
+//var dataset = {};
+/*
+const createDataset = (list) =>{
+  console.log(list)
+  //for now
+  let track = "INMT"
+
+  let bachelor_courses = { year1P1: [], year1P2: [], year1P3: [], year1P4: [],
+                  year2P1: [], year2P2: [], year2P3: [], year2P4: [],
+                  year3P1: [], year3P2: [], year3P3: [], year3P4: [],}
+
+    list.forEach(element => {
+         element.Electivity[0].Courses.forEach(course =>{
+             if("ConnectedRound" in course){
+              //if(!("SpecCode" in element)){
+              if(element.SpecCode === track || !("SpecCode" in element)){
+              //course.ConnectedRound.periodInfos.forEach(period =>{
+                if(element.StudyYear === 1){
+                     if("P1" in course.ConnectedRound){bachelor_courses.year1P1.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P1']})}
+                     if("P2" in course.ConnectedRound){bachelor_courses.year1P2.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P2']})}
+                     if("P3" in course.ConnectedRound){bachelor_courses.year1P3.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P3']})}
+                     if("P4" in course.ConnectedRound){bachelor_courses.year1P4.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P4']})}
+                }
+                if(element.StudyYear === 2){
+                  if("P1" in course.ConnectedRound){bachelor_courses.year2P1.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P1']})}
+                  if("P2" in course.ConnectedRound){bachelor_courses.year2P2.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P2']})}
+                  if("P3" in course.ConnectedRound){bachelor_courses.year2P3.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P3']})}
+                  if("P4" in course.ConnectedRound){bachelor_courses.year2P4.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P4']})}
+                }
+                if(element.StudyYear === 3){
+                  
+                    if("P1" in course.ConnectedRound){bachelor_courses.year3P1.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P1']})}
+                    if("P2" in course.ConnectedRound){bachelor_courses.year3P2.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P2']})}
+                    if("P3" in course.ConnectedRound){bachelor_courses.year3P3.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P3']})}
+                    if("P4" in course.ConnectedRound){bachelor_courses.year3P4.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P4']})}
+                  
+                }
+                
+            }
+         }
+         })
+      
+  
+    });
+
+var periods1 = [{name: 'p1', children: bachelor_courses.year1P1}, {name: 'p2', children: bachelor_courses.year1P2},
+                    {name: 'p3', children: bachelor_courses.year1P3}, {name: 'p4', children: bachelor_courses.year1P4},]
+    var periods2 = [{name: 'p1', children: bachelor_courses.year2P1}, {name: 'p2', children: bachelor_courses.year2P2},
+                    {name: 'p3', children: bachelor_courses.year2P3}, {name: 'p4', children: bachelor_courses.year2P4},]
+    var periods3 = [{name: 'p1', children: bachelor_courses.year3P1}, {name: 'p2', children: bachelor_courses.year3P2},
+                    {name: 'p3', children: bachelor_courses.year3P3}, {name: 'p4', children: bachelor_courses.year3P4},]
+   
+var years = [{name: 'Year 1', children: periods1}, 
+  {name: 'Year 2', children: periods2}, 
+  {name: 'Year 3', children: periods3}]        
+
+   dataset.name = "bachelor"
+   dataset.children = years
+  return dataset
+}*/
+
+//const fetch = createDataset(DataFetching("CMETE","HT16"))
+//console.log(fetch);
+
 
 useEffect(()=>{
-setData(props);
-/*
- var nodeData = {
-    name: "TOPICS", children: [{
-        name: "Topic A",
-        children: [{name: "Sub A1", size: 7.5}, {name: "Sub A2", size: 7.5}]
-    }, {
-        name: "Topic B",
-        children: [{name: "Sub B1", size: 7.5}, {name: "Sub B2", size: 7.5}, {
-            name: "Sub B3", size: 0.4}]
-    }, {
-        name: "Topic C",
-        children: [{name: "Sub A1", size: 7.5}, {name: "Sub A2", size: 7.5}]
-    }]
-};*/
+  
+setData(props)
+  
+
 
 const width = 600
 const radius = width / 8
@@ -152,54 +215,7 @@ function labelTransform(d) {
   return `rotate(${x - 90}) translate(${y},0) rotate(${x < 180 ? 0 : 180})`;
 }
 
-//return svg.node();
 
-/*
-var width = 500;  // <-- 1
-var height = 500;
-var radius = Math.min(width, height) / 2;  // < -- 2
-var color = d3.scaleOrdinal(d3.schemeCategory10);   // <-- 3
-
-const svg = d3.select(d3Container.current)
-.append('svg')
-.style("width", "100%")
-.style("height", "auto")
-.style("font", "10px sans-serif");
-
-const g = d3.select('svg')  // <-- 1
-.attr('width', width)  // <-- 2
-.attr('height', height)
-.append('g')  // <-- 3
-.attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');  // <-- 4
-
-const partition = d3.partition()  // <-- 1
-.size([2 * Math.PI, radius]);  // <-- 2
-
-const root = d3.hierarchy(data)  // <-- 1
-.sum(function (d) {return d.size});  // <-- 2
-
-
-partition(root);
-console.log(partition(root));
-var arc = d3.arc()
-    .startAngle(function (d) {return d.x0 })
-    .endAngle(function (d) {return d.x1 })
-    .innerRadius(function (d) {return d.y0 })
-    .outerRadius(function (d) {return d.y1 });
-
-// Put it all together
-g.selectAll('path')
-    .data(root.descendants())
-    .enter().append('path')
-    .attr("display", function (d) { return d.depth ? null : "none"; })
-    .attr("d", arc)
-    .style('stroke', '#fff')
-    .style("fill", function (d) { return color((d.children ? d : d.parent).data.name); })
-    .on('click', function(d) {console.log((d.children ? d : d.parent).data.name)});
-
-*/
-
-    //return svg.node();
 },[props])
 
 return (
@@ -211,4 +227,3 @@ return (
   );
 }
 
-export default Sunburst

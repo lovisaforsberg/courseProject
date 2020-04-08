@@ -1,18 +1,15 @@
 import React, {useState, useEffect} from "react";
 const DisplayData=(props)=> {
-    const [schools,setSchools] = useState(props);
-    const [courses,setCourses] = useState(props);
+    const [dataset,setDataset] = useState(props);
+
     useEffect(()=>{
-        setSchools(props.schools)
-        setCourses(props.courses)
+        setDataset(props)
     },[])
 
   return (
       <>
       <h1>Display Data</h1>
-      {Object.entries(schools).map(school =>{
-          console.log(school)
-      })}
+      {console.log(dataset)}
       </>
   )
 }

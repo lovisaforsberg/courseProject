@@ -1,7 +1,9 @@
+import React, {useState} from "react"
 
 
-const createCourseData = (school_list, dep_list, course_list) => {
+function createCourseData(dep_list, course_list){
     const  dataset = {} // where we want to create our dataset
+
     dataset.name = 'all courses'
     dataset.children = []
 
@@ -23,11 +25,8 @@ const createCourseData = (school_list, dep_list, course_list) => {
                     
                     active_courses.forEach(course =>{
                         if((course.department).split(' ')[0] == dep.code){
-                            console.log('hej')
                             courses.push({name: course.code, fullName: course.name})
                         }
-                        
-                    
                     })
                 school_departments.push({name:dep.code, fullName: dep.name, children: courses})
                 })
@@ -40,7 +39,9 @@ const createCourseData = (school_list, dep_list, course_list) => {
    // })
 
     
-    console.log(dataset)
+    
+
+    return dataset;
    }
 
    export { createCourseData };

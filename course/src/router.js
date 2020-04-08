@@ -7,6 +7,7 @@ import ContactView from "./Views/contact-view";
 import SunburstView from "./Views/studyplan-view"
 import DataFetching from "./Data/sunburst-context"
 import Courses from "./Components/courses"
+import DisplayData from "./Components/courses_data"
 const Router = () => {
   return (
     <Switch>

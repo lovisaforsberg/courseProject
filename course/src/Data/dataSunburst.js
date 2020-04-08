@@ -19,7 +19,7 @@ const DataSunburst = () =>{
   const url = 'https://api.kth.se/api/kopps/v2/courses?l=en'
   const urlSchools = 'https://api.kth.se/api/kopps/v2/schools'
   const urlCourse = 'https://api.kth.se/api/kopps/v2/course/'
-  const urlProg = 'http://api.kth.se/api/kopps/v2/programme/academic-year-plan/TIMTM/HT19'
+  const urlProg = 'http://api.kth.se/api/kopps/v2/programme/academic-year-plan/CMETE/HT16'
 
   var fetched_courses = [];
   var fetched_schools = [];

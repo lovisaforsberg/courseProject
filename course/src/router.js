@@ -8,10 +8,11 @@ import SunburstView from "./Views/studyplan-view"
 import DataFetching from "./Data/sunburst-context"
 import Courses from "./Components/courses"
 import DisplayData from "./Components/courses_data"
+import SearchView from "./Views/search-view"
 const Router = () => {
   return (
     <Switch>
-      <Route exact path='/' component={Courses} />
+      <Route exact path='/' component={SearchView} />
     </Switch>
   )
 }

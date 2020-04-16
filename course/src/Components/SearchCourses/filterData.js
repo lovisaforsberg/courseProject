@@ -25,13 +25,14 @@ function filterData(data, filterinput){
     const data_copy = Object.assign({}, dataInput);
     
     console.log(filterinput)
+    console.log(filterinput.search_text.toLowerCase())
   
     data_copy.children.map(school =>{
       school.children.map(dep =>{
         //every dep.children is a list of courses
         const filtered = dep.children.filter(course =>{
               return (course.education_level == filterinput.level || filterinput.level == "") &&
-                (course.fullName.includes(filterinput.search_text) || filterinput.search_text == "")
+                (course.fullName.toLowerCase().includes(filterinput.search_text.toLowerCase()) || filterinput.search_text == "")
         })
         // set the new filtered list as child på the department
         dep.children = filtered

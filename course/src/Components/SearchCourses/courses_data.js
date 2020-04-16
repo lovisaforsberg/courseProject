@@ -11,14 +11,13 @@ const DisplayData=({dataprop,filter})=> {
 
     useEffect(()=>{
 
-        if(document.getElementById('packedCircle')){
-          d3.select('.circles').remove()
-        }
 
         let data = filterData(dataprop,filter)
-        //let data = dataprop
-        /*
-        */
+
+          
+        var chart = d3.select('.circles').selectAll('*')
+        chart.remove()
+        
 
         let view;
         let width = 932
@@ -35,18 +34,18 @@ const DisplayData=({dataprop,filter})=> {
             .scaleOrdinal()
             .range(['#ffffff', '#59A5CC', '#AC66B7', '#68AD7C'])
 
-  const pack = data => d3.pack()
+  var pack = data => d3.pack()
     .size([width, height])
     .padding(3)
     (d3.hierarchy(data)
     .sum(d => d.value)
     .sort((a, b) => b.value - a.value))
 
-    const root = pack(data);
+    var root = pack(data);
     let focus = root;
 
   //const svg = d3.create("svg")
-  const svg = d3.select(d3Container.current)
+  var svg = d3.select(d3Container.current)
       .attr("viewBox", `-${width / 2} -${height / 2} ${width} ${height}`)
       .attr('class', 'circles')
       .attr('id', 'circles')
@@ -56,7 +55,7 @@ const DisplayData=({dataprop,filter})=> {
       .style("cursor", "pointer")
       .on("click", () => zoom(root));
 
-  const node = svg.append("g")
+  var node = svg.append("g")
     .selectAll("circle")
     .data(root.descendants().slice(1))
     .enter().append('circle')
@@ -67,7 +66,7 @@ const DisplayData=({dataprop,filter})=> {
       .on("mouseout", function() { d3.select(this).attr("stroke", null); })
       .on("click", d => focus !== d && (zoom(d), d3.event.stopPropagation()));
 
-  const label = svg.append("g")
+  var label = svg.append("g")
       .style("font", "10px sans-serif")
       .attr("pointer-events", "none")
       .attr("text-anchor", "middle")
@@ -82,7 +81,7 @@ const DisplayData=({dataprop,filter})=> {
   zoomTo([root.x, root.y, root.r * 2]);
 
   function zoomTo(v) {
-    const k = width / v[2];
+    var k = width / v[2];
 
     view = v;
 
@@ -92,11 +91,11 @@ const DisplayData=({dataprop,filter})=> {
   }
 
   function zoom(d) {
-    const focus0 = focus;
+    var focus0 = focus;
 
     focus = d;
 
-    const transition = svg.transition()
+    var transition = svg.transition()
         .duration(d3.event.altKey ? 7500 : 750)
         .tween("zoom", d => {
           const i = d3.interpolateZoom(view, [focus.x, focus.y, focus.r * 2]);

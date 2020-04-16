@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Segment, Form, Input, Button } from "semantic-ui-react";
 //import _ from "lodash";
-import { SunburstContext } from "../Data/sunburst-context";
+import { SunburstContext } from "../../Data/sunburst-context";
 
 export default function SunburstForm() {
   const bachelor = useFormInput("");

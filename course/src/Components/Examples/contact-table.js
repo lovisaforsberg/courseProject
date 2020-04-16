@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Segment, Table, Button, Icon } from "semantic-ui-react";
-import { ContactContext } from "../Context/contact-context";
+import { ContactContext } from "../../Context/contact-context";
 
 export default function ContactTable() {
   // Subscribe to `contacts` state and access dispatch function

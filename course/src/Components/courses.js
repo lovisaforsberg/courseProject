@@ -1,7 +1,8 @@
 import React, {useState} from "react";
 import { useFetchCourses } from "../Data/useFetchCourses";
-import DisplayData from "./courses_data"
+import DisplayData from "./SearchCourses/courses_data"
 import {createCourseData} from "../Data/createDataset"
+import CoursesContainer from "./SearchCourses/coursesContainer"
 
 const proxy = 'https://cors-anywhere.herokuapp.com/'
 const urlCourses = 'https://api.kth.se/api/kopps/v2/courses?l=en'
@@ -20,11 +21,15 @@ const [allFallCourses, loadingFallCourses] = useFetchCourses(proxy+urlFallCourse
 const [allSpringCourses, loadingSpringCourses] = useFetchCourses(proxy+urlSpringCourses);
 
 let props = {}
+let filteredprops = {}
 
-if(loadingFallCourses == false && loadingDepartments == false && loadingSpringCourses == false){
-props = createCourseData(allDepartments, allFallCourses, allSpringCourses)
-console.log(allFallCourses)
+if(loadingFallCourses === false && loadingSpringCourses === false){
+  props = createCourseData(allDepartments, allFallCourses, allSpringCourses)
+  console.log(props)
 }
+
+
+
 
 /*
 let props = {
@@ -36,7 +41,7 @@ let props = {
   return (
     <>
       <h1>Courses</h1>
-      {(loadingSpringCourses) ? ("Loading.."): <DisplayData {...props}></DisplayData>}
+      {(loadingFallCourses) ? ("Loading.."): <CoursesContainer data={props}></CoursesContainer>}
     </>
   );
 }

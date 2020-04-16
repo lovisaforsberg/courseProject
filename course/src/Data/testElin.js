@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 import * as d3 from 'd3'
-import Sunburst from "../Components/sunburst";
+import Sunburst from "../Components/StudyPlan/sunburst";
 
 
 

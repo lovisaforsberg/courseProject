@@ -1,16 +1,23 @@
 import React, {useState, useEffect, useRef} from "react";
 import * as d3 from 'd3'
+import {filterData} from "./filterData"
 
 
-const DisplayData=(props)=> {
-    const [dataset,setDataset] = useState(props);
+const DisplayData=({dataprop,filter})=> {
     const d3Container = useRef(null)
-
+    console.log(dataprop)
+    console.log(filter)
+   
 
     useEffect(()=>{
-        setDataset(props)
-        let data = dataset
         
+        let data = filterData(dataprop,filter)
+        //let data = dataprop
+        /*
+        if(document.getElementById('circles')){
+          d3.select('.circles').remove()
+        }*/
+
         let view;
         let width = 932
         let height = width
@@ -39,6 +46,8 @@ const DisplayData=(props)=> {
   //const svg = d3.create("svg")
   const svg = d3.select(d3Container.current)
       .attr("viewBox", `-${width / 2} -${height / 2} ${width} ${height}`)
+      .attr('class', 'circles')
+      .attr('id', 'circles')
       .style("display", "block")
       .style("margin", "0 -14px")
       .style("background", color(0))
@@ -102,14 +111,14 @@ const DisplayData=(props)=> {
 
   //return svg.node();
 
-    },[])
+    },[filter])
 
   return (
       <>
       <div>
         <h1>Display Data</h1>
             <svg id='packedCircle' width={932} height={932} radius={932/2} ref={d3Container}></svg>
-        {console.log(dataset)}
+        
       </div>
       </>
   )

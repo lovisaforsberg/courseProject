@@ -13,9 +13,10 @@ function SearchForm() {
   };
   const handleCheckboxes = event => {
     setCheckedItems({...checkedItems, [event.target.name] : event.target.checked });
-      console.log("checkedItems: ", checkedItems);
     //skicka till extern filtrering med usecontext?
   };
+
+  console.log("checkedItems: ", checkedItems);
 
   const checkboxes = [
     {

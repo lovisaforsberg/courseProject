@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { CounterContext } from "../Context/counter-context";
+import { CounterContext } from "../../Context/counter-context";
 
 export default function CounterButtons() {
   const [count, setCount] = useContext(CounterContext);

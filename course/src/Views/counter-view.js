@@ -1,8 +1,8 @@
 import React from "react";
 
 import { CounterContextProvider } from "../Context/counter-context";
-import CounterDisplay from "../Components/counter-display";
-import CounterButtons from "../Components/counter-buttons";
+import CounterDisplay from "../Components/Examples/counter-display";
+import CounterButtons from "../Components/Examples/counter-buttons";
 
 export default function CounterView() {
   return (

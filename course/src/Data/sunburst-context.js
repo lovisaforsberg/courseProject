@@ -1,7 +1,5 @@
 import React, {useReducer,useEffect, createContext, useState} from "react";
-import axios from "axios";
-import Sunburst from "../Components/sunburst"
-import useFetch from "./useFetch"
+
 
 export const SunburstContext = createContext();
 

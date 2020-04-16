@@ -2,7 +2,6 @@ import React, {useState} from "react"
 
 function createCourseData(dep_list, fall_courses, spring_courses){
     const  dataset = {} // where we want to create our dataset
-
     dataset.name = 'all courses'
     dataset.children = []
     
@@ -11,7 +10,6 @@ function createCourseData(dep_list, fall_courses, spring_courses){
     const active_schools = ["Electrical Engineering and Computer Science",
                             "Industrial Engineering and Management",
                             "Architecture and the Built Environment",
-                            "Education and Communication in Engineering Science",
                             "Engineering Sciences in Chemistry, Biotechnology and Health",
                             "Engineering Sciences",
                             "Cooperation with other universities"]
@@ -25,6 +23,7 @@ function createCourseData(dep_list, fall_courses, spring_courses){
                     const courses = []
                     
                     fall_courses.forEach(course =>{
+                        
                         if(course.department_code == dep.code){
                         // if the course already exists in courses, 
                         // existing_course will be the course objects, otherwise it will be undefined
@@ -38,10 +37,12 @@ function createCourseData(dep_list, fall_courses, spring_courses){
                                         course_director: course.course_director_name,
                                         value: 10})
                         }
+                        
                         // if course already exists, add the period to the first course object
                         else{
                             existing_course.period.push(course.first_period.slice(-2))
                         }
+                        
                         }
                     })
 
@@ -51,7 +52,7 @@ function createCourseData(dep_list, fall_courses, spring_courses){
                         // if the course already exists in courses, 
                         // existing_course will be the course objects, otherwise it will be undefined
                         let existing_course = courses.find(courses => courses.name === course.course_code) 
-                        if(existing_course == undefined){
+                        if(existing_course === undefined){
                             courses.push({name: course.course_code, 
                                         fullName:course.course_name_en, 
                                         period: [course.first_period.slice(-2)], 
@@ -68,16 +69,17 @@ function createCourseData(dep_list, fall_courses, spring_courses){
                     })
                 // add courses as children to each department
                 school_departments.push({name:dep.code, fullName: dep.name, children: courses})
+                
                 })   
             }
         })
         // add departments as children to each school
         dataset.children.push({name:school, children: school_departments})  
     })
-
+console.log(dataset)
     return dataset;
    }
-
+/*
 
 function createCourseDataFirst(dep_list, course_list){
     const  dataset = {} // where we want to create our dataset
@@ -124,5 +126,5 @@ function createCourseDataFirst(dep_list, course_list){
 
     return dataset;
    }
-
+*/
    export { createCourseData };

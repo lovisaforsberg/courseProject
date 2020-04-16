@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import ReactDOM from "react-dom";
 import * as d3 from 'd3'
-import useFetch from "../Data/useFetch"
-import {SunburstContext} from "../Data/sunburst-context"
+//import useFetch from "../../Data/useFetch"
+//import {SunburstContext} from "../../Data/sunburst-context"
 
 
 

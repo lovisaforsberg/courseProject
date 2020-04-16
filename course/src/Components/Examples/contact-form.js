@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Segment, Form, Input, Button } from "semantic-ui-react";
 import _ from "lodash";
-import { ContactContext } from "../Context/contact-context";
+import { ContactContext } from "../../Context/contact-context";
 
 export default function ContactForm() {
   const name = useFormInput("");

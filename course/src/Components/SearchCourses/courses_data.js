@@ -10,13 +10,15 @@ const DisplayData=({dataprop,filter})=> {
    
 
     useEffect(()=>{
-        
+
+        if(document.getElementById('packedCircle')){
+          d3.select('.circles').remove()
+        }
+
         let data = filterData(dataprop,filter)
         //let data = dataprop
         /*
-        if(document.getElementById('circles')){
-          d3.select('.circles').remove()
-        }*/
+        */
 
         let view;
         let width = 932
@@ -117,7 +119,7 @@ const DisplayData=({dataprop,filter})=> {
       <>
       <div>
         <h1>Display Data</h1>
-            <svg id='packedCircle' width={932} height={932} radius={932/2} ref={d3Container}></svg>
+            <svg id='packedCircle' width={600} height={600} radius={600/2} ref={d3Container}></svg>
         
       </div>
       </>

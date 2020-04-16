@@ -3,10 +3,15 @@ import FilterForm from "./filterForm";
 import DisplayData from "./courses_data"
 
 const CoursesContainer = ({data}) => {
+  
+    const courses = data;
 
-    //const [courses, setCourses] = useState(data);
-    //console.log(courses)
+    /*
+    useEffect(()=>{
+      setCourses(data)
+    },[])*/
     console.log(data)
+    console.log(courses)
     
   
     //const componentIsMounted = useRef(true);
@@ -39,9 +44,8 @@ const CoursesContainer = ({data}) => {
   };
 
 
-    const filteredCourses = data
-    console.log(filteredCourses)
-    console.log(filterInput)
+   
+ 
 
   return (
 
@@ -57,14 +61,12 @@ const CoursesContainer = ({data}) => {
 
       <div>
         <h2>Filter Input: </h2>
-        {filteredCourses.map}
+        
         <DisplayData 
-            dataprop={filteredCourses} 
+            dataprop={courses} 
             
             filter={filterInput}
             />
-
-        
 
       </div>
 

@@ -26,8 +26,23 @@ let filteredprops = {}
 if(loadingFallCourses === false && loadingSpringCourses === false){
   props = createCourseData(allDepartments, allFallCourses, allSpringCourses)
   console.log(props)
-}
 
+  return (
+    <>
+    <h1>Courses</h1>
+    <CoursesContainer data={props}></CoursesContainer>
+    </>
+  )
+
+}
+else{
+  return (
+    <>
+    <h1>Courses</h1>
+    <p>Loading...</p>
+    </>
+  )
+}
 
 
 
@@ -36,13 +51,15 @@ let props = {
     schools:allSchools,
     courses:allCourses
     }
-*/
+
+
 
   return (
     <>
       <h1>Courses</h1>
-      {(loadingFallCourses) ? ("Loading.."): <CoursesContainer data={props}></CoursesContainer>}
+      {(loadingFallCourses && loadingSpringCourses) ? ("Loading.."): <CoursesContainer data={props}></CoursesContainer>}
     </>
-  );
+  );*/
 }
+
 export default Courses;

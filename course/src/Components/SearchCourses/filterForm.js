@@ -8,6 +8,21 @@ const FilterForm = ({ searchValue, handleChangeValue }) => {
 
     <>
 
+        <select
+          defaultValue={searchValue.level}
+          onChange={e =>handleChangeValue(e)}
+        >
+          <option key='Select a school' disabled={true} value={searchValue.level}>
+            Level
+          </option>
+          <option key="BASIC" value="BASIC">
+                Basic
+            </option>
+            <option key="ADVANCED" value="ADVANCED">
+                Advanced
+            </option>
+        </select>
+
       <form className="filter-container">
 
         <input
@@ -20,17 +35,6 @@ const FilterForm = ({ searchValue, handleChangeValue }) => {
           
         />
 
-
-        <input
-
-          type="text"
-          name="level"
-          value={searchValue.level}
-          onChange={e=>handleChangeValue(e)}
-          placeholder="level"
-          className="filter-input"
-
-        />
         <input type="submit" value="Submit" />
         
 

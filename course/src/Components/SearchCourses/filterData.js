@@ -20,10 +20,13 @@ function filterData(data, filterinput){
   return data
   }*/
 
-  function filterData(data, filterinput){
+  function filterData(dataInput, filterinput){
+
+    const data_copy = Object.assign({}, dataInput);
+    
     console.log(filterinput)
   
-    data.children.map(school =>{
+    data_copy.children.map(school =>{
       school.children.map(dep =>{
         //every dep.children is a list of courses
         const filtered = dep.children.filter(course =>{
@@ -50,12 +53,12 @@ function filterData(data, filterinput){
       }
     })
     // remove the schools that don't have any departments with courses
-    for(var i = data.children.length-1; i >= 0; i--){
-      if(!('children' in data.children[i])){
-        data.children.splice(i, 1)
+    for(var i = data_copy.children.length-1; i >= 0; i--){
+      if(!('children' in data_copy.children[i])){
+        data_copy.children.splice(i, 1)
       }
     }
     
-  return data
+  return data_copy
   }
   export {filterData}

@@ -9,6 +9,7 @@ const FilterForm = ({ searchValue, handleChangeValue }) => {
     <>
 
         <select
+          name = 'level'
           defaultValue={searchValue.level}
           onChange={e =>handleChangeValue(e)}
         >

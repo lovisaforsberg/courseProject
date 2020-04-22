@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useRef} from "react";
 import * as d3 from 'd3'
 import {filterData} from "./filterData"
+import './courses_data.css'
 
 
 const DisplayData=({dataprop,filter})=> {
@@ -45,14 +46,37 @@ const DisplayData=({dataprop,filter})=> {
         .attr("class", function(d) { return d.parent ? d.children ? "node" : "node node--leaf" : "node node--root"; })
         //.style("fill", function(d) { return d.children ? color(d.depth) : '#eec1bc'; })
         .style('fill', function(d){return d.data.color})
-        .on("mouseover", function(d){console.log(d)})
-        .on("click", function(d) { if (focus !== d) {return zoom(d), d3.event.stopPropagation();} });
+        .on("click", function(d) { if (focus !== d) {return d.children !== undefined ? 
+          (zoom(d), 
+          d3.event.stopPropagation()
+          ):
+          //do this when clicking the course node
+          (console.log(d.data), 
+          // stop from zooming out
+          d3.event.stopPropagation());} });
   
     var text = g.selectAll("text")
       .data(nodes)
       .enter().append("text")
         .attr("class", "label")
-        .style("fill-opacity", function(d) { return d.parent === root ? 1 : 0; })
+        .attr("text-anchor", "middle")
+        .attr('font-family', 'montserrat')
+        .attr('width', 100)
+        .on('mouseover', function(d){d3.select(this)
+          .style('font-size', function(d){ return d.children == undefined ? 10: 14})
+        }
+        )
+        .on('mouseout', function(d){d3.select(this)
+          .style('font-size', function(d){ return d.children == undefined ? 5: 10})
+        })
+        .on("click", function(d) { if (focus !== d) {return d.children !== undefined ? 
+          (zoom(d), d3.event.stopPropagation()):
+          //do this when clicking the course node
+          (console.log(d.data), 
+          // stop from zooming out
+          d3.event.stopPropagation());} })
+        .style("fill-opacity", function(d) { return d.parent === root ? 1 : 0;})
+        .style('font-size', function(d){ return d.children == undefined ? 5: 10})
         .style("display", function(d) { return d.parent === root ? "inline" : "none"; })
         .text(function(d) { return d.parent === root ? null : d.data.name; });
   
@@ -110,6 +134,7 @@ const DisplayData=({dataprop,filter})=> {
       .data(legend_data)
       .enter()
       .append('g')
+      .attr('id', function(d){return d.value})
       .attr('transform', function(d, i) {
         //return 'translate(' + i * 65 + ',' + 0 + ')'
         return 'translate(120,' + i * 40 + ')'

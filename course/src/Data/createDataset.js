@@ -8,12 +8,16 @@ function createCourseData(dep_list, fall_courses, spring_courses){
     
     // Education and Communication in Engineering Science verkar inte längre ge någor kurser, 
     // kanske inte finns kvar?
+    
     const active_schools = [{school: "Electrical Engineering and Computer Science", color_school:'#C65649', color_dep: '#D0746A', color_course: '#DA938B'},
                             {school: "Industrial Engineering and Management", color_school:'#68AD7C', color_dep: '#83BB93', color_course: '#9ECAAB'},
                             {school: "Architecture and the Built Environment", color_school:'#AC66B7', color_dep: '#BB81C4', color_course: '#CA9DD1'},
                             {school: "Engineering Sciences in Chemistry, Biotechnology and Health", color_school:'#E08443', color_dep: '#E59A65', color_course: '#EBB087'},
                             {school: "Engineering Sciences", color_school:'#59A5CC', color_dep: '#77B5D5', color_course: '#95C5DE'},
                             {school: "Cooperation with other universities", color_school:'#CC5BA4', color_dep: '#DE96C5', color_course: '#E7B4D5'}]
+    
+
+
 
     active_schools.forEach(school =>{
         const school_departments = [] // list of all departments for each school
@@ -29,15 +33,15 @@ function createCourseData(dep_list, fall_courses, spring_courses){
                         // if the course already exists in courses, 
                         // existing_course will be the course objects, otherwise it will be undefined
                         let existing_course = courses.find(courses => courses.name === course.course_code) 
-                        if(existing_course == undefined){
+                        if(existing_course === undefined){
                             courses.push({name: course.course_code, 
                                         fullName:course.course_name_en, 
                                         period: [course.first_period.slice(-2)], 
                                         campus: course.campus, 
                                         education_level: course.educational_level_en,
                                         course_director: course.course_director_name,
-                                        size: 10,
-                                        color: school.color_course
+                                        color: school.color_course,
+                                        size: 10
                                     })
                         }
                         
@@ -62,7 +66,9 @@ function createCourseData(dep_list, fall_courses, spring_courses){
                                         campus: course.campus, 
                                         education_level: course.educational_level_en,
                                         course_director: course.course_director_name,
-                                        value: 10})
+                                        color: school.color_course,
+                                        size: 10
+                                    })
                         }
                         // if course already exists, add the period to the first course object
                         else{

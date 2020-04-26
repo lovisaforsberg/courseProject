@@ -5,6 +5,7 @@ function createCourseData(dep_list, fall_courses, spring_courses){
     dataset.name = 'all courses'
     dataset.color = '#efefef'
     dataset.children = []
+    console.log(fall_courses)
     
     // Education and Communication in Engineering Science verkar inte längre ge någor kurser, 
     // kanske inte finns kvar?
@@ -40,6 +41,7 @@ function createCourseData(dep_list, fall_courses, spring_courses){
                                         campus: course.campus, 
                                         education_level: course.educational_level_en,
                                         course_director: course.course_director_name,
+                                        language: course.language,
                                         color: school.color_course,
                                         size: 10
                                     })
@@ -65,8 +67,10 @@ function createCourseData(dep_list, fall_courses, spring_courses){
                                         period: [course.first_period.slice(-2)], 
                                         campus: course.campus, 
                                         education_level: course.educational_level_en,
-                                        course_director: course.course_director_name,
+                                        course_director: course.course_director_name, 
+                                        language: course.language,
                                         color: school.color_course,
+                                       
                                         size: 10
                                     })
                         }

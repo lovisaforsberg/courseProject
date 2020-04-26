@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, createContext} from "react";
 import { useFetchCourses } from "../Data/useFetchCourses";
 import DisplayData from "./SearchCourses/courses_data"
 import {createCourseData} from "../Data/createDataset"
@@ -9,6 +9,8 @@ const urlCourses = 'https://api.kth.se/api/kopps/v2/courses?l=en'
 const urlDepartments = 'https://api.kth.se/api/kopps/v2/schools/departments?department_criteria=has_courses&listForActiveCourses=true&l=en'
 const urlFallCourses = 'https://api.kth.se/api/kopps/v2/courses/offerings?from=20202&skip_coordinator_info=true&l=en'
 const urlSpringCourses = 'https://api.kth.se/api/kopps/v2/courses/offerings?from=20211&skip_coordinator_info=true&l=en'
+
+export const DataContext = createContext({})
 
 function Courses() {
 const [schools, setSchools] = useState({})
@@ -27,12 +29,23 @@ if(loadingFallCourses === false && loadingSpringCourses === false){
   props = createCourseData(allDepartments, allFallCourses, allSpringCourses)
   console.log(props)
 
+ //const initialData = {data:props}
+  
+
+/*
   return (
     <>
     <h1>Courses</h1>
     <CoursesContainer data={props}></CoursesContainer>
     </>
-  )
+  )*/
+  return (
+    <DataContext.Provider value={props}>
+      <CoursesContainer>
+        
+      </CoursesContainer>
+    </DataContext.Provider>
+  );
 
 }
 else{

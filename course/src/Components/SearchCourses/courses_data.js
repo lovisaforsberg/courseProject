@@ -1,14 +1,17 @@
-import React, {useState, useEffect, useRef} from "react";
+import React, {useState, useEffect, useRef, useContext} from "react";
 import * as d3 from 'd3'
 import {filterData} from "./filterData"
 import './courses_data.css'
+import {DataContext} from "../courses"
 
 
-const DisplayData=({dataprop,filter})=> {
+const DisplayData=({dataprop})=> {
     const d3Container = useRef(null)
     const legendContainer = useRef(null)
+
+    var data = useContext(DataContext);
     console.log(dataprop)
-    console.log(filter)
+    //console.log(filter)
    
 
     useEffect(()=>{
@@ -30,8 +33,8 @@ const DisplayData=({dataprop,filter})=> {
       .size([diameter - margin, diameter - margin])
       .padding(2);
   
-    var root = filterData(dataprop, filter)
-  
+   //var root = filterData(dataprop, filter)
+  var root = dataprop
     root = d3.hierarchy(root)
         .sum(function(d) { return d.size; })
         .sort(function(a, b) { return b.value - a.value; });
@@ -164,7 +167,7 @@ const DisplayData=({dataprop,filter})=> {
       })
   
 
-    },[filter])
+    },[dataprop])
 
   return (
       <>

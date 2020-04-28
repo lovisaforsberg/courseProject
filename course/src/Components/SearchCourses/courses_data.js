@@ -2,7 +2,7 @@ import React, {useState, useEffect, useRef, useContext} from "react";
 import * as d3 from 'd3'
 import {filterData} from "./filterData"
 import './courses_data.css'
-import {DataContext} from "../courses"
+import {DataContext} from "../../Data/courses"
 
 
 const DisplayData=({dataprop})=> {

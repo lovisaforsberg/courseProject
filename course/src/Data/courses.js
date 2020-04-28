@@ -1,8 +1,8 @@
 import React, {useState, createContext} from "react";
-import { useFetchCourses } from "../Data/useFetchCourses";
-import DisplayData from "./SearchCourses/courses_data"
-import {createCourseData} from "../Data/createDataset"
-import CoursesContainer from "./SearchCourses/coursesContainer"
+import { useFetchCourses } from "./useFetchCourses";
+import DisplayData from "../Components/SearchCourses/courses_data"
+import {createCourseData} from "./createDataset"
+import CoursesContainer from "../Components/SearchCourses/coursesContainer"
 
 const proxy = 'https://cors-anywhere.herokuapp.com/'
 const urlCourses = 'https://api.kth.se/api/kopps/v2/courses?l=en'

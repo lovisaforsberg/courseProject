@@ -2,7 +2,7 @@ import React, {useState,useRef, useReducer, useEffect, useContext} from "react";
 import FilterForm from "./filterForm";
 import {filterData} from "./filterData"
 import DisplayData from "./courses_data"
-import {DataContext} from "../courses"
+import {DataContext} from "../../Data/courses"
 
 const CoursesContainer = () => {
 

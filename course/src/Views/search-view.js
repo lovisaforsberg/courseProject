@@ -1,8 +1,7 @@
 import React from "react";
 import { Segment, Header } from "semantic-ui-react";
 
-import Courses from "../Components/courses"
-import SearchForm from "../Components/SearchCourses/search-form"
+import Courses from "../Data/courses"
 import CoursesContainer from "../Components/SearchCourses/coursesContainer"
 
 

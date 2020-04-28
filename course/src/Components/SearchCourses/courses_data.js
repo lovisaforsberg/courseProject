@@ -10,13 +10,14 @@ const DisplayData=({dataprop})=> {
     const legendContainer = useRef(null)
 
     var data = useContext(DataContext);
-    console.log(dataprop)
+    //console.log(dataprop)
     //console.log(filter)
    
 
     useEffect(()=>{
 
       d3.select(".root_circle").selectAll('*').remove()
+      d3.select(".legend").selectAll('*').remove()
 
 
       var svg = d3.select(d3Container.current),
@@ -56,7 +57,21 @@ const DisplayData=({dataprop})=> {
           //do this when clicking the course node
           (console.log(d.data), 
           // stop from zooming out
-          d3.event.stopPropagation());} });
+          d3.event.stopPropagation());} })
+        .on('mousemove', function(d) { return d3.select(this).attr('class') == "node node--leaf" ?
+          
+          ( divTooltip.style('left', d3.event.pageX + 10 + 'px'),
+            divTooltip.style('top', d3.event.pageY - 25 + 'px'),
+            divTooltip.style('display', 'inline-block'),
+            divTooltip.html(d.data.fullName))
+            :
+
+            divTooltip.style('display', 'none')
+          })
+        .on('mouseout', function(d) {
+            divTooltip.style('display', 'none')
+          })
+
   
     var text = g.selectAll("text")
       .data(nodes)
@@ -66,12 +81,12 @@ const DisplayData=({dataprop})=> {
         .attr('font-family', 'montserrat')
         .attr('width', 100)
         .on('mouseover', function(d){d3.select(this)
-          .style('font-size', function(d){ return d.children == undefined ? 10: 14})
-        }
+          .style('font-size', function(d){ return d.children == undefined ? 10: 14})}
         )
         .on('mouseout', function(d){d3.select(this)
           .style('font-size', function(d){ return d.children == undefined ? 5: 10})
         })
+
         .on("click", function(d) { if (focus !== d) {return d.children !== undefined ? 
           (zoom(d), d3.event.stopPropagation()):
           //do this when clicking the course node
@@ -107,13 +122,22 @@ const DisplayData=({dataprop})=> {
           .style("fill-opacity", function(d) { return d.parent === focus ? 1 : 0; })
           .on("start", function(d) { if (d.parent === focus) this.style.display = "inline"; })
           .on("end", function(d) { if (d.parent !== focus) this.style.display = "none"; });
-    }
+        }
   
     function zoomTo(v) {
       var k = diameter / v[2]; view = v;
       node.attr("transform", function(d) { return "translate(" + (d.x - v[0]) * k + "," + (d.y - v[1]) * k + ")"; });
       circle.attr("r", function(d) { return d.r * k; });
     }
+
+    var divTooltip = d3
+      .select('body')
+      .append('div')
+      .attr('class', 'toolTip')
+      .attr('font-family', 'montserrat')
+
+
+
 
     const legend_data = [
                         {key: "Electrical Engineering and Computer Science", value:'#C65649'},
@@ -125,6 +149,7 @@ const DisplayData=({dataprop})=> {
 
 
     var legendContainerSVG = d3.select(legendContainer.current)
+    .attr('class', 'legend')
 
     var legend = legendContainerSVG
       .append('g')

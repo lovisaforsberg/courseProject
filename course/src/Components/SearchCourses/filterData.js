@@ -61,8 +61,26 @@ function filterData(data, filterinput){
   return data_copy
   }*/
 
-  function filterData(dataInput, filterinput){
-    
+  function checkPeriod(filter){
+    var filterValues = []
+    for(var key in filter) {
+      if(filter[key] === true) {
+        filterValues.push(key.valueOf().toString())
+      }
+     
+  }
+  return filterValues
+  }
+
+  function checkIntersecion(filterArr, courseArr){
+    var intersection = courseArr.filter(value => 
+      filterArr.includes(value)
+    )
+    return intersection
+  }
+
+  function filterData(dataInput, filterinput, periodinput){
+    console.log(periodinput)
    // const data_copy = Object.assign({}, dataInput);
      console.log(filterinput)
      const result = {} //new dataset
@@ -70,8 +88,6 @@ function filterData(data, filterinput){
      result.color = '#efefef'
      result.children = []
      
-     console.log(filterinput.period['P1'])
-     console.log(filterinput.language)
     dataInput.children.map(school =>{ //in each school 
       const school_copy = Object.assign({},school)
       school_copy.children = []
@@ -81,10 +97,14 @@ function filterData(data, filterinput){
         //every dep.children is a list of courses --> filtered list of courses
         const filtered = dep_copy.children.filter(course =>{
               return (course.education_level == filterinput.level || filterinput.level == "") 
-                && (course.fullName.toLowerCase().includes(filterinput.search_text.toLowerCase()) || filterinput.search_text == "")
+                && (course.fullName.toLowerCase().includes(filterinput.search_text.toLowerCase()) || 
+                    (course.name.toLowerCase().includes(filterinput.search_text.toLowerCase())) || 
+                    filterinput.search_text == "")
                 && (course.campus == filterinput.campus || filterinput.campus == "")
                 && (course.language == filterinput.language || filterinput.language == "")
-                //&& ( filterinput.period == [])  //object(key) = value (true/false)
+                && ((checkIntersecion(checkPeriod(periodinput), course.period).length > 0)
+                ||(periodinput.P1 == false && periodinput.P2 == false && periodinput.P3 == false && periodinput.P4 == false))
+                //&& ( periodinput == [])  //object(key) = value (true/false)
                 
         })
 

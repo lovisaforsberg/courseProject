@@ -1,3 +1,22 @@
 .circle_legend_active{
     font-weight: 700;
 }
+
+.toolTip {
+    font-family: 'montserrat';
+    position: absolute;
+    display: none;
+    width: auto;
+    height: auto;
+    background: none repeat scroll 0 0 white;
+    opacity: 0.8;
+    border-radius: 8px 8px 8px 8px;
+    color: '#404040';
+    font: 12px sans-serif;
+    padding: 5px;
+    text-align: center;
+  }
+
+  .node--root{
+      display: 'none'
+  }

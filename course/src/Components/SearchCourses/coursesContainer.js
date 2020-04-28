@@ -9,7 +9,7 @@ const CoursesContainer = () => {
     let dataGlobal = useContext(DataContext)
     const [data, setData] = useState(dataGlobal)
     const [checkedItems, setCheckedItems] = useState({P1:false, P2:false, P3:false, P4:false})
-    console.log(data)
+    //console.log(data)
 
     const [filterInput, setFilterInput] = useReducer(
       (state, newState) => ({ ...state, ...newState }),
@@ -37,12 +37,12 @@ const CoursesContainer = () => {
     setCheckedItems({...checkedItems, [name] : checked });
     setFilterInput({['period']: checkedItems}) //when checkboxes changes, change state of filterInput
   };
-  console.log(checkedItems)
+  //console.log(checkedItems)
 
 
    useEffect(()=>{
     setData(dataGlobal)
-    setFilteredData(filterData(data, filterInput))
+    setFilteredData(filterData(data, filterInput, checkedItems))
 
    },[filterInput, checkedItems])
  

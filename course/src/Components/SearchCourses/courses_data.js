@@ -1,13 +1,34 @@
 import React, {useState, useEffect, useRef, useContext} from "react";
 import * as d3 from 'd3'
 import {filterData} from "./filterData"
+import CourseDetail from './courseDetail'
 import './courses_data.css'
 import {DataContext} from "../../Data/courses"
+
+
+
 
 
 const DisplayData=({dataprop})=> {
     const d3Container = useRef(null)
     const legendContainer = useRef(null)
+    const [isDetailShown, setDetailShown] = useState(false)
+    const [selectedCourse, setSelectedCourse] = useState('')
+
+    const showDetail = (course)=>{
+      //e.preventDefault();
+      //console.log(course)
+      //console.log(typeof course)
+      setSelectedCourse(course)
+      setDetailShown(true);
+    }
+
+    const hideDetail = ()=>{
+      //e.preventDefault();
+      //console.log(course)
+      //console.log(typeof course)
+      setDetailShown(false);
+    }
 
     var data = useContext(DataContext);
     //console.log(dataprop)
@@ -55,7 +76,7 @@ const DisplayData=({dataprop})=> {
           d3.event.stopPropagation()
           ):
           //do this when clicking the course node
-          (console.log(d.data), 
+          (console.log(d.data), showDetail(d.data),
           // stop from zooming out
           d3.event.stopPropagation());} })
         .on('mousemove', function(d) { return d3.select(this).attr('class') == "node node--leaf" ?
@@ -198,7 +219,8 @@ const DisplayData=({dataprop})=> {
       <>
       <div>
         <h1>Display Data</h1>
-            
+            {isDetailShown && <CourseDetail sentCourse={selectedCourse}/>}
+            <button onClick={console.log('tja')}>HIDE</button>
             <svg id='legend' width={400} height={400} ref={legendContainer}></svg>
             <svg id='packedCircle' width={600} height={600} radius={600/2} ref={d3Container}></svg>
       </div>

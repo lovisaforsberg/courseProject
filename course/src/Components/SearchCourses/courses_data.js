@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef, useContext} from "react";
+import React, {useState, useEffect, useRef, useContext, createContext} from "react";
 import * as d3 from 'd3'
 import {filterData} from "./filterData"
 import CourseDetail from './courseDetail'
@@ -6,12 +6,13 @@ import './courses_data.css'
 import {DataContext} from "../../Data/courses"
 
 
-
-
+export const DetailContext = createContext({})
 
 const DisplayData=({dataprop})=> {
     const d3Container = useRef(null)
     const legendContainer = useRef(null)
+
+    
     const [isDetailShown, setDetailShown] = useState(false)
     const [selectedCourse, setSelectedCourse] = useState('')
 
@@ -228,10 +229,14 @@ const DisplayData=({dataprop})=> {
       <>
       <div>
         <h1>Display Data</h1>
-            {isDetailShown && <CourseDetail sentCourse={selectedCourse}/>}
-            <button onClick={console.log('tja')}>HIDE</button>
-            <svg id='packedCircle' width={600} height={600} radius={600/2} ref={d3Container}></svg>
-            <svg id='legend' width={100} height={270} ref={legendContainer}></svg>
+            <div className='circleContainer'>
+              {isDetailShown && 
+              <DetailContext.Provider value={{isDetailShown, setDetailShown}}><CourseDetail sentCourse={selectedCourse}/></DetailContext.Provider> 
+              }
+              <svg id='packedCircle' width={600} height={600} radius={600/2} ref={d3Container}></svg>
+              <svg id='legend' width={100} height={270} ref={legendContainer}></svg>
+            </div>
+
 
       </div>
       </>

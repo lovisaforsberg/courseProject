@@ -1,34 +1,40 @@
 import React, { useContext, useEffect, useState } from 'react';
 import './courseDetail.css'
 import {useFetchCourses} from '../../Data/useFetchCourses'
+import {DetailContext} from './courses_data'
 
 const proxy = 'https://cors-anywhere.herokuapp.com/'
-
 
 function setUrl(course_code){
     const urlCourse = 'https://api.kth.se/api/kopps/v2/course/'+course_code+'/detailedinformation?l=en'
     return urlCourse
 }
-/*
-function useFetchCourses(url) {
-    const [data, setData] = useState([]);
-    const [loading, setLoading] = useState(true);
-  
-    async function fetchUrl() {
-      const response = await fetch(url);
-      const json = await response.json();
-      setData(json);
-      setLoading(false);
+
+function openTab(tabToOpen){
+    var i;
+    var x = document.getElementsByClassName("tab");
+    for (i = 0; i < x.length; i++) {
+      x[i].style.display = "none";
     }
-    useEffect(() => {
-      fetchUrl();
-    }, [url]);
-    return [data, loading];
+    document.getElementById(tabToOpen).style.display = "block";
+
+    if(tabToOpen=='information_tab'){
+        document.getElementById('tabLink_info').className = 'cardTabLink active_card'
+        document.getElementById('tabLink_about').className = 'cardTabLink'
+    }
+    if(tabToOpen=='about_tab'){
+        document.getElementById('tabLink_info').className = 'cardTabLink'
+        document.getElementById('tabLink_about').className = 'cardTabLink active_card'
+    }
   }
-  */
+
+
 
 const CourseDetail=({sentCourse})=> {
-    //const [courseShown, setCourseShown] = useState({})
+
+    const detail_context = useContext(DetailContext)
+    const {detailShow, setDetailShown} = detail_context
+
     const [fetchedCourse, loadningFetch] = useFetchCourses(proxy+setUrl(sentCourse.name))
     if(loadningFetch === false){  
         let courseInfo = {}
@@ -40,9 +46,22 @@ const CourseDetail=({sentCourse})=> {
         courseInfo.subjects = fetchedCourse.mainSubjects
         courseInfo.examiners = fetchedCourse.examiners
 
+       // if(fetchedCourse.course.infoContactName !== undefined){
+        if('recruitmentText' in fetchedCourse.course){
+            courseInfo.about = fetchedCourse.course.recruitmentText
+            .replace(/<p>/g, '').replace(/<\/p>/g, '')
+            .replace(/<em>/g, '').replace(/<\/em>/g, '')
+            .replace(/<ul>/g, '').replace(/<\/ul>/g, '')
+            .replace(/<li>/g, '').replace(/<\/li>/g, ', ')
+            .replace(/&#8217;/g, "'")
+            
+        }
+        else{
+            courseInfo.about = "description missing"
+        }
+
         courseInfo.contactName = fetchedCourse.course.infoContactName
-        //courseInfo.about = fetchedCourse.course.recruitmentText.replace('<p>', '').replace('</p>', '')
-        courseInfo.about = fetchedCourse.course.recruitmentText
+        //courseInfo.about = fetchedCourse.course.recruitmentText
 
         courseInfo.supplement_info = fetchedCourse.course.supplementaryInfo
         courseInfo.prerequisites = fetchedCourse.course.prerequisites
@@ -57,28 +76,49 @@ const CourseDetail=({sentCourse})=> {
 
         return(
             <>
-            <h1>course detail</h1>
-            <p>{courseInfo.title}</p>
-            <div className="infoCard">
+            <div className="infoContainer">
+                <header className="infoHeadline" style={{backgroundColor:courseInfo.color}}>
+                    <div>
+                        <h4 id="textHeadline">{courseInfo.title} ({courseInfo.course_code})</h4>
+                        <h5 id="textHeadline"></h5>
+                        <h6 id="textHeadline"><strong>Given by: </strong>{courseInfo.department.name}</h6> 
 
-            <header className="infoHeadline" style={{backgroundColor:courseInfo.color}}>
-            <h1 id="textHeadline">{courseInfo.title}</h1>
-            <h2 id="textHeadline">{courseInfo.course_code}</h2>
-            <h2 id="textHeadline">close</h2>
+                    </div>
+                    <div className='iconHeadline'>
+                        <i onClick={()=>setDetailShown(false)} className="cross_icon fas fa-times"></i>
+                    </div>
+                </header>
+                <div className="cardTabBar">
+                    <button className="cardTabLink active_card" id="tabLink_info" onClick={()=>openTab('information_tab')}>Information</button>
+                    <button className="cardTabLink" id="tabLink_about" onClick={()=>openTab('about_tab')}>About</button>
+                </div>
+                <div id='information_tab' className='tab'>
+                    <div className="infoText">
+                        <p className='infoTextLine'><strong>Credits: </strong>{courseInfo.size} hp</p>
+                        <p className='infoTextLine'><strong>Educational Level: </strong>{courseInfo.level}</p>
+                        <p className='infoTextLine'><strong>Subject(s): </strong>{courseInfo.subjects.map(sub=>{return sub+', '})}</p>
 
-            </header>
+                        <p className='infoTextLine'><strong>Grading scale: </strong>{courseInfo.gradeScale}</p>
+                        <p className='infoTextLine'><strong>Contact for information: </strong>{courseInfo.contactName}</p>
+                    </div>
+                </div>
+                <div id='about_tab' className='tab' style={{display:'none'}}>
+                    <div className="infoText">
+                        <p><strong>About: </strong>{courseInfo.about}</p>
+                    </div>
+                </div>
+                
 
-            <div className="infoText">
-                <p><strong>Credits: </strong>{courseInfo.size} hp</p>
-                <p><strong>Grading scale: </strong>{courseInfo.gradeScale}</p>
-                <p><strong>Contact for information: </strong>{courseInfo.contactName}</p>
-
-                <p>{courseInfo.about}</p>
-            </div>
-
-            <footer className="infoFooter">
-            <h5>Footer</h5>
-            </footer>
+                <footer className="infoFooter" >
+                <div className='iconContainer'>
+                   <i className="FooterIcon fas fa-cart-plus"></i>
+                    <p className='FooterText'>Save for later</p> 
+                </div>
+                <div className='iconContainer'>
+                    <i className="FooterIcon fas fa-graduation-cap"></i>
+                    <p className='FooterText'>Add to study plan</p>
+                </div>
+                </footer>
 
             </div>
             </>

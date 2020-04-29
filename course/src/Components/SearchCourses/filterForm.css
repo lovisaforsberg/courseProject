@@ -1,3 +1,24 @@
 .filterContainer{
     text-align: center;
+    box-shadow: 0px 3px 10px rgb(224, 224, 224);
 }
+.container{
+    display: inline-flex; 
+    justify-content: space-between;
+}
+.filterItem{
+    padding:20px;
+}
+
+.dropdown select{
+    width: 150px;
+    height:20px;
+    border-radius: 2px;
+    box-shadow: 0px 3px 10px rgb(224, 224, 224);
+    border: none;
+
+}
+
+.select-selected {
+    background-color: DodgerBlue;
+  }

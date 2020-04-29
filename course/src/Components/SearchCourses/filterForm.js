@@ -1,7 +1,8 @@
 import React from "react";
 import Checkbox from "./checkbox"
+import "./filterForm.css"
 
-const FilterForm = ({ searchValue, handleChangeValue, handleCheckboxes, checkedItems}) => {
+const FilterForm = ({ searchValue, handleChangeValue, handleCheckboxes, checkedItems, handleCheckboxesCampus, checkedItemsCampus}) => {
   
   const checkboxes = [
     {
@@ -26,10 +27,43 @@ const FilterForm = ({ searchValue, handleChangeValue, handleCheckboxes, checkedI
     }
 ];
 
+const checkboxesCampus = [
+  {
+      name: 'AlbaNova',
+      key: 'checkBox1',
+      label: 'AlbaNova',
+  },
+  {
+      name: 'Campus',
+      key: 'checkBox2',
+      label: 'Campus',
+  },
+  {
+    name: 'Flemingsberg',
+    key: 'checkBox3',
+    label: 'Flemingsberg',
+  },
+  {
+      name: 'Kista',
+      key: 'checkBox4',
+      label: 'Kista',
+  },
+  {
+    name: 'Solna',
+    key: 'checkBox5',
+    label: 'Solna',
+},
+{
+      name: 'Södertälje',
+      key: 'checkBox6',
+      label: 'Södertälje',
+  },
+];
+
     
   return (
 
-    <>
+    <div className="filterContainer">
 
         <select
           name = 'level'
@@ -51,7 +85,7 @@ const FilterForm = ({ searchValue, handleChangeValue, handleCheckboxes, checkedI
             </option>
         </select>
       
-        <select
+     { /*  <select
           name = 'campus'
           defaultValue={searchValue.campus}
           onChange={e =>handleChangeValue(e)}
@@ -69,7 +103,7 @@ const FilterForm = ({ searchValue, handleChangeValue, handleCheckboxes, checkedI
                KTH Kista
             </option>
 
-        </select>
+        </select>*/}
         <select
           name = 'language'
           defaultValue={searchValue.language}
@@ -113,11 +147,23 @@ const FilterForm = ({ searchValue, handleChangeValue, handleCheckboxes, checkedI
                 ))
             }
         </div>
+
+        <div className="Checkboxes">
+            <label>Choose campus: </label> <br/>
+            {
+                checkboxesCampus.map(item => (
+                    <label key={item.key}>
+                        {item.name}
+                        <Checkbox name={item.name} checked={checkedItemsCampus[item.name]} onChange={handleCheckboxesCampus} />
+                    </label>
+                ))
+            }
+        </div>
                 
 
       </form>
 
-    </>
+    </div>
 
   );
   

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 import * as d3 from 'd3'
 import Sunburst from "../Components/StudyPlan/sunburst";
+import NavBar from "../Components/Navbar"
 
 
 
@@ -134,6 +135,7 @@ var years = [{name: 'Year 1', children: periods1},
 
   return (
     <React.Fragment>
+    <NavBar></NavBar>
     <Sunburst {...prog_list}></Sunburst>
     </React.Fragment>
   );

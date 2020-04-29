@@ -3,6 +3,7 @@ import { useFetchCourses } from "./useFetchCourses";
 import DisplayData from "../Components/SearchCourses/courses_data"
 import {createCourseData} from "./createDataset"
 import CoursesContainer from "../Components/SearchCourses/coursesContainer"
+import NavBar from "../Components/Navbar"
 
 const proxy = 'https://cors-anywhere.herokuapp.com/'
 const urlCourses = 'https://api.kth.se/api/kopps/v2/courses?l=en'
@@ -51,8 +52,6 @@ if(loadingFallCourses === false && loadingSpringCourses === false){
 else{
   return (
     <>
-    <h1>Courses</h1>
-    <p>Loading...</p>
     </>
   )
 }

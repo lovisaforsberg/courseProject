@@ -10,7 +10,8 @@ import SearchView from "./Views/search-view"
 const Router = () => {
   return (
     <Switch>
-      <Route exact path='/' component={Courses} />
+      <Route exact path='/' component={SearchView} />
+      <Route exact path='/studyplan' component={dataSunburst}/>
     </Switch>
   )
 }

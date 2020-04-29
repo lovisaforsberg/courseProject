@@ -17,7 +17,31 @@
     return intersection
   }
 
-  function filterData(dataInput, filterinput, periodinput){
+  function checkCampus(filterArr, courseCampus){
+    let campus = ""
+    //console.log(courseCampus.substring(0,3))
+
+    if(courseCampus.substring(0,3) == "KTH" ){
+    campus = courseCampus.slice(4); //remove KTH from campus name
+    console.log(campus)
+    }
+    else if(courseCampus.substring(0,2) == "KI"){
+      campus = courseCampus.slice(3);
+    }
+    else{ 
+      campus = courseCampus
+      console.log(campus)
+    }
+
+    if(filterArr.includes(campus)){
+      return true
+    }
+    else{
+      return false
+    }
+  }
+
+  function filterData(dataInput, filterinput, periodinput, campusinput){
     console.log(periodinput)
    // const data_copy = Object.assign({}, dataInput);
      console.log(filterinput)
@@ -38,7 +62,8 @@
                 && (course.fullName.toLowerCase().includes(filterinput.search_text.toLowerCase()) || 
                     (course.name.toLowerCase().includes(filterinput.search_text.toLowerCase())) || 
                     filterinput.search_text == "")
-                && (course.campus == filterinput.campus || filterinput.campus == "")
+                && (checkCampus(checkPeriod(campusinput), course.campus) == true
+                || (campusinput.AlbaNova == false && campusinput.Campus == false && campusinput.Flemingsberg == false && campusinput.Kista == false && campusinput.Solna == false && campusinput.Södertälje == false ))
                 && (course.language == filterinput.language || filterinput.language == "")
                 && ((checkIntersecion(checkPeriod(periodinput), course.period).length > 0)
                 ||(periodinput.P1 == false && periodinput.P2 == false && periodinput.P3 == false && periodinput.P4 == false))

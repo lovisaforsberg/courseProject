@@ -12,7 +12,7 @@ function useFetchCourses(url) {
   }
   useEffect(() => {
     fetchUrl();
-  }, []);
+  }, [url]);
   return [data, loading];
 }
 export { useFetchCourses };

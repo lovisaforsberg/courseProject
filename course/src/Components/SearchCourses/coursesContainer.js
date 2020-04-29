@@ -9,6 +9,7 @@ const CoursesContainer = () => {
     let dataGlobal = useContext(DataContext)
     const [data, setData] = useState(dataGlobal)
     const [checkedItems, setCheckedItems] = useState({P1:false, P2:false, P3:false, P4:false})
+    const [checkedItemsCampus, setCheckedItemsCampus] = useState({AlbaNova:false, Campus:false, Flemingsberg:false, Kista:false, Solna:false, Södertälje:false})
     //console.log(data)
 
     const [filterInput, setFilterInput] = useReducer(
@@ -37,14 +38,21 @@ const CoursesContainer = () => {
     setCheckedItems({...checkedItems, [name] : checked });
     setFilterInput({['period']: checkedItems}) //when checkboxes changes, change state of filterInput
   };
+
+  const handleCheckboxesCampus = event => {
+    const name = event.target.name
+    const checked = event.target.checked
+    setCheckedItemsCampus({...checkedItemsCampus, [name] : checked });
+    setFilterInput({['campus']: checkedItemsCampus}) //when checkboxes changes, change state of filterInput
+  };
   //console.log(checkedItems)
 
 
    useEffect(()=>{
     setData(dataGlobal)
-    setFilteredData(filterData(data, filterInput, checkedItems))
+    setFilteredData(filterData(data, filterInput, checkedItems, checkedItemsCampus))
 
-   },[filterInput, checkedItems])
+   },[filterInput, checkedItems, checkedItemsCampus])
  
 
   return (
@@ -54,11 +62,11 @@ const CoursesContainer = () => {
       <FilterForm
 
         searchValue={filterInput}
-
         handleChangeValue={handleFilterCourses}
-
         handleCheckboxes={handleCheckboxes}
         checkedItems={checkedItems}
+        handleCheckboxesCampus={handleCheckboxesCampus}
+        checkedItemsCampus={checkedItemsCampus}
 
       />
 

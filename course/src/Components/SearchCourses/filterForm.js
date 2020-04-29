@@ -64,7 +64,19 @@ const checkboxesCampus = [
   return (
 
     <div className="filterContainer">
-
+      <div className="row">
+        <input
+          type="text"
+          name="search_text"
+          value={searchValue.search_text}
+          onChange={e=>handleChangeValue(e)}
+          placeholder="Search for courses"
+          className="filter-input"
+      
+        />
+      </div>
+      <div className="row container">
+        <div className="filterItem dropdown">
         <select
           name = 'level'
           defaultValue={searchValue.level}
@@ -84,26 +96,8 @@ const checkboxesCampus = [
                 Advanced
             </option>
         </select>
-      
-     { /*  <select
-          name = 'campus'
-          defaultValue={searchValue.campus}
-          onChange={e =>handleChangeValue(e)}
-        >
-          <option key='Select campus' disabled={true} value={searchValue.campus}>
-            Campus
-          </option>
-          <option key="" value="">
-                All
-          </option>
-          <option key="KTH Campus" value="KTH Campus">
-                KTH Campus
-          </option>
-          <option key="KTH Kista" value="KTH Kista">
-               KTH Kista
-            </option>
-
-        </select>*/}
+        </div>
+        <div className="filterItem dropdown">
         <select
           name = 'language'
           defaultValue={searchValue.language}
@@ -123,18 +117,9 @@ const checkboxesCampus = [
             </option>
 
         </select>
+        </div>
 
-      <form className="filter-container">
-
-        <input
-          type="text"
-          name="search_text"
-          value={searchValue.search_text}
-          onChange={e=>handleChangeValue(e)}
-          placeholder="Search for courses"
-          className="filter-input"
-          
-        />
+      <form className="filterItem">
 
         <div className="Checkboxes">
             <label>Choose period: </label> <br/>
@@ -147,7 +132,8 @@ const checkboxesCampus = [
                 ))
             }
         </div>
-
+        </form>
+        <form className="filterItem">
         <div className="Checkboxes">
             <label>Choose campus: </label> <br/>
             {
@@ -158,11 +144,10 @@ const checkboxesCampus = [
                     </label>
                 ))
             }
-        </div>
-                
+        </div>        
 
       </form>
-
+      </div>
     </div>
 
   );

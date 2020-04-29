@@ -161,12 +161,12 @@ const DisplayData=({dataprop})=> {
 
 
     const legend_data = [
-                        {key: "Electrical Engineering and Computer Science", value:'#C65649'},
-                        {key: "Industrial Engineering and Management", value:'#68AD7C'},
-                        {key: "Architecture and the Built Environment", value:'#AC66B7'},
-                        {key: "Engineering Sciences in Chemistry, Biotechnology and Health", value:'#E08443'},
-                        {key: "Engineering Sciences", value:'#59A5CC'},
-                        {key: "Cooperation with other universities", value:'#CC5BA4'}]
+                        {key: 'EECS', name: "Electrical Engineering and Computer Science", value:'#C65649'},
+                        {key: 'ITM', name: "Industrial Engineering and Management", value:'#68AD7C'},
+                        {key: 'ABE', name: "Architecture and the Built Environment", value:'#AC66B7'},
+                        {key: 'CBH', name: "Engineering Sciences in Chemistry, Biotechnology and Health", value:'#E08443'},
+                        {key: 'SCI', name: "Engineering Sciences", value:'#59A5CC'},
+                        {key: 'XXX', name: "Cooperation with other universities", value:'#CC5BA4'}]
 
 
     var legendContainerSVG = d3.select(legendContainer.current)
@@ -188,15 +188,24 @@ const DisplayData=({dataprop})=> {
         //return 'translate(' + i * 65 + ',' + 0 + ')'
         return 'translate(120,' + i * 40 + ')'
       })
+      .on('mousemove', function(d) {
+        divTooltip.style('left', d3.event.pageX + 10 + 'px')
+        divTooltip.style('top', d3.event.pageY - 25 + 'px')
+        divTooltip.style('display', 'inline-block')
+        divTooltip.html(d.name)
+      })
+      .on('mouseout', function(d) {
+        divTooltip.style('display', 'none')
+      })
     //.attr('class', 'legend_active')
 
     legend
       .append('text')
-      .attr('text-anchor', 'end')
+      .attr('text-anchor', 'start')
       .attr('x', function(d, i) {
-        return 185
+        return -70
       })
-      .attr('y', -21)
+      .attr('y', -18)
       .attr('dy', '3em')
       .text(function(d) {
         return d.key
@@ -205,7 +214,7 @@ const DisplayData=({dataprop})=> {
 
       legend
       .append('rect')
-      .attr('x', 200)
+      .attr('x', -100)
       .attr('width', 23)
       .attr('height', 23)
       .attr('fill', function(d) {
@@ -221,8 +230,9 @@ const DisplayData=({dataprop})=> {
         <h1>Display Data</h1>
             {isDetailShown && <CourseDetail sentCourse={selectedCourse}/>}
             <button onClick={console.log('tja')}>HIDE</button>
-            <svg id='legend' width={400} height={400} ref={legendContainer}></svg>
             <svg id='packedCircle' width={600} height={600} radius={600/2} ref={d3Container}></svg>
+            <svg id='legend' width={100} height={270} ref={legendContainer}></svg>
+
       </div>
       </>
   )

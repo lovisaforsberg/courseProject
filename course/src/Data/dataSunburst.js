@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, createContext } from "react";
+import React, { useState, useEffect, useReducer, createContext } from "react";
 import ReactDOM from "react-dom";
 import * as d3 from 'd3'
 import Sunburst from "../Components/StudyPlan/sunburst";
@@ -56,7 +56,7 @@ const DataSunburst = () =>{
   var course_details = [];
   var dataset = {};
   var course_list = []
-  var prog_list = []
+  //var prog_list = []
   var dataset_list = []
   //const nodeData = null
   
@@ -88,12 +88,36 @@ const DataSunburst = () =>{
 
   ,[]);
   //prog_list = createDataset(Prog_course)
-  prog_list = empty_dataset()
-  console.log(prog_list)
+  const initialstate = empty_dataset()
+  console.log(initialstate)
+  
+  
+  const reducer = (state, action) => {
+    switch (action.type) {
+      case 'ADD_COURSE': 
+        addCourse();
+        return state;
+      case 'DELETE_COURSE':
+        deleteCourse();
+        return state;
+      default:
+        return state;
+    }
+  };
 
+
+  const addCourse = () =>{
+    console.log("Adding course!")
+  }
+
+  const deleteCourse = () =>{
+    console.log("Deleting course!")
+  }
+
+  const contextValue = useReducer(reducer, initialstate);
 
   return (
-    <studyPlanContext.Provider value ={prog_list}>
+    <studyPlanContext.Provider value ={contextValue}>
       <StudyPlanContainer>
 
       </StudyPlanContainer>

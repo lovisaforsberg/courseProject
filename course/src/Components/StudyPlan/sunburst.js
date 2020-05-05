@@ -1,15 +1,31 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useContext, useEffect, useRef, useReducer } from "react";
 import ReactDOM from "react-dom";
+import studyplanReducer from "./studyPlanContainer"
 import * as d3 from 'd3'
+import {studyPlanContext} from "../../Data/dataSunburst"
+
 import './sunburst.css'
 
 //import useFetch from "../../Data/useFetch"
 //import {SunburstContext} from "../../Data/sunburst-context"
 
 
+const useCourse = () =>{
+  const contextValue = useContext(studyPlanContext);
+  return contextValue;
+}
 
+export default function Sunburst() {
+  //let sunBurstData = useCourse()
+  const [data, dispatch] = useCourse()
+  console.log(data)
 
-export default function Sunburst(props) {
+  const clickedCourse = (d) =>{
+    console.log("clicked")
+    console.log(d.data.name)
+    dispatch({type: 'DELETE_COURSE'})
+    
+  }
 
   //useContext
 //const [state, dispatch] = useContext(SunburstContext);
@@ -19,7 +35,7 @@ export default function Sunburst(props) {
 //useFetch(urlFetch)
 
 
-const [data,setData] = useState(props);
+//const [data,setData] = useState(props);
 const d3Container = useRef(null)
 //var dataset = {};
 /*
@@ -91,7 +107,7 @@ useEffect(()=>{
 d3.select(".root_sunburst").selectAll('*').remove()
 
   
-setData(props)
+//setData(data)
 
 const width = 400
 const radius = width / 10
@@ -138,7 +154,7 @@ const path = g.append("g")
   .selectAll("path")
   .data(root.descendants().slice(1))
   .enter().append("path")
-  .on('click', function(d){console.log(d.data.courseName +' '+ d.data.size)})
+  .on('click', function(d){clickedCourse(d)})
     .attr("fill", d => { while (d.depth > 1) d = d.parent; return color(d.data.name); })
     .attr("fill-opacity", d => arcVisible(d.current) ? (d.children ? 0.6 : 0.4) : 0.4)
     .attr("d", d => arc(d.current));
@@ -220,14 +236,16 @@ function labelTransform(d) {
 }
 
 
-},[props])
+},[data])
 
 return (
     <React.Fragment>
     <div className='sunburstContainer'>
         <svg id='sunBurst' width={400} height={400} radius={400/2} ref={d3Container}></svg>
     </div>
+        
     </React.Fragment>
   );
 }
 
+//onClick={clickedCourse}

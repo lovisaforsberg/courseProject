@@ -210,7 +210,7 @@ function arcVisible(d) {
 }
 
 function labelVisible(d) {
-  return d.y1 <= 4 && d.y0 >= 1 && (d.y1 - d.y0) * (d.x1 - d.x0) > 0.03;
+  return d.y1 <= 5 && d.y0 >= 1 && (d.y1 - d.y0) * (d.x1 - d.x0) > 0.03;
 }
 
 function labelTransform(d) {

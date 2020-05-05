@@ -100,7 +100,7 @@ const DisplayData=({dataprop})=> {
       .data(nodes)
       .enter().append("text")
         .attr("class", "label")
-        .attr("text-anchor", "end")
+        .attr("text-anchor", "middle")
         .attr('font-family', 'montserrat')
         .attr('y', 0)
         .attr('dy', '.35em')
@@ -120,7 +120,8 @@ const DisplayData=({dataprop})=> {
           d3.event.stopPropagation()); })
         .style("fill-opacity", function(d) { return d.parent === root ? 1 : 0;})
         .style('font-size', function(d){ return d.children == undefined ? 5: 10})
-        .style("display", function(d) { return d.parent === root ? "inline" : "none"; })
+        //.style("display", function(d) { return d.children !== undefined ? "inline" : "inline"; })
+        .style('display', 'inline')
         .text(function(d) { return d.parent === root ? null : d.data.name; })
 
 
@@ -144,12 +145,19 @@ const DisplayData=({dataprop})=> {
             return function(t) { zoomTo(i(t)); };
           });
   
+      /*
       transition.selectAll("text")
         .filter(function(d) { return d === focus || this.style.display === "inline"; })
-          .style("fill-opacity", function(d) { return d.parent === focus ? 1 : 0; })
-          .on("start", function(d) { if (d.parent === focus) this.style.display = "inline"; })
-          .on("end", function(d) { if (d.parent !== focus) this.style.display = "none"; });
-
+          .style("fill-opacity", function(d) { return d === focus ? 1 : 0; })
+          //.on("start", function(d) { if (d.parent === focus) {this.style.display = "inline"; }})
+          //.on("end", function(d) { if (d.parent !== focus){ this.style.display = "none"; }});
+*/
+text
+      .filter(function(d) { return d.parent === focus || this.style.display === "inline"; })
+      .transition(transition)
+        .style("fill-opacity", d => d.parent === focus ? 1 : 0)
+        .on("start", function(d) { if (d.parent === focus) this.style.display = "inline"; })
+        .on("end", function(d) { if (d.parent !== focus) this.style.display = "none"; });
         }
   
     function zoomTo(v) {

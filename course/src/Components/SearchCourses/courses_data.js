@@ -266,8 +266,6 @@ const DisplayData=({dataprop})=> {
 
   return (
       <>
-      <div>
-        <h1>Display Data</h1>
             <div className='circleContainer'>
               {isDetailShown && 
               <DetailContext.Provider value={{isDetailShown, setDetailShown}}><CourseDetail sentCourse={selectedCourse}/></DetailContext.Provider> 
@@ -277,7 +275,6 @@ const DisplayData=({dataprop})=> {
             </div>
 
 
-      </div>
       </>
   )
 }

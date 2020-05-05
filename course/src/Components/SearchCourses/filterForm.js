@@ -3,7 +3,7 @@ import Checkbox from "./checkbox"
 import "./filterForm.css"
 import { Multiselect } from 'multiselect-react-dropdown';
 
-const FilterForm = ({ searchValue, handleChangeValue, handleCheckboxes, checkedItems, handleCheckboxesCampus, checkedItemsCampus, handleOnChangeCampus}) => {
+const FilterForm = ({ searchValue, handleChangeValue, handleCheckboxes, checkedItems, handleOnChangeCampus}) => {
   
   const checkboxes = [
     {
@@ -26,39 +26,6 @@ const FilterForm = ({ searchValue, handleChangeValue, handleCheckboxes, checkedI
         key: 'checkBox4',
         label: 'P4',
     }
-];
-
-const checkboxesCampus = [
-  {
-      name: 'AlbaNova',
-      key: 'checkBox1',
-      label: 'AlbaNova',
-  },
-  {
-      name: 'Campus',
-      key: 'checkBox2',
-      label: 'Campus',
-  },
-  {
-    name: 'Flemingsberg',
-    key: 'checkBox3',
-    label: 'Flemingsberg',
-  },
-  {
-      name: 'Kista',
-      key: 'checkBox4',
-      label: 'Kista',
-  },
-  {
-    name: 'Solna',
-    key: 'checkBox5',
-    label: 'Solna',
-},
-{
-      name: 'Södertälje',
-      key: 'checkBox6',
-      label: 'Södertälje',
-  },
 ];
 
 const campusOptions = [
@@ -170,46 +137,10 @@ const campusOptions = [
             }
         </div>
         </form>
-        {/*
-        <form className="filterItem">
-          
-        <div className="Checkboxes">
-            <label>Choose campus: </label> <br/>
-            {
-                checkboxesCampus.map(item => (
-                    <label key={item.key}>
-                        {item.name}
-                        <Checkbox name={item.name} checked={checkedItemsCampus[item.name]} onChange={handleCheckboxesCampus} />
-                    </label>
-                ))
-            }
-        </div>        
-
-      </form>
-
-      <div className="filterItem">
-      <select 
-        name="campus" 
-        multiple="multiple" 
-        class="ui fluid dropdown"
-        defaultValue={searchValue.campus}
-        onChange={e =>handleChangeValue(e)}>
-        <option value="">Skills</option>
-        <option value="AlbaNova">AlbaNova</option>
-        <option value="Campus">Campus</option>
-        <option value="Flemingsberg">Flemingsberg</option>
-        <option value="Kista">Kista</option>
-        <option value="Solna">Solna</option>
-        <option value="Södertälje">Södertälje</option>
-
-      </select>
-      </div>
-      */ }
 
       <div className="filterItem dropdown">
       <Multiselect
         options={campusOptions} // Options to display in the dropdown
-        //selectedValues={checkedItemsCampus} // Preselected value to persist in dropdown
         placeholder="Filter campus"
         onSelect={handleOnChangeCampus} // Function will trigger on select event
         onRemove={handleOnChangeCampus} 

@@ -6,16 +6,14 @@ import {studyPlanContext} from "../../Data/dataSunburst"
 //changing the dataset
 
 const StudyPlanContainer = () => {
-    let sunBurstData = useContext(studyPlanContext)
+    //let sunBurstData = useContext(studyPlanContext)
+    //console.log(sunBurstData[0])
+    //let dataprops = sunBurstData[0]
 
-    //reducer add/remove courses
-
-    //add function = call action add
-    //remove function = call action remove
     return(
         <>
         <NavBar></NavBar>
-        <Sunburst {...sunBurstData}></Sunburst>
+        <Sunburst></Sunburst>
         </>
     )
 

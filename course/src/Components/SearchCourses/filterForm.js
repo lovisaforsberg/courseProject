@@ -1,8 +1,9 @@
 import React from "react";
 import Checkbox from "./checkbox"
 import "./filterForm.css"
+import { Multiselect } from 'multiselect-react-dropdown';
 
-const FilterForm = ({ searchValue, handleChangeValue, handleCheckboxes, checkedItems, handleCheckboxesCampus, checkedItemsCampus}) => {
+const FilterForm = ({ searchValue, handleChangeValue, handleCheckboxes, checkedItems, handleCheckboxesCampus, checkedItemsCampus, handleOnChangeCampus}) => {
   
   const checkboxes = [
     {
@@ -60,18 +61,53 @@ const checkboxesCampus = [
   },
 ];
 
+const campusOptions = [
+  {
+      text: 'AlbaNova',
+      key: 'checkBox1',
+      value: 'AlbaNova',
+  },
+  {
+      text: 'Campus',
+      key: 'checkBox2',
+      value: 'Campus',
+  },
+  {
+    text: 'Flemingsberg',
+    key: 'checkBox3',
+    value: 'Flemingsberg',
+  },
+  {
+      text: 'Kista',
+      key: 'checkBox4',
+      value: 'Kista',
+  },
+  {
+    text: 'Solna',
+    key: 'checkBox5',
+    value: 'Solna',
+},
+{
+      text: 'Södertälje',
+      key: 'checkBox6',
+      value: 'Södertälje',
+  },
+];
+
     
   return (
 
     <div className="filterContainer">
       <div className="row">
+      <div className='searchIcon'></div>
         <input
           type="text"
           name="search_text"
           value={searchValue.search_text}
           onChange={e=>handleChangeValue(e)}
           placeholder="Search for courses"
-          className="filter-input"
+          className="textInput"
+          id="textInput"
       
         />
       </div>
@@ -125,15 +161,18 @@ const checkboxesCampus = [
             <label>Choose period: </label> <br/>
             {
                 checkboxes.map(item => (
-                    <label key={item.key}>
-                        {item.name}
+                    <label key={item.key} className="checkboxContainer">
+                        <text>{item.name}</text>
                         <Checkbox name={item.name} checked={checkedItems[item.name]} onChange={handleCheckboxes} />
+                        <span className="checkmark"></span>
                     </label>
                 ))
             }
         </div>
         </form>
+        {/*
         <form className="filterItem">
+          
         <div className="Checkboxes">
             <label>Choose campus: </label> <br/>
             {
@@ -147,6 +186,36 @@ const checkboxesCampus = [
         </div>        
 
       </form>
+
+      <div className="filterItem">
+      <select 
+        name="campus" 
+        multiple="multiple" 
+        class="ui fluid dropdown"
+        defaultValue={searchValue.campus}
+        onChange={e =>handleChangeValue(e)}>
+        <option value="">Skills</option>
+        <option value="AlbaNova">AlbaNova</option>
+        <option value="Campus">Campus</option>
+        <option value="Flemingsberg">Flemingsberg</option>
+        <option value="Kista">Kista</option>
+        <option value="Solna">Solna</option>
+        <option value="Södertälje">Södertälje</option>
+
+      </select>
+      </div>
+      */ }
+
+      <div className="filterItem dropdown">
+      <Multiselect
+        options={campusOptions} // Options to display in the dropdown
+        //selectedValues={checkedItemsCampus} // Preselected value to persist in dropdown
+        placeholder="Filter campus"
+        onSelect={handleOnChangeCampus} // Function will trigger on select event
+        onRemove={handleOnChangeCampus} 
+        displayValue="text" // Property name to display in the dropdown options
+/>
+      </div>
       </div>
     </div>
 

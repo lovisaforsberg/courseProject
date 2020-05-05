@@ -6,7 +6,7 @@ const Navbar = () =>{
 
     return(
 
-        <div class = "sidenav">
+        <div className = "sidenav">
             <NavLink to="/" className='menuButton'>
                 Search
             </NavLink>

@@ -1,5 +1,5 @@
 .App {
-  font-family: 'montserrat';
+  font-family: 'Montserrat', sans-serif;
 }
 
 body{
@@ -18,4 +18,7 @@ p{
   font-weight: normal;
   font-size: 12px;
   line-height: 18px;
+}
+.ui.segment {
+  padding:0px;
 }

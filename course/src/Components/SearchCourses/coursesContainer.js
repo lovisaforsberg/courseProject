@@ -47,6 +47,16 @@ const CoursesContainer = () => {
   };
   //console.log(checkedItems)
 
+  const handleOnChangeCampus = (selectedList, selectedItem) =>{
+      if(checkedItemsCampus[selectedItem.value] == true){
+        setCheckedItemsCampus({...checkedItemsCampus,[selectedItem.value]:false})
+      }
+      else if(checkedItemsCampus[selectedItem.value] == false){
+        setCheckedItemsCampus({...checkedItemsCampus,[selectedItem.value]:true})
+      }
+    setFilterInput({['campus']: checkedItemsCampus})
+    console.log(checkedItemsCampus)
+  }
 
    useEffect(()=>{
     setData(dataGlobal)
@@ -67,6 +77,7 @@ const CoursesContainer = () => {
         checkedItems={checkedItems}
         handleCheckboxesCampus={handleCheckboxesCampus}
         checkedItemsCampus={checkedItemsCampus}
+        handleOnChangeCampus={handleOnChangeCampus}
 
       />
 

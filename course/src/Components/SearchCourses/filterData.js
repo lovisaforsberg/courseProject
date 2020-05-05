@@ -42,9 +42,9 @@
   }
 
   function filterData(dataInput, filterinput, periodinput, campusinput){
-    console.log(periodinput)
+    //console.log(periodinput)
    // const data_copy = Object.assign({}, dataInput);
-     console.log(filterinput)
+     //console.log(filterinput)
      const result = {} //new dataset
      result.name = 'all courses'
      result.color = '#efefef'

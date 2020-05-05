@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef, useContext, createContext} from "react";
+import React, {useState, useEffect, useRef, useContext, createContext, useCallback} from "react";
 import * as d3 from 'd3'
 import {filterData} from "./filterData"
 import CourseDetail from './courseDetail'
@@ -72,15 +72,16 @@ const DisplayData=({dataprop})=> {
         .attr("class", function(d) { return d.parent ? d.children ? "node" : "node node--leaf" : "node node--root"; })
         //.style("fill", function(d) { return d.children ? color(d.depth) : '#eec1bc'; })
         .style('fill', function(d){return d.data.color})
-        .on("click", function(d) { if (focus !== d) {return d.children !== undefined ? 
+        .on("click", function(d) {return d.children !== undefined ? 
           (zoom(d), 
-          d3.event.stopPropagation()
+          d3.event.stopPropagation(),
+          console.log(d), console.log(focus), console.log('not')
           ):
           //do this when clicking the course node
-          (console.log(d.data), showDetail(d.data),
+          (console.log(d.data), showDetail(d.data), console.log(d), console.log(focus),
           // stop from zooming out
-          d3.event.stopPropagation());} })
-        .on('mousemove', function(d) { return d3.select(this).attr('class') == "node node--leaf" ?
+          d3.event.stopPropagation());})
+        .on('mousemove', function(d) {if (focus !== d) { return d3.select(this).attr('class') == "node node--leaf" ?
           
           ( divTooltip.style('left', d3.event.pageX + 10 + 'px'),
             divTooltip.style('top', d3.event.pageY - 25 + 'px'),
@@ -89,19 +90,53 @@ const DisplayData=({dataprop})=> {
             :
 
             divTooltip.style('display', 'none')
-          })
+          }})
         .on('mouseout', function(d) {
             divTooltip.style('display', 'none')
           })
 
+          function wrap(text, width) {
+            text.each(function () {
+                var text = d3.select(this),
+                    words = text.text().split(/\s+/).reverse(),
+                    word,
+                    line = [],
+                    lineNumber = 0,
+                    lineHeight = 1.1, // ems
+                    x = text.attr('x'),
+                    y = text.attr('y'),
+                    dy = 0, //parseFloat(text.attr('dy')),
+                    tspan = text.text(null)
+                        .append('tspan')
+                        .attr('x', x)
+                        .attr('y', y)
+                        .attr('dy', dy + 'em');
+                while (word = words.pop()) {
+                    line.push(word);
+                    tspan.text(line.join(' '));
+                    if (tspan.node().getComputedTextLength() > width) {
+                        line.pop();
+                        tspan.text(line.join(' '));
+                        line = [word];
+                        tspan = text.append('tspan')
+                            .attr('x', x)
+                            .attr('y', y)
+                            .attr('dy', lineHeight + dy + 'em')
+                            .text(word);
+                    }
+                }
+            });
+          }
   
     var text = g.selectAll("text")
       .data(nodes)
       .enter().append("text")
         .attr("class", "label")
-        .attr("text-anchor", "middle")
+        .attr("text-anchor", "end")
         .attr('font-family', 'montserrat')
-        .attr('width', 100)
+        .attr('y', 0)
+        .attr('dy', '.35em')
+
         .on('mouseover', function(d){d3.select(this)
           .style('font-size', function(d){ return d.children == undefined ? 10: 14})}
         )
@@ -118,7 +153,10 @@ const DisplayData=({dataprop})=> {
         .style("fill-opacity", function(d) { return d.parent === root ? 1 : 0;})
         .style('font-size', function(d){ return d.children == undefined ? 5: 10})
         .style("display", function(d) { return d.parent === root ? "inline" : "none"; })
-        .text(function(d) { return d.parent === root ? null : d.data.name; });
+        .text(function(d) { return d.parent === root ? null : d.data.name; })
+        .call(wrap, 20)
+
+
   
     var node = g.selectAll("circle,text");
   
@@ -144,6 +182,7 @@ const DisplayData=({dataprop})=> {
           .style("fill-opacity", function(d) { return d.parent === focus ? 1 : 0; })
           .on("start", function(d) { if (d.parent === focus) this.style.display = "inline"; })
           .on("end", function(d) { if (d.parent !== focus) this.style.display = "none"; });
+
         }
   
     function zoomTo(v) {

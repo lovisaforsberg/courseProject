@@ -19,6 +19,10 @@ p{
   font-size: 12px;
   line-height: 18px;
 }
-.ui.segment {
-  padding:0px;
+
+a{
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 18px;
+  color: #404040;
 }

@@ -18,6 +18,10 @@ function getHighestKey(object){
     return max.toString()
 }
 
+function onlyUnique(value, index, self) { 
+    return self.indexOf(value) === index;
+}
+
 function openTab(tabToOpen){
     var i;
     var x = document.getElementsByClassName("tab");
@@ -99,7 +103,8 @@ const CourseDetail=({sentCourse})=> {
         courseInfo.examinationForm = fetchedCourse.examinationSets[highestKey].examinationRounds
         
         courseInfo.level = sentCourse.education_level
-        courseInfo.givenPeriods = sentCourse.period
+        courseInfo.givenPeriods = sentCourse.period.filter( onlyUnique ); 
+
         courseInfo.language = sentCourse.language
         courseInfo.campus = sentCourse.campus
         courseInfo.color = sentCourse.color
@@ -134,6 +139,8 @@ const CourseDetail=({sentCourse})=> {
                         <p className='infoTextLine'><strong>Language: </strong>{courseInfo.language}</p>
                         <p className='infoTextLine'><strong>Subject(s): </strong>{courseInfo.subjects.map(sub=>{return sub+', '})}</p>
                         <p className='infoTextLine'><strong>The course is given at: </strong>{courseInfo.campus}</p>
+                        <p className='infoTextLine'><strong>Given in period(s): </strong>{courseInfo.givenPeriods.map(per=>{return per+', '})}</p>
+
 
                         <br/>
                         <p className='infoTextLine'><strong>Prerequisites: </strong>{courseInfo.prerequisites}</p>
@@ -166,7 +173,10 @@ const CourseDetail=({sentCourse})=> {
 
                 <footer className="infoFooter" >
                 <div className='iconContainer'>
-                   <i className="FooterIcon fas fa-cart-plus"></i>
+                    {/* WHEN NOT SELECTED */}
+                    <i className="FooterIcon far fa-heart"></i>
+                    {/* WHEN SELECTED */}
+                    {/*<i class="FooterIcon fas fa-heart"></i>*/}
                     <p className='FooterText'>Save for later</p> 
                 </div>
                 <div className='iconContainer'>

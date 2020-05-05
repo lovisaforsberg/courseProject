@@ -1,9 +1,42 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, createContext } from "react";
 import ReactDOM from "react-dom";
 import * as d3 from 'd3'
 import Sunburst from "../Components/StudyPlan/sunburst";
 import NavBar from "../Components/Navbar"
+import {createDataset} from './dataset_bachelor'
+import { useFetchCourses } from "./useFetchCourses";
+import StudyPlanContainer from "../Components/StudyPlan/studyPlanContainer";
 
+const empty_dataset = ()=>{
+  var dataset = {}
+
+ let bachelor_courses = { 
+  year1P1: [{name:'123', courseName:'test', size:4}], year1P2: [], year1P3: [], year1P4: [],
+  year2P1: [], year2P2: [], year2P3: [], year2P4: [],
+  year3P1: [], year3P2: [], year3P3: [{name:'5674', courseName:'test2', size:7}], year3P4: [],
+  year4P1: [], year4P2: [], year4P3: [], year4P4: [],
+  year5P1: [], year5P2: [], year5P3: [], year5P4: [],
+}
+
+  var year1_periods = [{name: 'P1', children: bachelor_courses.year1P1}, {name: 'P2', children: bachelor_courses.year1P2}, {name: 'P3', children: bachelor_courses.year1P3}, {name: 'P4', children: bachelor_courses.year1P4}]
+  var year2_periods = [{name: 'P1', children: bachelor_courses.year2P1}, {name: 'P2', children: bachelor_courses.year2P2}, {name: 'P3', children: bachelor_courses.year2P3}, {name: 'P4', children: bachelor_courses.year2P4}]
+  var year3_periods = [{name: 'P1', children: bachelor_courses.year3P1}, {name: 'P2', children: bachelor_courses.year3P2}, {name: 'P3', children: bachelor_courses.year3P3}, {name: 'P4', children: bachelor_courses.year3P4}]
+  var year4_periods = [{name: 'P1', children: bachelor_courses.year4P1}, {name: 'P2', children: bachelor_courses.year4P2}, {name: 'P3', children: bachelor_courses.year4P3}, {name: 'P4', children: bachelor_courses.year4P4}]
+  var year5_periods = [{name: 'P1', children: bachelor_courses.year5P1}, {name: 'P2', children: bachelor_courses.year5P2}, {name: 'P3', children: bachelor_courses.year5P3}, {name: 'P4', children: bachelor_courses.year5P4}]
+
+  var bachelor_years = [{name: 'year1', children: year1_periods}, {name: 'year2', children: year2_periods}, {name: 'year3', children: year3_periods}]
+  var master_years = [{name: 'year4', children: year4_periods}, {name: 'year5', children: year5_periods}]
+
+  dataset.name = 'all courses'
+  dataset.children = [{name: 'bachelor', children: bachelor_years}, {name:'master', children: master_years}]
+  //dataset.name = 'bachelor'
+  //dataset.children = bachelor_years
+
+return dataset
+}
+
+
+export const studyPlanContext = createContext({})
 
 
 const DataSunburst = () =>{
@@ -13,13 +46,9 @@ const DataSunburst = () =>{
   const [isLoading, setIsLoading] = useState(true);
   const [nodeData,setNodeData] = useState({});
 
-  const d3Container = useRef(null)
-
 
   const proxy = 'https://cors-anywhere.herokuapp.com/'
-  const url = 'https://api.kth.se/api/kopps/v2/courses?l=en'
-  const urlSchools = 'https://api.kth.se/api/kopps/v2/schools'
-  const urlCourse = 'https://api.kth.se/api/kopps/v2/course/'
+
   const urlProg = 'http://api.kth.se/api/kopps/v2/programme/academic-year-plan/CMETE/HT16'
 
   var fetched_courses = [];
@@ -48,78 +77,6 @@ const DataSunburst = () =>{
   }
 
 
-  const createDataset = (list) =>{
-    //for now
-    let track = "VLM"
-
-    let bachelor_courses = { year1P1: [], year1P2: [], year1P3: [], year1P4: [],
-                    year2P1: [], year2P2: [], year2P3: [], year2P4: [],
-                    year3P1: [], year3P2: [], year3P3: [], year3P4: [],}
-
-      list.forEach(element => {
-           element.Electivity[0].Courses.forEach(course =>{
-               if("ConnectedRound" in course){
-                //if(!("SpecCode" in element)){
-                if(element.SpecCode === track || !("SpecCode" in element)){
-                //course.ConnectedRound.periodInfos.forEach(period =>{
-                  if(element.StudyYear === 1){
-                       if("P1" in course.ConnectedRound){bachelor_courses.year1P1.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P1']})}
-                       if("P2" in course.ConnectedRound){bachelor_courses.year1P2.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P2']})}
-                       if("P3" in course.ConnectedRound){bachelor_courses.year1P3.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P3']})}
-                       if("P4" in course.ConnectedRound){bachelor_courses.year1P4.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P4']})}
-                  }
-                  if(element.StudyYear === 2){
-                    if("P1" in course.ConnectedRound){bachelor_courses.year2P1.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P1']})}
-                    if("P2" in course.ConnectedRound){bachelor_courses.year2P2.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P2']})}
-                    if("P3" in course.ConnectedRound){bachelor_courses.year2P3.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P3']})}
-                    if("P4" in course.ConnectedRound){bachelor_courses.year2P4.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P4']})}
-                  }
-                  if(element.StudyYear === 3){
-                    
-                      if("P1" in course.ConnectedRound){bachelor_courses.year3P1.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P1']})}
-                      if("P2" in course.ConnectedRound){bachelor_courses.year3P2.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P2']})}
-                      if("P3" in course.ConnectedRound){bachelor_courses.year3P3.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P3']})}
-                      if("P4" in course.ConnectedRound){bachelor_courses.year3P4.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P4']})}
-                    
-                  }
-                  
-              // })
-              }
-           }
-           })
-        
-    
-      });
-      //console.log(bachelor_courses.year1P1)
-     // console.log(bachelor_courses)
-    /*  const years = [{name: 'year1', children: [bachelor_courses.year1P1, bachelor_courses.year1P2, bachelor_courses.year1P3, bachelor_courses.year1P4]}, 
-                      {name: 'year2', children: [bachelor_courses.year2P1, bachelor_courses.year2P2, bachelor_courses.year2P3, bachelor_courses.year2P4]}, 
-                      {name: 'year3', children: [bachelor_courses.year3P1, bachelor_courses.year3P2, bachelor_courses.year3P3, bachelor_courses.year3P4]}]
-
-      dataset.name = 'all_courses';
-      dataset.children = [{name: 'bachelor', children: years}, {name: 'master', children: []}];
-*/
-
-
-
-var periods1 = [{name: 'p1', children: bachelor_courses.year1P1}, {name: 'p2', children: bachelor_courses.year1P2},
-                      {name: 'p3', children: bachelor_courses.year1P3}, {name: 'p4', children: bachelor_courses.year1P4},]
-      var periods2 = [{name: 'p1', children: bachelor_courses.year2P1}, {name: 'p2', children: bachelor_courses.year2P2},
-                      {name: 'p3', children: bachelor_courses.year2P3}, {name: 'p4', children: bachelor_courses.year2P4},]
-      var periods3 = [{name: 'p1', children: bachelor_courses.year3P1}, {name: 'p2', children: bachelor_courses.year3P2},
-                      {name: 'p3', children: bachelor_courses.year3P3}, {name: 'p4', children: bachelor_courses.year3P4},]
-     
-var years = [{name: 'Year 1', children: periods1}, 
-    {name: 'Year 2', children: periods2}, 
-    {name: 'Year 3', children: periods3}]        
-
-     //dataset.name = "all_courses";
-     //dataset.children = [{name: 'bachelor', children: years}, {name: 'master', children: []}];
-     dataset.name = "bachelor"
-     dataset.children = years
-    return dataset
-  }
-
   
   
     useEffect(()=>{
@@ -130,14 +87,23 @@ var years = [{name: 'Year 1', children: periods1},
   
 
   ,[]);
-  prog_list = createDataset(Prog_course)
+  //prog_list = createDataset(Prog_course)
+  prog_list = empty_dataset()
+  console.log(prog_list)
 
 
   return (
+    <studyPlanContext.Provider value ={prog_list}>
+      <StudyPlanContainer>
+
+      </StudyPlanContainer>
+    </studyPlanContext.Provider>
+    /*
     <React.Fragment>
     <NavBar></NavBar>
     <Sunburst {...prog_list}></Sunburst>
     </React.Fragment>
+    */
   );
 }
 

@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import ReactDOM from "react-dom";
 import * as d3 from 'd3'
+import './sunburst.css'
+
 //import useFetch from "../../Data/useFetch"
 //import {SunburstContext} from "../../Data/sunburst-context"
 
@@ -85,13 +87,14 @@ var years = [{name: 'Year 1', children: periods1},
 
 
 useEffect(()=>{
+
+d3.select(".root_sunburst").selectAll('*').remove()
+
   
 setData(props)
-  
 
-
-const width = 600
-const radius = width / 8
+const width = 400
+const radius = width / 10
 
 const partition = data => {
     const root = d3.hierarchy(data)
@@ -122,13 +125,14 @@ const root = partition(data);
 root.each(d => d.current = d);
 
 const svg = d3.select(d3Container.current)
+    .attr('class', 'root_sunburst')
     .append('svg')
-    .style("width", "100%")
-    .style("height", "auto")
+    //.style("width", "100%")
+    //.style("height", "auto")
     .style("font", "10px sans-serif");
 
 const g = svg.append("g")
-    .attr("transform", `translate(${width / 2},${width / 2})`);
+    .attr("transform", `translate(${width/2},${width/2})`);
 
 const path = g.append("g")
   .selectAll("path")
@@ -136,7 +140,7 @@ const path = g.append("g")
   .enter().append("path")
   .on('click', function(d){console.log(d.data.courseName +' '+ d.data.size)})
     .attr("fill", d => { while (d.depth > 1) d = d.parent; return color(d.data.name); })
-    .attr("fill-opacity", d => arcVisible(d.current) ? (d.children ? 0.6 : 0.4) : 0)
+    .attr("fill-opacity", d => arcVisible(d.current) ? (d.children ? 0.6 : 0.4) : 0.4)
     .attr("d", d => arc(d.current));
 
 path.filter(d => d.children)
@@ -190,7 +194,7 @@ function clicked(p) {
     .filter(function(d) {
       return +this.getAttribute("fill-opacity") || arcVisible(d.target);
     })
-      .attr("fill-opacity", d => arcVisible(d.target) ? (d.children ? 0.6 : 0.4) : 0)
+      .attr("fill-opacity", d => arcVisible(d.target) ? (d.children ? 0.6 : 0.4) : 0.4)
       .attrTween("d", d => () => arc(d.current));
 
   label.filter(function(d) {
@@ -220,8 +224,8 @@ function labelTransform(d) {
 
 return (
     <React.Fragment>
-    <div>
-        <svg id='sunBurst' width={932} height={932} radius={932/2} ref={d3Container}></svg>
+    <div className='sunburstContainer'>
+        <svg id='sunBurst' width={400} height={400} radius={400/2} ref={d3Container}></svg>
     </div>
     </React.Fragment>
   );

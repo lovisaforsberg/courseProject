@@ -23,14 +23,14 @@
 
     if(courseCampus.substring(0,3) == "KTH" ){
     campus = courseCampus.slice(4); //remove KTH from campus name
-    console.log(campus)
+    //console.log(campus)
     }
     else if(courseCampus.substring(0,2) == "KI"){
       campus = courseCampus.slice(3);
     }
     else{ 
       campus = courseCampus
-      console.log(campus)
+      //console.log(campus)
     }
 
     if(filterArr.includes(campus)){
@@ -42,9 +42,9 @@
   }
 
   function filterData(dataInput, filterinput, periodinput, campusinput){
-    console.log(periodinput)
+    //console.log(periodinput)
    // const data_copy = Object.assign({}, dataInput);
-     console.log(filterinput)
+     //console.log(filterinput)
      const result = {} //new dataset
      result.name = 'all courses'
      result.color = '#efefef'

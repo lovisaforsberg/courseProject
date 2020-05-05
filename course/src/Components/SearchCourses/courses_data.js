@@ -95,38 +95,6 @@ const DisplayData=({dataprop})=> {
             divTooltip.style('display', 'none')
           })
 
-          function wrap(text, width) {
-            text.each(function () {
-                var text = d3.select(this),
-                    words = text.text().split(/\s+/).reverse(),
-                    word,
-                    line = [],
-                    lineNumber = 0,
-                    lineHeight = 1.1, // ems
-                    x = text.attr('x'),
-                    y = text.attr('y'),
-                    dy = 0, //parseFloat(text.attr('dy')),
-                    tspan = text.text(null)
-                        .append('tspan')
-                        .attr('x', x)
-                        .attr('y', y)
-                        .attr('dy', dy + 'em');
-                while (word = words.pop()) {
-                    line.push(word);
-                    tspan.text(line.join(' '));
-                    if (tspan.node().getComputedTextLength() > width) {
-                        line.pop();
-                        tspan.text(line.join(' '));
-                        line = [word];
-                        tspan = text.append('tspan')
-                            .attr('x', x)
-                            .attr('y', y)
-                            .attr('dy', lineHeight + dy + 'em')
-                            .text(word);
-                    }
-                }
-            });
-          }
   
     var text = g.selectAll("text")
       .data(nodes)
@@ -144,17 +112,16 @@ const DisplayData=({dataprop})=> {
           .style('font-size', function(d){ return d.children == undefined ? 5: 10})
         })
 
-        .on("click", function(d) { if (focus !== d) {return d.children !== undefined ? 
+        .on("click", function(d) {return d.children !== undefined ? 
           (zoom(d), d3.event.stopPropagation()):
           //do this when clicking the course node
           (console.log(d.data), 
           // stop from zooming out
-          d3.event.stopPropagation());} })
+          d3.event.stopPropagation()); })
         .style("fill-opacity", function(d) { return d.parent === root ? 1 : 0;})
         .style('font-size', function(d){ return d.children == undefined ? 5: 10})
         .style("display", function(d) { return d.parent === root ? "inline" : "none"; })
         .text(function(d) { return d.parent === root ? null : d.data.name; })
-        .call(wrap, 20)
 
 
   
@@ -178,7 +145,7 @@ const DisplayData=({dataprop})=> {
           });
   
       transition.selectAll("text")
-        .filter(function(d) { return d.parent === focus || this.style.display === "inline"; })
+        .filter(function(d) { return d === focus || this.style.display === "inline"; })
           .style("fill-opacity", function(d) { return d.parent === focus ? 1 : 0; })
           .on("start", function(d) { if (d.parent === focus) this.style.display = "inline"; })
           .on("end", function(d) { if (d.parent !== focus) this.style.display = "none"; });

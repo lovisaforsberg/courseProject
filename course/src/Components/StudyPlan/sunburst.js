@@ -2,9 +2,8 @@ import React, { useContext, useEffect, useRef, useReducer, useState, createConte
 import ReactDOM from "react-dom";
 import studyplanReducer from "./studyPlanContainer"
 import * as d3 from 'd3'
-import {studyPlanContext} from "../../Data/dataSunburst"
-import CourseDetail from '../SearchCourses/courseDetail'
 
+import StudyplanContext from "../../store"
 import './sunburst.css'
 
 //import useFetch from "../../Data/useFetch"
@@ -12,7 +11,7 @@ import './sunburst.css'
 
 
 const useCourse = () =>{
-  const contextValue = useContext(studyPlanContext);
+  const contextValue = useContext(StudyplanContext);
   return contextValue;
 }
 

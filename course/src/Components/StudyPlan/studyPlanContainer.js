@@ -6,7 +6,7 @@ import StudyplanContext from '../../store'
 
 //changing the dataset
 
-
+/*
 function GetBachelorCourses (sunburstData, prog, year){
         const proxy = 'https://cors-anywhere.herokuapp.com/'
         const urlProg = 'http://api.kth.se/api/kopps/v2/programme/academic-year-plan/'+prog+'/'+year
@@ -15,6 +15,7 @@ function GetBachelorCourses (sunburstData, prog, year){
         console.log(fetchedProg)
 return fetchedProg
     }
+*/
 
 const StudyPlanContainer = () => {
     const contextValue = useContext(StudyplanContext);
@@ -28,7 +29,7 @@ const StudyPlanContainer = () => {
         <>
         <NavBar></NavBar>
         <Sunburst></Sunburst>
-        <button style={{margin:'200px'}} onClick={()=>GetBachelorCourses(contextValue, 'CMETE', 'HT16')}>BACHELOR</button>
+    {/* <button style={{margin:'200px'}} onClick={()=>GetBachelorCourses(contextValue, 'CMETE', 'HT16')}>BACHELOR</button>*/}
 
         </>
     )

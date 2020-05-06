@@ -166,7 +166,7 @@ const path = g.append("g")
   .selectAll("path")
   .data(root.descendants().slice(1))
   .enter().append("path")
-  .on('click', function(d){showDetail(d.data)})
+  .on('click', function(d){clickedCourse(d)})
     .attr("fill", d => { while (d.depth > 1) d = d.parent; return color(d.data.name); })
     .attr("fill-opacity", d => arcVisible(d.current) ? (d.children ? 0.6 : 0.4) : 0.4)
     .attr("d", d => arc(d.current));

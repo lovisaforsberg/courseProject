@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import './courseDetail.css'
 import {useFetchCourses} from '../../Data/useFetchCourses'
 import {DetailContext} from './courses_data'
+import StudyplanContext from "../../store"
 
 const proxy = 'https://cors-anywhere.herokuapp.com/'
 
@@ -50,6 +51,13 @@ function openTab(tabToOpen){
 
 
 const CourseDetail=({sentCourse})=> {
+
+    const clickedCourse = () =>{
+        console.log("clicked in detail")
+        dispatch({type: 'ADD_COURSE'})
+        
+      }
+    const [state,dispatch] = useContext(StudyplanContext);
 
     const detail_context = useContext(DetailContext)
     const {detailShow, setDetailShown} = detail_context
@@ -180,8 +188,8 @@ const CourseDetail=({sentCourse})=> {
                     <p className='FooterText'>Save for later</p> 
                 </div>
                 <div className='iconContainer'>
-                    <i className="FooterIcon fas fa-graduation-cap"></i>
-                    <p className='FooterText'>Add to study plan</p>
+                    <i onClick={clickedCourse} className="FooterIcon fas fa-graduation-cap"></i>
+                   <p className='FooterText'>Add to study plan</p>
                 </div>
                 </footer>
 

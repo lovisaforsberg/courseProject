@@ -18,7 +18,7 @@ const useCourse = () =>{
 const Sunburst = ()=> {
   //let sunBurstData = useCourse()
   const [data, dispatch] = useCourse()
-  console.log(data)
+  //console.log(data)
 
   const [isDetailShown, setDetailShown] = useState(false)
   const [selectedCourse, setSelectedCourse] = useState('')
@@ -33,9 +33,12 @@ const Sunburst = ()=> {
 
 
   const clickedCourse = (d) =>{
+    const period = d.parent.data.name
+    const year = d.parent.parent.data.name
+    const level = d.parent.parent.parent.data.name
+    const courseObject = {code:d.data.name, level: level, year: year, period: period}
     console.log("clicked")
-    console.log(d.data.name)
-    dispatch({type: 'DELETE_COURSE'})
+    dispatch({type: 'DELETE_COURSE', courseObject})
     
   }
 

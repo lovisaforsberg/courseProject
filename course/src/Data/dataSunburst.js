@@ -11,7 +11,7 @@ const empty_dataset = ()=>{
   var dataset = {}
 
  let bachelor_courses = { 
-  year1P1: [{name:'123', courseName:'test', size:4}], year1P2: [], year1P3: [], year1P4: [],
+  year1P1: [{name:'DH2321', courseName:'Information Visualization', size:7.5}], year1P2: [], year1P3: [], year1P4: [],
   year2P1: [], year2P2: [], year2P3: [], year2P4: [],
   year3P1: [], year3P2: [], year3P3: [{name:'5674', courseName:'test2', size:7}], year3P4: [],
   year4P1: [], year4P2: [], year4P3: [], year4P4: [],

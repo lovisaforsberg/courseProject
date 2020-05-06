@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import './courseDetail.css'
 import {useFetchCourses} from '../../Data/useFetchCourses'
 import {DetailContext} from './courses_data'
+//import {DetailContextSunburst} from '../StudyPlan/sunburst'
 
 const proxy = 'https://cors-anywhere.herokuapp.com/'
 
@@ -52,7 +53,9 @@ function openTab(tabToOpen){
 const CourseDetail=({sentCourse})=> {
 
     const detail_context = useContext(DetailContext)
+
     const {detailShow, setDetailShown} = detail_context
+
 
     const [fetchedCourse, loadningFetch] = useFetchCourses(proxy+setUrl(sentCourse.name))
     if(loadningFetch === false){  
@@ -102,9 +105,12 @@ const CourseDetail=({sentCourse})=> {
         var highestKey = (getHighestKey(fetchedCourse.examinationSets))
         courseInfo.examinationForm = fetchedCourse.examinationSets[highestKey].examinationRounds
         
-        courseInfo.level = sentCourse.education_level
-        courseInfo.givenPeriods = sentCourse.period.filter( onlyUnique ); 
-
+        if('education_level' in sentCourse){
+            courseInfo.level = sentCourse.education_level}
+        else{courseInfo.level = '-'}
+        if('period' in sentCourse){
+            courseInfo.givenPeriods = sentCourse.period.filter( onlyUnique ); }
+        else{courseInfo.givenPeriods = []}
         courseInfo.language = sentCourse.language
         courseInfo.campus = sentCourse.campus
         courseInfo.color = sentCourse.color

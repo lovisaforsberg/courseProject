@@ -1,8 +1,9 @@
-import React, { useContext, useEffect, useRef, useReducer } from "react";
+import React, { useContext, useEffect, useRef, useReducer, useState, createContext } from "react";
 import ReactDOM from "react-dom";
 import studyplanReducer from "./studyPlanContainer"
 import * as d3 from 'd3'
 import {studyPlanContext} from "../../Data/dataSunburst"
+import CourseDetail from '../SearchCourses/courseDetail'
 
 import './sunburst.css'
 
@@ -15,10 +16,22 @@ const useCourse = () =>{
   return contextValue;
 }
 
-export default function Sunburst() {
+const Sunburst = ()=> {
   //let sunBurstData = useCourse()
   const [data, dispatch] = useCourse()
   console.log(data)
+
+  const [isDetailShown, setDetailShown] = useState(false)
+  const [selectedCourse, setSelectedCourse] = useState('')
+
+  const showDetail = (course)=>{
+    setSelectedCourse(course)
+    setDetailShown(true);
+  }
+  const hideDetail = ()=>{
+    setDetailShown(false);
+  }
+
 
   const clickedCourse = (d) =>{
     console.log("clicked")
@@ -154,7 +167,7 @@ const path = g.append("g")
   .selectAll("path")
   .data(root.descendants().slice(1))
   .enter().append("path")
-  .on('click', function(d){clickedCourse(d)})
+  .on('click', function(d){showDetail(d.data)})
     .attr("fill", d => { while (d.depth > 1) d = d.parent; return color(d.data.name); })
     .attr("fill-opacity", d => arcVisible(d.current) ? (d.children ? 0.6 : 0.4) : 0.4)
     .attr("d", d => arc(d.current));
@@ -247,5 +260,7 @@ return (
     </React.Fragment>
   );
 }
+
+export default Sunburst;
 
 //onClick={clickedCourse}

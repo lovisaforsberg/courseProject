@@ -2,7 +2,7 @@ import React, {useState,useRef, useReducer, useEffect, useContext} from "react";
 import Sunburst from "./sunburst";
 import NavBar from '../Navbar'
 import {useFetchCourses} from '../../Data/useFetchCourses'
-import {studyPlanContext} from "../../Data/dataSunburst"
+import StudyplanContext from '../../store'
 
 //changing the dataset
 
@@ -17,7 +17,7 @@ return fetchedProg
     }
 
 const StudyPlanContainer = () => {
-    const contextValue = useContext(studyPlanContext);
+    const contextValue = useContext(StudyplanContext);
 
     //let sunBurstData = useContext(studyPlanContext)
     //console.log(sunBurstData[0])

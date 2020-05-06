@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import './courseDetail.css'
 import {useFetchCourses} from '../../Data/useFetchCourses'
 import {DetailContext} from './courses_data'
@@ -53,9 +53,11 @@ function openTab(tabToOpen){
 
 const CourseDetail=({sentCourse})=> {
 
-    const clickedCourse = () =>{
-        console.log("clicked in detail")
-        dispatch({type: 'ADD_COURSE'})
+    const courseRef = useRef();
+
+    const clickedCourse = (course) =>{
+        console.log(course)
+        dispatch({type: 'ADD_COURSE', course})
         
       }
     const [state,dispatch] = useContext(StudyplanContext);
@@ -194,7 +196,7 @@ const CourseDetail=({sentCourse})=> {
                     <p className='FooterText'>Save for later</p> 
                 </div>
                 <div className='iconContainer'>
-                    <i onClick={clickedCourse} className="FooterIcon fas fa-graduation-cap"></i>
+                    <i onClick={()=>clickedCourse(courseInfo)} className="FooterIcon fas fa-graduation-cap"></i>
                    <p className='FooterText'>Add to study plan</p>
                 </div>
                 </footer>

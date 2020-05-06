@@ -28,12 +28,38 @@ const empty_dataset = ()=>{
   return dataset
   }
   
-const addCourse = () =>{
-    console.log("Adding course!")
+const addCourse = (course, level, year, period) =>{
+  const courseObject = {}
+  courseObject.name = course.course_code
+  courseObject.courseName = course.title
+  courseObject.size = course.size
+  console.log(courseObject)
+
+  const obj_lev = initialstate.children.find( ({ name }) => name === level);
+  const obj_year = obj_lev.children.find(({name}) => name === year);
+  const obj_period = obj_year.children.find(({name}) => name === period);
+  obj_period.children.push(courseObject)
+
+  console.log(initialstate)
+  console.log(course.title)
+  console.log("Adding course!")
+  return initialstate
   }
 
-  const deleteCourse = () =>{
+  const deleteCourse = (course) =>{
+    console.log(course)
+    const obj_lev = initialstate.children.find( ({ name }) => name === course.level);
+    const obj_year = obj_lev.children.find(({name}) => name === course.year);
+    const obj_period = obj_year.children.find(({name}) => name === course.period);
+
+    for(var i = obj_period.children.length-1; i >= 0; i--){
+      if(course.code === obj_period.children[i].name){
+        obj_period.children.splice(i, 1)
+      }
+    }
+    console.log(initialstate)
     console.log("Deleting course!")
+    return initialstate
   }
 
 export const initialstate = empty_dataset()
@@ -41,10 +67,10 @@ export const initialstate = empty_dataset()
 export const studyplanReducer = (state,action) =>{
     switch (action.type){
         case 'ADD_COURSE':
-            addCourse();
+            addCourse(action.course, 'bachelor', 'year1', 'P1');
             return state;
       case 'DELETE_COURSE':
-            deleteCourse();
+            deleteCourse(action.courseObject);
             return state;
         default:
             return state;

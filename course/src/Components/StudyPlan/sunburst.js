@@ -251,7 +251,7 @@ function labelTransform(d) {
 }
 
 
-},[data])
+},[data,dispatch])
 
 return (
     <React.Fragment>

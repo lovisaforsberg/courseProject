@@ -68,10 +68,12 @@ export const studyplanReducer = (state,action) =>{
     switch (action.type){
         case 'ADD_COURSE':
             addCourse(action.course, 'bachelor', 'year1', 'P1');
-            return state;
+            const newState1 = {...state}
+            return newState1;
       case 'DELETE_COURSE':
             deleteCourse(action.courseObject);
-            return state;
+            const newState2 = {...state}
+            return newState2;
         default:
             return state;
         }

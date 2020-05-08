@@ -5,6 +5,7 @@ import * as d3 from 'd3'
 
 import StudyplanContext from "../../store"
 import './sunburst.css'
+import {useFetchCourses} from '../../Data/useFetchCourses'
 
 //import useFetch from "../../Data/useFetch"
 //import {SunburstContext} from "../../Data/sunburst-context"
@@ -39,6 +40,23 @@ const Sunburst = ()=> {
     const courseObject = {code:d.data.name, level: level, year: year, period: period}
     console.log("clicked")
     dispatch({type: 'DELETE_COURSE', courseObject})
+    
+  }
+
+  const AddBachelor = (prog, year, track) =>{
+    const proxy = 'https://cors-anywhere.herokuapp.com/'
+    const urlProg = 'http://api.kth.se/api/kopps/v2/programme/academic-year-plan/'+prog+'/'+year
+    //const [fetchedProg, loadningFetch] = useFetchCourses(proxy+urlProg)
+    
+  var x = fetch(proxy+urlProg)
+  .then((response) => response.json())
+  .then((responseJSON) => {
+     // do stuff with responseJSON here...
+     const fetchedProg = responseJSON.Specs
+     dispatch({type: 'ADD_BACHELOR', fetchedProg, track})
+  });
+    
+    
     
   }
 
@@ -257,6 +275,7 @@ return (
     <React.Fragment>
     <div className='sunburstContainer'>
         <svg id='sunBurst' width={400} height={400} radius={400/2} ref={d3Container}></svg>
+        <button onClick={()=>AddBachelor('CMETE', 'HT16', 'INMT')}>Add bachelor</button>
     </div>
         
     </React.Fragment>

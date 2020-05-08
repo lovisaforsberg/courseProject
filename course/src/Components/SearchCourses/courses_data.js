@@ -75,10 +75,11 @@ const DisplayData=({dataprop})=> {
         .on("click", function(d) {return d.children !== undefined ? 
           (zoom(d), 
           d3.event.stopPropagation(),
-          console.log(d), console.log(focus), console.log('not')
+          console.log(d)
           ):
           //do this when clicking the course node
-          (console.log(d.data), showDetail(d.data), console.log(d), console.log(focus),
+          ( showDetail(d.data), 
+          //console.log(d), console.log(focus), console.log(d.data),
           // stop from zooming out
           d3.event.stopPropagation());})
         .on('mousemove', function(d) {if (focus !== d) { return d3.select(this).attr('class') == "node node--leaf" ?

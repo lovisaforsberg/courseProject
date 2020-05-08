@@ -1,4 +1,6 @@
 //import {empty_dataset} from "../Data/dataSunburst"
+import { useState, useEffect } from "react";
+import {useFetchCourses} from '../Data/useFetchCourses'
 
 const empty_dataset = ()=>{
     var dataset = {}
@@ -27,6 +29,12 @@ const empty_dataset = ()=>{
   
   return dataset
   }
+
+function courseExist(name, arr) {
+  return arr.some(function(el) {
+    return el.name === name;
+  });
+}
   
 const addCourse = (course, level, year, period) =>{
   const courseObject = {}
@@ -38,10 +46,14 @@ const addCourse = (course, level, year, period) =>{
   const obj_lev = initialstate.children.find( ({ name }) => name === level);
   const obj_year = obj_lev.children.find(({name}) => name === year);
   const obj_period = obj_year.children.find(({name}) => name === period);
-  obj_period.children.push(courseObject)
+  console.log(obj_period)
+  if(courseExist(course.course_code, obj_period.children) === false){
+    obj_period.children.push(courseObject)
+  }
+  else{
+    alert('course already exists')
+  }
 
-  console.log(initialstate)
-  console.log(course.title)
   console.log("Adding course!")
   return initialstate
   }
@@ -61,6 +73,69 @@ const addCourse = (course, level, year, period) =>{
     console.log("Deleting course!")
     return initialstate
   }
+  
+async function fetchAll(prog, year){
+  const proxy = 'https://cors-anywhere.herokuapp.com/'
+  const urlProg = 'http://api.kth.se/api/kopps/v2/programme/academic-year-plan/'+prog+'/'+year
+ // const response = await fetch(proxy+urlProg);
+ // const prog_json = await response.json();
+ // const result = prog_json.Specs
+
+  var x = fetch(proxy+urlProg)
+    .then((response) => response.json())
+    .then((responseJSON) => {
+       // do stuff with responseJSON here...
+       console.log(responseJSON);
+       return initialstate
+    });
+
+  
+}
+
+const addPeriods = (period, year, bach, course)=>{
+  let p_str = 'P'+(period).toString()
+  let y_str = 'year'+year.toString()
+  if(p_str in course.ConnectedRound){
+    if(courseExist(course.Code, bach.children.find(({name}) => name === y_str).children[period-1].children) === false){
+      bach.children.find(({name}) => name === y_str).children[period-1].children
+      .push({name: course.Code, courseName:course.Name, size:course.ConnectedRound[p_str]})
+    }
+    else{
+      console.log('course already exists')
+    }
+  }
+}
+
+
+
+const AddBachelor = (fetch, track) =>{
+  const bachelor_courses = initialstate.children.find(({name}) => name === 'bachelor');
+  fetch.map(element => {
+    element.Electivity[0].Courses.map(course =>{
+      if("ConnectedRound" in course){
+        if(element.SpecCode === track || !("SpecCode" in element)){
+          if(element.StudyYear === 1){
+            for(var i = 1; i < 5; i++){
+                addPeriods(i, element.StudyYear, bachelor_courses, course)
+            }
+          }
+          if(element.StudyYear === 2){
+            for(var i = 1; i < 5; i++){
+                addPeriods(i, element.StudyYear, bachelor_courses, course)
+            }
+          }
+          if(element.StudyYear === 3){
+            for(var i = 1; i < 5; i++){
+                addPeriods(i, element.StudyYear, bachelor_courses, course)
+            }
+          }
+        }
+      }
+    })
+  })
+  console.log('add bachelor courses')
+  return initialstate
+}
 
 export const initialstate = empty_dataset()
 
@@ -74,6 +149,10 @@ export const studyplanReducer = (state,action) =>{
             deleteCourse(action.courseObject);
             const newState2 = {...state}
             return newState2;
+      case 'ADD_BACHELOR':
+            AddBachelor(action.fetchedProg, action.track);
+            const newState3 = {...state}
+            return newState3;
         default:
             return state;
         }

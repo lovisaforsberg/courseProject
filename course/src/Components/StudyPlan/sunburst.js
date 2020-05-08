@@ -70,74 +70,11 @@ const Sunburst = ()=> {
 
 //const [data,setData] = useState(props);
 const d3Container = useRef(null)
-//var dataset = {};
-/*
-const createDataset = (list) =>{
-  console.log(list)
-  //for now
-  let track = "INMT"
-
-  let bachelor_courses = { year1P1: [], year1P2: [], year1P3: [], year1P4: [],
-                  year2P1: [], year2P2: [], year2P3: [], year2P4: [],
-                  year3P1: [], year3P2: [], year3P3: [], year3P4: [],}
-
-    list.forEach(element => {
-         element.Electivity[0].Courses.forEach(course =>{
-             if("ConnectedRound" in course){
-              //if(!("SpecCode" in element)){
-              if(element.SpecCode === track || !("SpecCode" in element)){
-              //course.ConnectedRound.periodInfos.forEach(period =>{
-                if(element.StudyYear === 1){
-                     if("P1" in course.ConnectedRound){bachelor_courses.year1P1.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P1']})}
-                     if("P2" in course.ConnectedRound){bachelor_courses.year1P2.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P2']})}
-                     if("P3" in course.ConnectedRound){bachelor_courses.year1P3.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P3']})}
-                     if("P4" in course.ConnectedRound){bachelor_courses.year1P4.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P4']})}
-                }
-                if(element.StudyYear === 2){
-                  if("P1" in course.ConnectedRound){bachelor_courses.year2P1.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P1']})}
-                  if("P2" in course.ConnectedRound){bachelor_courses.year2P2.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P2']})}
-                  if("P3" in course.ConnectedRound){bachelor_courses.year2P3.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P3']})}
-                  if("P4" in course.ConnectedRound){bachelor_courses.year2P4.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P4']})}
-                }
-                if(element.StudyYear === 3){
-                  
-                    if("P1" in course.ConnectedRound){bachelor_courses.year3P1.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P1']})}
-                    if("P2" in course.ConnectedRound){bachelor_courses.year3P2.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P2']})}
-                    if("P3" in course.ConnectedRound){bachelor_courses.year3P3.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P3']})}
-                    if("P4" in course.ConnectedRound){bachelor_courses.year3P4.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P4']})}
-                  
-                }
-                
-            }
-         }
-         })
-      
-  
-    });
-
-var periods1 = [{name: 'p1', children: bachelor_courses.year1P1}, {name: 'p2', children: bachelor_courses.year1P2},
-                    {name: 'p3', children: bachelor_courses.year1P3}, {name: 'p4', children: bachelor_courses.year1P4},]
-    var periods2 = [{name: 'p1', children: bachelor_courses.year2P1}, {name: 'p2', children: bachelor_courses.year2P2},
-                    {name: 'p3', children: bachelor_courses.year2P3}, {name: 'p4', children: bachelor_courses.year2P4},]
-    var periods3 = [{name: 'p1', children: bachelor_courses.year3P1}, {name: 'p2', children: bachelor_courses.year3P2},
-                    {name: 'p3', children: bachelor_courses.year3P3}, {name: 'p4', children: bachelor_courses.year3P4},]
-   
-var years = [{name: 'Year 1', children: periods1}, 
-  {name: 'Year 2', children: periods2}, 
-  {name: 'Year 3', children: periods3}]        
-
-   dataset.name = "bachelor"
-   dataset.children = years
-  return dataset
-}*/
-
-//const fetch = createDataset(DataFetching("CMETE","HT16"))
-//console.log(fetch);
-
 
 useEffect(()=>{
 
 d3.select(".root_sunburst").selectAll('*').remove()
+console.log(data)
 
   
 //setData(data)
@@ -145,19 +82,22 @@ d3.select(".root_sunburst").selectAll('*').remove()
 const width = 400
 const radius = width / 10
 
+
 const partition = data => {
     const root = d3.hierarchy(data)
     .sum(d => d.size)
-    .sort((a, b) => b.value - a.value);
+    //.sort((a, b) => b.value - a.value);
+    .sort(function(a, b) { return d3.ascending(a.name, b.name); })
+
     return d3.partition()
     .size([2 * Math.PI, root.height + 1])
     (root);
   }
-
+  
 //const color = d3.scaleOrdinal().range(d3.quantize(d3.interpolateRainbow, data.children.length + 1));
 var color = d3
       .scaleOrdinal()
-      .range(['#C65649', '#59A5CC', '#AC66B7', '#68AD7C'])
+      .range(['#CC5BA4', '#C65649', '#EAD94C', '#68AD7C', '#59A5CC'])
 
 const format = d3.format(",d");
 
@@ -167,7 +107,7 @@ const arc = d3.arc()
 .padAngle(d => Math.min((d.x1 - d.x0) / 2, 0.005))
 .padRadius(radius * 1.5)
 .innerRadius(d => d.y0 * radius)
-.outerRadius(d => Math.max(d.y0 * radius, d.y1 * radius - 1));
+.outerRadius(d => (Math.max(d.y0 * radius, d.y1 * radius - 1)));
 
 const root = partition(data);
 
@@ -188,8 +128,10 @@ const path = g.append("g")
   .data(root.descendants().slice(1))
   .enter().append("path")
   .on('click', function(d){clickedCourse(d)})
-    .attr("fill", d => { while (d.depth > 1) d = d.parent; return color(d.data.name); })
-    .attr("fill-opacity", d => arcVisible(d.current) ? (d.children ? 0.6 : 0.4) : 0.4)
+    .attr("fill", d => { while (d.depth > 2) d = d.parent; if(d.depth==1){return '#e2e0e0'}else{ return d.data.color}; })
+    //.attr('fill', function(d) {return color(d.data.name)})
+    //.attr("fill-opacity", d => arcVisible(d.current) ? (d.parent ? 1 : 0.8) : 0.4)
+    .attr("fill-opacity", function(d){if(d.depth==2){return 0.8}if(d.depth==3){return 0.7}if(d.depth==4){return 0.5}} )
     .attr("d", d => arc(d.current));
 
 path.filter(d => d.children)
@@ -220,6 +162,22 @@ const parent = g.append("circle")
     .attr("pointer-events", "all")
     .on("click", clicked);
 
+  g.append("g")
+  .selectAll("text")
+  .data(root.descendants().slice(1))
+  .append('text')
+  .text(function(d){return d.current.data.name})
+  .attr('text-anchor', 'middle')
+  .attr('alignment-baseline', 'middle')
+  .style('font-size', '12px')
+  .style("cursor", "pointer")
+  .attr("pointer-events", "all")
+  .on("click", function(d){console.log(d.current)});
+
+  
+
+
+
 function clicked(p) {
   parent.datum(p.parent || root);
 
@@ -243,7 +201,9 @@ function clicked(p) {
     .filter(function(d) {
       return +this.getAttribute("fill-opacity") || arcVisible(d.target);
     })
-      .attr("fill-opacity", d => arcVisible(d.target) ? (d.children ? 0.6 : 0.4) : 0.4)
+      //.attr("fill-opacity", d => arcVisible(d.target) ? (d.children ? 0.6 : 0.4) : 0.4)
+      .attr("fill-opacity", function(d){if(d.depth==2){return 0.8}if(d.depth==3){return 0.7}if(d.depth==4){return 0.5}} )
+
       .attrTween("d", d => () => arc(d.current));
 
   label.filter(function(d) {

@@ -69,7 +69,7 @@ const CourseDetail=({sentCourse})=> {
 
     const [fetchedCourse, loadningFetch] = useFetchCourses(proxy+setUrl(sentCourse.name))
     if(loadningFetch === false){  
-        console.log(fetchedCourse)
+        //console.log(fetchedCourse)
         let courseInfo = {}
         courseInfo.title = fetchedCourse.course.title
         courseInfo.course_code = fetchedCourse.course.courseCode
@@ -125,7 +125,7 @@ const CourseDetail=({sentCourse})=> {
         courseInfo.campus = sentCourse.campus
         courseInfo.color = sentCourse.color
 
-        console.log(courseInfo)
+       // console.log(courseInfo)
 
 
         return(

@@ -244,7 +244,9 @@ text
       <>
             <div className='circleContainer'>
               {isDetailShown && 
-              <DetailContext.Provider value={{isDetailShown, setDetailShown}}><CourseDetail sentCourse={selectedCourse}/></DetailContext.Provider> 
+              <DetailContext.Provider value={{isDetailShown, setDetailShown}}>
+                <CourseDetail sentCourse={selectedCourse}/>
+                </DetailContext.Provider> 
               }
               <svg id='packedCircle' width={600} height={600} radius={600/2} ref={d3Container}></svg>
               <svg id='legend' width={100} height={270} ref={legendContainer}></svg>

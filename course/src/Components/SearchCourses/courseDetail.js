@@ -1,9 +1,11 @@
-import React, { useContext, useEffect, useState, useRef } from 'react';
+import React, { useContext, useEffect, useState, useRef, createContext } from 'react';
 import './courseDetail.css'
 import {useFetchCourses} from '../../Data/useFetchCourses'
 import {DetailContext} from './courses_data'
-
+import Popup from "./popup"
 import StudyplanContext from "../../store"
+
+export const PopupContext = createContext({})
 
 const proxy = 'https://cors-anywhere.herokuapp.com/'
 
@@ -61,11 +63,16 @@ const CourseDetail=({sentCourse})=> {
         
       }
     const [state,dispatch] = useContext(StudyplanContext);
-
     const detail_context = useContext(DetailContext)
 
     const {detailShow, setDetailShown} = detail_context
+    const [isPopupShown, setPopupShown] = useState(false)
 
+    const showPopup = (courseInfo) =>{
+        console.log(courseInfo)
+        setPopupShown(true);
+
+    }
 
     const [fetchedCourse, loadningFetch] = useFetchCourses(proxy+setUrl(sentCourse.name))
     if(loadningFetch === false){  
@@ -174,12 +181,12 @@ const CourseDetail=({sentCourse})=> {
                 <div id='exam_tab' className='tab' style={{display:'none'}}>
                     <div className="infoText">
                         <p className='infoTextLine' style={{fontSize:'15px', marginBottom:'4px'}}><strong>Examination:</strong></p>
-                        <p className='infoTextLine'>{courseInfo.examinationForm.map(moment =>{
+                        <span className='infoTextLine'>{courseInfo.examinationForm.map(moment =>{
                             return <div><li><strong>{moment.examCode}</strong>{': '+moment.title+', '+moment.credits+' hp'}</li>
-                            <p style={{fontWeight:'300', marginLeft:15}} className='infoTextLine'>{'Grading scale: '+moment.gradeScaleCode}</p>
+                            <span style={{fontWeight:'300', marginLeft:15}} className='infoTextLine'>{'Grading scale: '+moment.gradeScaleCode}</span>
                             </div>
                         })}
-                        </p>
+                        </span>
                         <p className='infoTextLine'><strong>Examiner: </strong>{courseInfo.examiners.map(person=>{return <li>{ person.givenName+' '+person.lastName+', '+person.email }</li>})}</p>
                         <p className='infoTextLine'><strong>Grading scale for whole course: </strong>{courseInfo.gradeScale}</p>
 
@@ -196,16 +203,26 @@ const CourseDetail=({sentCourse})=> {
                     <p className='FooterText'>Save for later</p> 
                 </div>
                 <div className='iconContainer'>
-                    <i onClick={()=>clickedCourse(courseInfo)} className="FooterIcon fas fa-graduation-cap"></i>
+                    <i onClick={showPopup} className="FooterIcon fas fa-graduation-cap"></i>
                    <p className='FooterText'>Add to study plan</p>
                 </div>
                 </footer>
 
             </div>
+            {console.log(isPopupShown)}
+                {isPopupShown && 
+                <PopupContext.Provider value={{isPopupShown, setPopupShown}}>
+                  <Popup sentCourse={courseInfo}/>
+                </PopupContext.Provider>
+
+              }
             </>
         );
         
     }
+    //<PopupContext.Provider value={{isPopupShown, setPopupShown}}>
+    //</PopupContext.Provider> 
+    //clickedCourse(courseInfo)
     else{
         return(
             <>

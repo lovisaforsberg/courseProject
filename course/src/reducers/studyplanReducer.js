@@ -36,7 +36,18 @@ function courseExist(name, arr) {
   });
 }
   
-const addCourse = (course, level, year, period) =>{
+const addCourse = (course, year, period) =>{
+    console.log(course)
+    console.log(year)
+    console.log(period)
+    let level = '';
+
+    if(year == "year1" || year == "year2" || year == "year3"){
+        level='bachelor'
+    }
+    else if(year === "year4" || year === "year5"){
+        level ='master'
+    }
   const courseObject = {}
   courseObject.name = course.course_code
   courseObject.courseName = course.title
@@ -142,7 +153,7 @@ export const initialstate = empty_dataset()
 export const studyplanReducer = (state,action) =>{
     switch (action.type){
         case 'ADD_COURSE':
-            addCourse(action.course, 'bachelor', 'year1', 'P1');
+            addCourse(action.courseObject.course, action.courseObject.year, action.courseObject.period);
             const newState1 = {...state}
             return newState1;
       case 'DELETE_COURSE':

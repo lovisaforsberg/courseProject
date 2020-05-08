@@ -2,10 +2,10 @@ import React, { useContext, useEffect, useRef, useReducer, useState, createConte
 import ReactDOM from "react-dom";
 import studyplanReducer from "./studyPlanContainer"
 import * as d3 from 'd3'
-
 import StudyplanContext from "../../store"
 import './sunburst.css'
 import {useFetchCourses} from '../../Data/useFetchCourses'
+import {useInput} from "../SearchCourses/useInput"
 
 //import useFetch from "../../Data/useFetch"
 //import {SunburstContext} from "../../Data/sunburst-context"
@@ -20,9 +20,11 @@ const Sunburst = ()=> {
   //let sunBurstData = useCourse()
   const [data, dispatch] = useCourse()
   //console.log(data)
+  
 
   const [isDetailShown, setDetailShown] = useState(false)
   const [selectedCourse, setSelectedCourse] = useState('')
+
 
   const showDetail = (course)=>{
     setSelectedCourse(course)
@@ -42,7 +44,7 @@ const Sunburst = ()=> {
     dispatch({type: 'DELETE_COURSE', courseObject})
     
   }
-
+/*
   const AddBachelor = (prog, year, track) =>{
     const proxy = 'https://cors-anywhere.herokuapp.com/'
     const urlProg = 'http://api.kth.se/api/kopps/v2/programme/academic-year-plan/'+prog+'/'+year
@@ -58,18 +60,11 @@ const Sunburst = ()=> {
     
     
     
-  }
-
-  //useContext
-//const [state, dispatch] = useContext(SunburstContext);
-//const proxy = 'https://cors-anywhere.herokuapp.com/'
-//const urlProg = 'http://api.kth.se/api/kopps/v2/programme/academic-year-plan/'
-//const urlFetch = proxy + urlProg + state.bachelor + "/" + state.start_year
-//useFetch(urlFetch)
+  }*/
 
 
-//const [data,setData] = useState(props);
 const d3Container = useRef(null)
+
 
 useEffect(()=>{
 
@@ -235,7 +230,6 @@ return (
     <React.Fragment>
     <div className='sunburstContainer'>
         <svg id='sunBurst' width={400} height={400} radius={400/2} ref={d3Container}></svg>
-        <button onClick={()=>AddBachelor('CMETE', 'HT16', 'INMT')}>Add bachelor</button>
     </div>
         
     </React.Fragment>

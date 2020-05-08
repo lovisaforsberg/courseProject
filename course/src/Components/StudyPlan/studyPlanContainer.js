@@ -1,5 +1,6 @@
 import React, {useState,useRef, useReducer, useEffect, useContext} from "react";
 import Sunburst from "./sunburst";
+import BachelorForm from "./bachelorForm"
 import NavBar from '../Navbar'
 import {useFetchCourses} from '../../Data/useFetchCourses'
 import StudyplanContext from '../../store'
@@ -28,7 +29,9 @@ const StudyPlanContainer = () => {
     return(
         <>
         <NavBar></NavBar>
+        <BachelorForm></BachelorForm>
         <Sunburst></Sunburst>
+        
     {/* <button style={{margin:'200px'}} onClick={()=>GetBachelorCourses(contextValue, 'CMETE', 'HT16')}>BACHELOR</button>*/}
 
         </>

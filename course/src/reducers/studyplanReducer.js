@@ -124,7 +124,8 @@ const AddBachelor = (fetch, track) =>{
   fetch.map(element => {
     element.Electivity[0].Courses.map(course =>{
       if("ConnectedRound" in course){
-        if(element.SpecCode === track || !("SpecCode" in element)){
+      //  if(element.SpecCode === track || !("SpecCode" in element)){
+          if(!("SpecCode" in element)){
           if(element.StudyYear === 1){
             for(var i = 1; i < 5; i++){
                 addPeriods(i, element.StudyYear, bachelor_courses, course)
@@ -161,7 +162,8 @@ export const studyplanReducer = (state,action) =>{
             const newState2 = {...state}
             return newState2;
       case 'ADD_BACHELOR':
-            AddBachelor(action.fetchedProg, action.track);
+           // AddBachelor(action.fetchedProg, action.track);
+           AddBachelor(action.fetchedProg);
             const newState3 = {...state}
             return newState3;
         default:

@@ -2,10 +2,10 @@ import React, { useContext, useEffect, useRef, useReducer, useState, createConte
 import ReactDOM from "react-dom";
 import studyplanReducer from "./studyPlanContainer"
 import * as d3 from 'd3'
-
 import StudyplanContext from "../../store"
 import './sunburst.css'
 import {useFetchCourses} from '../../Data/useFetchCourses'
+import {useInput} from "../SearchCourses/useInput"
 
 //import useFetch from "../../Data/useFetch"
 //import {SunburstContext} from "../../Data/sunburst-context"
@@ -20,9 +20,11 @@ const Sunburst = ()=> {
   //let sunBurstData = useCourse()
   const [data, dispatch] = useCourse()
   //console.log(data)
+  
 
   const [isDetailShown, setDetailShown] = useState(false)
   const [selectedCourse, setSelectedCourse] = useState('')
+
 
   const showDetail = (course)=>{
     setSelectedCourse(course)
@@ -42,7 +44,7 @@ const Sunburst = ()=> {
     dispatch({type: 'DELETE_COURSE', courseObject})
     
   }
-
+/*
   const AddBachelor = (prog, year, track) =>{
     const proxy = 'https://cors-anywhere.herokuapp.com/'
     const urlProg = 'http://api.kth.se/api/kopps/v2/programme/academic-year-plan/'+prog+'/'+year
@@ -58,81 +60,12 @@ const Sunburst = ()=> {
     
     
     
-  }
-
-  //useContext
-//const [state, dispatch] = useContext(SunburstContext);
-//const proxy = 'https://cors-anywhere.herokuapp.com/'
-//const urlProg = 'http://api.kth.se/api/kopps/v2/programme/academic-year-plan/'
-//const urlFetch = proxy + urlProg + state.bachelor + "/" + state.start_year
-//useFetch(urlFetch)
+  }*/
 
 
-//const [data,setData] = useState(props);
 const d3Container = useRef(null)
-//var dataset = {};
-/*
-const createDataset = (list) =>{
-  console.log(list)
-  //for now
-  let track = "INMT"
 
-  let bachelor_courses = { year1P1: [], year1P2: [], year1P3: [], year1P4: [],
-                  year2P1: [], year2P2: [], year2P3: [], year2P4: [],
-                  year3P1: [], year3P2: [], year3P3: [], year3P4: [],}
 
-    list.forEach(element => {
-         element.Electivity[0].Courses.forEach(course =>{
-             if("ConnectedRound" in course){
-              //if(!("SpecCode" in element)){
-              if(element.SpecCode === track || !("SpecCode" in element)){
-              //course.ConnectedRound.periodInfos.forEach(period =>{
-                if(element.StudyYear === 1){
-                     if("P1" in course.ConnectedRound){bachelor_courses.year1P1.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P1']})}
-                     if("P2" in course.ConnectedRound){bachelor_courses.year1P2.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P2']})}
-                     if("P3" in course.ConnectedRound){bachelor_courses.year1P3.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P3']})}
-                     if("P4" in course.ConnectedRound){bachelor_courses.year1P4.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P4']})}
-                }
-                if(element.StudyYear === 2){
-                  if("P1" in course.ConnectedRound){bachelor_courses.year2P1.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P1']})}
-                  if("P2" in course.ConnectedRound){bachelor_courses.year2P2.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P2']})}
-                  if("P3" in course.ConnectedRound){bachelor_courses.year2P3.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P3']})}
-                  if("P4" in course.ConnectedRound){bachelor_courses.year2P4.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P4']})}
-                }
-                if(element.StudyYear === 3){
-                  
-                    if("P1" in course.ConnectedRound){bachelor_courses.year3P1.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P1']})}
-                    if("P2" in course.ConnectedRound){bachelor_courses.year3P2.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P2']})}
-                    if("P3" in course.ConnectedRound){bachelor_courses.year3P3.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P3']})}
-                    if("P4" in course.ConnectedRound){bachelor_courses.year3P4.push({name: course.Code, courseName:course.Name, size:course.ConnectedRound['P4']})}
-                  
-                }
-                
-            }
-         }
-         })
-      
-  
-    });
-
-var periods1 = [{name: 'p1', children: bachelor_courses.year1P1}, {name: 'p2', children: bachelor_courses.year1P2},
-                    {name: 'p3', children: bachelor_courses.year1P3}, {name: 'p4', children: bachelor_courses.year1P4},]
-    var periods2 = [{name: 'p1', children: bachelor_courses.year2P1}, {name: 'p2', children: bachelor_courses.year2P2},
-                    {name: 'p3', children: bachelor_courses.year2P3}, {name: 'p4', children: bachelor_courses.year2P4},]
-    var periods3 = [{name: 'p1', children: bachelor_courses.year3P1}, {name: 'p2', children: bachelor_courses.year3P2},
-                    {name: 'p3', children: bachelor_courses.year3P3}, {name: 'p4', children: bachelor_courses.year3P4},]
-   
-var years = [{name: 'Year 1', children: periods1}, 
-  {name: 'Year 2', children: periods2}, 
-  {name: 'Year 3', children: periods3}]        
-
-   dataset.name = "bachelor"
-   dataset.children = years
-  return dataset
-}*/
-
-//const fetch = createDataset(DataFetching("CMETE","HT16"))
-//console.log(fetch);
 
 
 useEffect(()=>{
@@ -275,7 +208,6 @@ return (
     <React.Fragment>
     <div className='sunburstContainer'>
         <svg id='sunBurst' width={400} height={400} radius={400/2} ref={d3Container}></svg>
-        <button onClick={()=>AddBachelor('CMETE', 'HT16', 'INMT')}>Add bachelor</button>
     </div>
         
     </React.Fragment>

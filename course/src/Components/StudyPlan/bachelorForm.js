@@ -27,14 +27,16 @@ const addBachelor = (prog, year) =>{
      dispatch({type: 'ADD_BACHELOR', fetchedProg})
   });
     
-    
-    
   }
 
   async function fetchUrl() {
     const proxy = 'https://cors-anywhere.herokuapp.com/'
-    const urlProg = 'http://api.kth.se/api/kopps/v2/programme/'
-    const response = await fetch(proxy+urlProg);
+    const urlProg = 'https://api.kth.se/api/kopps/v2/programme/'
+    const requestOptions = {
+      method: 'GET',
+      headers: {'Content-Access-Control-Allow-Origin': '*'}
+    };
+    const response = await fetch(proxy+urlProg, requestOptions);
     const json = await response.json();
     setData(json);
     const all_progs = []
@@ -53,8 +55,6 @@ const addBachelor = (prog, year) =>{
 
   setAllProgs(all_progs)
   }
-
-
 
   useEffect (() =>{
     fetchUrl()

@@ -82,19 +82,19 @@ return(
             <option key='School year' disabled={true} value={year}>
                 Year
             </option>
-            <option key="1" value="year1">
+            <option key="1" value="Year 1">
                 Year 1
             </option>
-            <option key="2" value="year2">
+            <option key="2" value="year 2">
                 Year 2
             </option>
-            <option key="3" value="year3">
+            <option key="3" value="Year 3">
                 Year 3
             </option>
-            <option key="4" value="year4">
+            <option key="4" value="Year 4">
                 Year 4
             </option>
-            <option key="5" value="year5">
+            <option key="5" value="Year 5">
                 Year 5
             </option> 
 

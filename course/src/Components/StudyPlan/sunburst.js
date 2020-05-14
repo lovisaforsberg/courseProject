@@ -6,9 +6,12 @@ import StudyplanContext from "../../store"
 import './sunburst.css'
 import {useFetchCourses} from '../../Data/useFetchCourses'
 import {useInput} from "../SearchCourses/useInput"
+import StudyPlanDetails from './studyPlanDetails'
 
 //import useFetch from "../../Data/useFetch"
 //import {SunburstContext} from "../../Data/sunburst-context"
+
+export const StudyplanDetailContext = createContext({})
 
 
 const useCourse = () =>{
@@ -23,11 +26,16 @@ const Sunburst = ()=> {
   
 
   const [isDetailShown, setDetailShown] = useState(false)
-  const [selectedCourse, setSelectedCourse] = useState('')
+  const [selectedCourse, setSelectedCourse] = useState({})
 
 
-  const showDetail = (course)=>{
-    setSelectedCourse(course)
+  const showDetail = (course, color)=>{
+    course.data.color = color
+    course.data.period = course.parent.data.name
+    course.data.year = course.parent.parent.data.name
+    course.data.level = course.parent.parent.parent.data.name
+
+    setSelectedCourse(course.data)
     setDetailShown(true);
   }
   const hideDetail = ()=>{
@@ -40,7 +48,6 @@ const Sunburst = ()=> {
     const year = d.parent.parent.data.name
     const level = d.parent.parent.parent.data.name
     const courseObject = {code:d.data.name, level: level, year: year, period: period}
-    console.log("clicked")
     dispatch({type: 'DELETE_COURSE', courseObject})
     
   }
@@ -69,8 +76,6 @@ const d3Container = useRef(null)
 useEffect(()=>{
 
 d3.select(".root_sunburst").selectAll('*').remove()
-console.log(data)
-
   
 //setData(data)
 
@@ -122,20 +127,39 @@ const path = g.append("g")
   .selectAll("path")
   .data(root.descendants().slice(1))
   .enter().append("path")
-  .on('click', function(d){clickedCourse(d)})
+  .on('click', function(d){showDetail(d, d.parent.data.color)})
     .attr("fill", d => { while (d.depth > 2) d = d.parent; if(d.depth==1){return '#e2e0e0'}else{ return d.data.color}; })
     //.attr('fill', function(d) {return color(d.data.name)})
     //.attr("fill-opacity", d => arcVisible(d.current) ? (d.parent ? 1 : 0.8) : 0.4)
     .attr("fill-opacity", function(d){if(d.depth==2){return 0.8}if(d.depth==3){return 0.7}if(d.depth==4){return 0.5}} )
-    .attr("d", d => arc(d.current));
+    .attr("d", d => arc(d.current))
+    .on('mousemove', function(d) {return d.children === undefined ?
+      (divTooltip.style('left', d3.event.pageX + 10 + 'px'),
+      divTooltip.style('top', d3.event.pageY - 25 + 'px'),
+      divTooltip.style('display', 'inline-block'),
+      divTooltip.html(d.data.name+': '+d.data.courseName)):null
+      
+    })
+    .on('mouseout', function(d) {
+      divTooltip.style('display', 'none')
+    })
 
 path.filter(d => d.children)
     .style("cursor", "pointer")
     .on("click", clicked);
 
+    /*
 path.append("title")
    // .text(d => `${d.ancestors().map(d => d.data.name).reverse().join("/")}\n${format(d.value)}`);
-    .text(d => `${d.data.courseName}`);
+    //.text(d => `${d.data.courseName}`);
+    .text('hejhej')
+    */
+
+var divTooltip = d3
+  .select('body')
+  .append('div')
+  .attr('class', 'toolTip')
+  .attr('font-family', 'montserrat')
 
 
 const label = g.append("g")
@@ -155,19 +179,28 @@ const parent = g.append("circle")
     .attr("r", radius)
     .attr("fill", "none")
     .attr("pointer-events", "all")
-    .on("click", clicked);
-
+    .on("click", clicked)
+    .text('back')
+/*
   g.append("g")
-  .selectAll("text")
-  .data(root.descendants().slice(1))
-  .append('text')
-  .text(function(d){return d.current.data.name})
+  .selectAll("circle")
+  .text('back')
+ // .text(function(d){return d.current.data.name})
   .attr('text-anchor', 'middle')
   .attr('alignment-baseline', 'middle')
   .style('font-size', '12px')
   .style("cursor", "pointer")
   .attr("pointer-events", "all")
-  .on("click", function(d){console.log(d.current)});
+  .on("click", function(d){console.log(d.current)});*/
+
+  g.append("text")
+  .datum(root)
+  .html(function(d){return d.depth === 1 ? null : "Go back"})
+  .attr('text-anchor', 'middle')
+  .attr('alignment-baseline', 'middle')
+  .attr('font-family', 'montserrat')
+  .style('font-size', '12px')
+  .attr('fill', '#404040');
 
   
 
@@ -229,6 +262,11 @@ function labelTransform(d) {
 return (
     <React.Fragment>
     <div className='sunburstContainer'>
+    {isDetailShown && 
+              <StudyplanDetailContext.Provider value={{isDetailShown, setDetailShown}}>
+                <StudyPlanDetails sentCourse={selectedCourse}/>
+                </StudyplanDetailContext.Provider> 
+              }
         <svg id='sunBurst' width={400} height={400} radius={400/2} ref={d3Container}></svg>
     </div>
         

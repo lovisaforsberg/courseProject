@@ -85,7 +85,7 @@ return(
             <option key="1" value="Year 1">
                 Year 1
             </option>
-            <option key="2" value="year 2">
+            <option key="2" value="Year 2">
                 Year 2
             </option>
             <option key="3" value="Year 3">

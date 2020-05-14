@@ -1,0 +1,25 @@
+.headline{
+    margin-bottom: 10px;
+    font-size: 25px;
+}
+.headline2{
+    margin-bottom: 10px;
+}
+
+select:focus{
+    outline: none !important;
+    border:none !important;
+    cursor: pointer;
+}
+
+.addButton{
+    margin:20px;
+    border-radius: 5px;
+    border:none;
+    color:white;
+    width:150px;
+    height:40px;
+    cursor: pointer;
+
+}
+

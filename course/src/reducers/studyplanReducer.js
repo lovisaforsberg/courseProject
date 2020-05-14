@@ -1,16 +1,17 @@
 //import {empty_dataset} from "../Data/dataSunburst"
 import { useState, useEffect } from "react";
 import {useFetchCourses} from '../Data/useFetchCourses'
+import { cross } from "d3";
 
 const empty_dataset = ()=>{
     var dataset = {}
   
    let courses_per = { 
-    year1P1: [{name:'123', courseName:'test', size:4}], year1P2: [], year1P3: [], year1P4: [],
-    year2P1: [{name:'123', courseName:'test', size:4}], year2P2: [], year2P3: [], year2P4: [],
-    year3P1: [], year3P2: [], year3P3: [{name:'5674', courseName:'test2', size:7}], year3P4: [],
-    year4P1: [{name:'123', courseName:'test', size:4}], year4P2: [], year4P3: [], year4P4: [],
-    year5P1: [{name:'123', courseName:'test', size:4}], year5P2: [], year5P3: [], year5P4: [],
+    year1P1: [{name:'123', courseName:'hejhej', size:6}], year1P2: [], year1P3: [], year1P4: [],
+    year2P1: [], year2P2: [], year2P3: [], year2P4: [],
+    year3P1: [], year3P2: [], year3P3: [], year3P4: [],
+    year4P1: [], year4P2: [], year4P3: [], year4P4: [],
+    year5P1: [], year5P2: [], year5P3: [], year5P4: [],
   }
   
     var year1_periods = [{name: 'P1', children: courses_per.year1P1, color: '#DE96C5'}, {name: 'P2', children: courses_per.year1P2, color: '#DE96C5'}, {name: 'P3', children: courses_per.year1P3, color: '#DE96C5'}, {name: 'P4', children: courses_per.year1P4, color: '#DE96C5'}]
@@ -19,8 +20,8 @@ const empty_dataset = ()=>{
     var year4_periods = [{name: 'P1', children: courses_per.year4P1, color: '#83BB93'}, {name: 'P2', children: courses_per.year4P2, color: '#83BB93'}, {name: 'P3', children: courses_per.year4P3, color: '#83BB93'}, {name: 'P4', children: courses_per.year4P4, color: '#83BB93'}]
     var year5_periods = [{name: 'P1', children: courses_per.year5P1, color: '#77B5D5'}, {name: 'P2', children: courses_per.year5P2, color: '#77B5D5'}, {name: 'P3', children: courses_per.year5P3, color: '#77B5D5'}, {name: 'P4', children: courses_per.year5P4, color: '#77B5D5'}]
   
-    var bachelor_years = [{name: 'year1', children: year1_periods, color:'#CC5BA4'}, {name: 'year2', children: year2_periods, color:'#C65649'}, {name: 'year3', children: year3_periods, color:'#EAD94C'}]
-    var master_years = [{name: 'year4', children: year4_periods, color:'#68AD7C'}, {name: 'year5', children: year5_periods, color:'#59A5CC'}]
+    var bachelor_years = [{name: 'Year 1', children: year1_periods, color:'#CC5BA4'}, {name: 'Year 2', children: year2_periods, color:'#C65649'}, {name: 'Year 3', children: year3_periods, color:'#EAD94C'}]
+    var master_years = [{name: 'Year 4', children: year4_periods, color:'#68AD7C'}, {name: 'Year 5', children: year5_periods, color:'#59A5CC'}]
   
     dataset.name = 'all courses'
     dataset.children = [{name: 'bachelor', children: bachelor_years}, {name:'master', children: master_years}]
@@ -37,28 +38,38 @@ function courseExist(name, arr) {
 }
   
 const addCourse = (course, year, period) =>{
-    console.log(course)
-    console.log(year)
-    console.log(period)
+
     let level = '';
 
-    if(year == "year1" || year == "year2" || year == "year3"){
+    if(year == "Year 1" || year == "Year 2" || year == "Year 3"){
         level='bachelor'
     }
-    else if(year === "year4" || year === "year5"){
+    else if(year === "Year 4" || year === "Year 5"){
         level ='master'
     }
-  const courseObject = {}
+ 
+  var courseObject = {}
   courseObject.name = course.course_code
   courseObject.courseName = course.title
   courseObject.size = course.size
-  console.log(courseObject)
+  courseObject.allInfo = course
+  
+  /*
+  else{
+    var courseObject = {}
+    courseObject.name = course.course_code
+    courseObject.courseName = course.title
+    courseObject.size = course.size
+    courseObject.allInfo = course.allInfo
+    console.log(courseObject)
+  }
+  */
 
   const obj_lev = initialstate.children.find( ({ name }) => name === level);
   const obj_year = obj_lev.children.find(({name}) => name === year);
   const obj_period = obj_year.children.find(({name}) => name === period);
-  console.log(obj_period)
-  if(courseExist(course.course_code, obj_period.children) === false){
+  //console.log(obj_period)
+  if(courseExist(courseObject.name, obj_period.children) === false){
     obj_period.children.push(courseObject)
   }
   else{
@@ -70,7 +81,6 @@ const addCourse = (course, year, period) =>{
   }
 
   const deleteCourse = (course) =>{
-    console.log(course)
     const obj_lev = initialstate.children.find( ({ name }) => name === course.level);
     const obj_year = obj_lev.children.find(({name}) => name === course.year);
     const obj_period = obj_year.children.find(({name}) => name === course.period);
@@ -80,7 +90,6 @@ const addCourse = (course, year, period) =>{
         obj_period.children.splice(i, 1)
       }
     }
-    console.log(initialstate)
     console.log("Deleting course!")
     return initialstate
   }
@@ -96,7 +105,7 @@ async function fetchAll(prog, year){
     .then((response) => response.json())
     .then((responseJSON) => {
        // do stuff with responseJSON here...
-       console.log(responseJSON);
+       //console.log(responseJSON);
        return initialstate
     });
 
@@ -105,14 +114,14 @@ async function fetchAll(prog, year){
 
 const addPeriods = (period, year, bach, course)=>{
   let p_str = 'P'+(period).toString()
-  let y_str = 'year'+year.toString()
+  let y_str = 'Year '+year.toString()
   if(p_str in course.ConnectedRound){
     if(courseExist(course.Code, bach.children.find(({name}) => name === y_str).children[period-1].children) === false){
       bach.children.find(({name}) => name === y_str).children[period-1].children
-      .push({name: course.Code, courseName:course.Name, size:course.ConnectedRound[p_str]})
+      .push({name: course.Code, courseName:course.Name, size:course.ConnectedRound[p_str], fromBach_allInfo:course})
     }
     else{
-      console.log('course already exists')
+      alert('course already exists')
     }
   }
 }
@@ -149,6 +158,36 @@ const AddBachelor = (fetch, track) =>{
   return initialstate
 }
 
+const moveCourse = (course, moveTo)=>{
+  var courseObject = {code:course.course_code, level: course.bach_mas, year: course.year, period: course.period}
+  
+  deleteCourse(courseObject)
+
+  let level = '';
+  if(moveTo.year == "Year 1" || moveTo.year == "Year 2" || moveTo.year == "Year 3"){
+    level='bachelor'
+  }
+  else if(moveTo.year === "Year 4" || moveTo.year === "Year 5"){
+    level ='master'
+  }
+ 
+  var courseObjMove = {}
+  courseObjMove.name = course.course_code
+  courseObjMove.courseName = course.title
+  courseObjMove.size = course.size
+  courseObjMove.allInfo = course
+
+  const obj_lev = initialstate.children.find( ({ name }) => name === level);
+  const obj_year = obj_lev.children.find(({name}) => name === moveTo.year);
+  const obj_period = obj_year.children.find(({name}) => name === moveTo.period);
+
+  obj_period.children.push(courseObjMove)
+
+  console.log("Moving course!")
+  return initialstate
+
+}
+
 export const initialstate = empty_dataset()
 
 export const studyplanReducer = (state,action) =>{
@@ -166,6 +205,10 @@ export const studyplanReducer = (state,action) =>{
            AddBachelor(action.fetchedProg);
             const newState3 = {...state}
             return newState3;
+      case 'MOVE_COURSE':
+           moveCourse(action.course, action.moveTo);
+            const newState4 = {...state}
+            return newState4;
         default:
             return state;
         }

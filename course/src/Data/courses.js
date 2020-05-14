@@ -30,16 +30,7 @@ if(loadingFallCourses === false && loadingSpringCourses === false){
   props = createCourseData(allDepartments, allFallCourses, allSpringCourses)
   console.log(props)
 
- //const initialData = {data:props}
-  
 
-/*
-  return (
-    <>
-    <h1>Courses</h1>
-    <CoursesContainer data={props}></CoursesContainer>
-    </>
-  )*/
   return (
     <DataContext.Provider value={props}>
       <CoursesContainer>

@@ -27,7 +27,7 @@ const empty_dataset = ()=>{
     dataset.children = [{name: 'bachelor', children: bachelor_years}, {name:'master', children: master_years}]
     //dataset.name = 'bachelor'
     //dataset.children = bachelor_years
-  
+    
   return dataset
   }
 
@@ -187,8 +187,10 @@ const moveCourse = (course, moveTo)=>{
   return initialstate
 
 }
-
-export const initialstate = empty_dataset()
+const EMPTY = empty_dataset()
+export const initialstate = JSON.parse(localStorage.getItem("sunburstData"))||EMPTY;
+console.log(JSON.parse(localStorage.getItem("sunburstData")))
+console.log(initialstate)
 
 export const studyplanReducer = (state,action) =>{
     switch (action.type){

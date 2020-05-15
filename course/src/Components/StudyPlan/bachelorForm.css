@@ -4,19 +4,56 @@
         padding-right: 20px;
         text-align: center;
         font-family: 'Montserrat', sans-serif;
-        font-size: small;
-    
+        font-size: small;   
 }
-
-.sunburstContainerItem{
+.sunburstContainerH1{
+    float: left;
     display: inline-flex; 
     justify-content: space-between;
 }
 .bachelorForm{
     text-align: center;
     font-family: 'Montserrat', sans-serif;
-    font-size: small;
-    
+    font-size: small;   
+    float: right;
 }
 
+.program{
+    font-family: 'Montserrat', sans-serif;
+    cursor: pointer;
+    font-size: small;
+    width: 150px;
+    height:35px;
+    padding: 5px 10px;
+    border-radius: 4px;
+    box-shadow: 0px 3px 10px rgb(224, 224, 224);
+    border: none;
+    color:#404040;
+    border:0px;
+    outline:0px;
+}
 
+.year{
+    margin-left: 10px;
+    font-family: 'Montserrat', sans-serif;
+    cursor: pointer;
+    font-size: small;
+    width: 70px;
+    height:35px;
+    padding: 5px 10px;
+    border-radius: 4px;
+    box-shadow: 0px 3px 10px rgb(224, 224, 224);
+    border: none;
+    color:#404040;
+    border:none;
+    outline:0px;
+}
+
+.addBachelorButton{
+        margin-top: 20px;
+        border-radius: 5px;
+        border:none;
+        color: #404040;
+        width:120px;
+        height:30px;
+}

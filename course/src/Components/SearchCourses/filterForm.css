@@ -6,6 +6,11 @@
     box-shadow: 0px 3px 10px rgb(224, 224, 224);
     font-family: 'Montserrat', sans-serif;
     font-size: small;
+    color:#404040;
+}
+
+::placeholder{
+    color:#404040;
 }
 .container{
     display: inline-flex; 
@@ -47,6 +52,7 @@
     width: 500px;
     padding: 12px 20px;
     border: none;
+    color: #404040;
     background-color: white !important;
     background-image: url('searchIcon2.png') !important;
     background-size: 20px 20px;
@@ -76,10 +82,19 @@
       margin-left: 10px;
       width: 100px;
       margin-top: 0px !important;
+      color:#404040;
     }
 
 .inputField{
     border:none;
+    }
+
+    ._2iA8p44d0WZ-WqRBGcAuEV {
+        border: none !important;
+        border-radius: 4px;
+        padding: 5px;
+        min-height: 22px;
+        position: relative;
     }
 
 ._2OR24XnUXt8OCrysr3G0XI { 

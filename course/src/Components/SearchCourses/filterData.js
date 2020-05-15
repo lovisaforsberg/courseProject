@@ -66,7 +66,7 @@
                 || (campusinput.AlbaNova == false && campusinput.Campus == false && campusinput.Flemingsberg == false && campusinput.Kista == false && campusinput.Solna == false && campusinput.Södertälje == false ))
                 && (course.language == filterinput.language || filterinput.language == "")
                 && ((checkIntersecion(checkPeriod(periodinput), course.period).length > 0)
-                ||(periodinput.P1 == false && periodinput.P2 == false && periodinput.P3 == false && periodinput.P4 == false))
+                ||(periodinput.P1 == false && periodinput.P2 == false && periodinput.P3 == false && periodinput.P4 == false && periodinput.P5 == false))
                 //&& ( periodinput == [])  //object(key) = value (true/false)
                 
         })

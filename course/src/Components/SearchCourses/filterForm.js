@@ -25,7 +25,12 @@ const FilterForm = ({ searchValue, handleChangeValue, handleCheckboxes, checkedI
         name: 'P4',
         key: 'checkBox4',
         label: 'P4',
-    }
+    },
+    {
+      name: 'P5',
+      key: 'checkBox5',
+      label: 'Summer',
+  }
 ];
 
 const campusOptions = [
@@ -129,7 +134,7 @@ const campusOptions = [
             {
                 checkboxes.map(item => (
                     <label key={item.key} className="checkboxContainer">
-                        <text>{item.name}</text>
+                        <text>{item.label}</text>
                         <Checkbox name={item.name} checked={checkedItems[item.name]} onChange={handleCheckboxes} />
                         <span className="checkmark"></span>
                     </label>

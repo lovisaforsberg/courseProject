@@ -1,4 +1,4 @@
-import React, {useReducer} from 'react';
+import React, {useReducer, useEffect} from 'react';
 import logo from './logo.svg';
 import {BrowserRouter} from 'react-router-dom'
 import './App.css';
@@ -10,12 +10,13 @@ import {studyplanReducer,initialstate} from "./reducers/studyplanReducer"
 
 
 function App() {
-  const useStudyplanState = useReducer(studyplanReducer,initialstate)
+  //const [useStudyplanState] = useReducer(studyplanReducer,initialstate)
+
   return (
     
     <BrowserRouter>
       <div className='App'>
-        <StudyplanProvider value={useStudyplanState}>
+        <StudyplanProvider>
         <Router />
         </StudyplanProvider>
       </div>

@@ -105,6 +105,7 @@ const StudyPlanDetails=({sentCourse})=> {
         .then((responseJSON) => {
            // do stuff with responseJSON here...
            const fetchedCourse = responseJSON
+           console.log(fetchedCourse.roundInfos)
            let info = {}
            info.title = fetchedCourse.course.title
            info.course_code = fetchedCourse.course.courseCode

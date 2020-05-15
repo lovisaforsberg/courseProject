@@ -10,3 +10,11 @@
     padding: 20px;
 
 }
+
+.zoomedOut{
+    display:none;
+}
+
+.zoomedIn{
+    display: inline;
+}

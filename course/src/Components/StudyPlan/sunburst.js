@@ -179,8 +179,8 @@ const parent = g.append("circle")
     .attr("r", radius)
     .attr("fill", "none")
     .attr("pointer-events", "all")
+    .style('cursor', 'pointer')
     .on("click", clicked)
-    .text('back')
 /*
   g.append("g")
   .selectAll("circle")
@@ -193,14 +193,19 @@ const parent = g.append("circle")
   .attr("pointer-events", "all")
   .on("click", function(d){console.log(d.current)});*/
 
-  g.append("text")
+const textParent = g.append("text")
   .datum(root)
-  .html(function(d){return d.depth === 1 ? null : "Go back"})
+  .html('Go back')
+  .attr('id', 'backText')
+  .attr('class', 'zoomedOut')
   .attr('text-anchor', 'middle')
   .attr('alignment-baseline', 'middle')
   .attr('font-family', 'montserrat')
+  .attr("pointer-events", "all")
+  .attr('fill', '#404040')
+  .on("click", clicked)
   .style('font-size', '12px')
-  .attr('fill', '#404040');
+  .style('cursor', 'pointer')
 
   
 
@@ -208,6 +213,17 @@ const parent = g.append("circle")
 
 function clicked(p) {
   parent.datum(p.parent || root);
+  textParent.datum(p.parent || root);
+
+  if(p.depth === 0){
+    document.getElementById('backText').setAttribute("class", "zoomedOut")
+  }
+  else{
+    document.getElementById('backText').setAttribute("class", "zoomedIn")
+  }
+  
+  
+  console.log(p)
 
   root.each(d => d.target = {
     x0: Math.max(0, Math.min(1, (d.x0 - p.x0) / (p.x1 - p.x0))) * 2 * Math.PI,

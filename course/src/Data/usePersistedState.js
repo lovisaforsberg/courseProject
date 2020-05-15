@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
-export default function usePersistedState(key, defaultValue) {
+export default function usePersistedState(defaultValue,key) {
     console.log(key)
     console.log(defaultValue)
     const [state, setState] = useState(
@@ -9,5 +9,6 @@ export default function usePersistedState(key, defaultValue) {
     useEffect(() => {
       localStorage.setItem(key, JSON.stringify(state));
     }, [key, state]);
+    console.log(state)
     return [state, setState];
   }

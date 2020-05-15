@@ -16,11 +16,14 @@ const StudyPlanContainer = () => {
 
         <NavBar></NavBar>
         <div className="sunburstContainer">
-            <div className="sunburstContainerItem"></div>
-    
+            <div className="sunburstContainerH1">
             <h1>STUDYPLAN</h1>
-        <BachelorForm></BachelorForm>
+            </div>
+            <div className="sunburstContainerForm">
+            <BachelorForm></BachelorForm>
+            </div>
         </div>
+
         <Sunburst></Sunburst>
         
 

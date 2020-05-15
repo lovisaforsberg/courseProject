@@ -9,7 +9,7 @@ const CoursesContainer = () => {
 
     let dataGlobal = useContext(DataContext)
     const [data, setData] = useState(dataGlobal)
-    const [checkedItems, setCheckedItems] = useState({P1:false, P2:false, P3:false, P4:false})
+    const [checkedItems, setCheckedItems] = useState({P1:false, P2:false, P3:false, P4:false, P5:false})
     const [checkedItemsCampus, setCheckedItemsCampus] = useState({AlbaNova:false, Campus:false, Flemingsberg:false, Kista:false, Solna:false, Södertälje:false})
     //console.log(data)
 

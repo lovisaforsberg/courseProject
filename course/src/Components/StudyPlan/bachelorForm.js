@@ -87,14 +87,15 @@ return(
         <div className="row headline">
         ADD BACHELOR
         </div>
-        <div className="row dropdown">
+        <div className="row">
         <select
-          name = 'programme'
+          name = 'program'
           defaultValue={prog}
           onChange={e =>setProg(e)}
+          className='program'
         >
-            <option key='Programme' disabled={true} value={prog}>
-                Programme
+            <option key='Program' disabled={true} value={prog}>
+                Program
             </option>
 
             {allProgs.map(bachelor =>{
@@ -109,6 +110,7 @@ return(
           name = 'year'
           defaultValue={year}
           onChange={e =>setYear(e)}
+          className='year'
         >
             <option key='year' disabled={true} value={year}>
                 Year
@@ -123,14 +125,14 @@ return(
                 HT18
             </option>
             <option key='HT19' value='HT19'>
-                HT16
+                HT19
             </option>
                 
 
         </select>
        
         </div>
-        <button className="addButton" onClick={handleSubmit}>ADD TO PLAN</button>
+        <button className="addBachelorButton" onClick={handleSubmit}>ADD TO PLAN</button>
         </form>
      
 

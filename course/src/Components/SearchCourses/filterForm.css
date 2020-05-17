@@ -25,7 +25,7 @@
     cursor: pointer;
     font-size: small;
     width: 120px;
-    height:35px;
+    height:30px;
     padding: 5px 10px;
     border-radius: 4px;
     box-shadow: 0px 3px 10px rgb(224, 224, 224);
@@ -61,9 +61,7 @@
     padding-left: 50px;
     font-family: 'Montserrat', sans-serif;
 }
-.searchIcon{
-    background-image: url('searchIcon2.png');
-}
+
 
 #textInput:focus{
     outline: none;
@@ -73,7 +71,7 @@
     box-shadow: 0px 3px 10px rgb(224, 224, 224);
     border: none;
     border-radius: 4px;
-    padding-top: 4px;
+    
 }
 .searchBox{
       border: none;

@@ -1,8 +1,8 @@
-.sunburstContainer{
+/*.sunburstContainer{
     display: flex;
     justify-content: center;
     align-content: center;
-}
+}*/
 
 .root_sunburst{
     display: flex;
@@ -17,4 +17,7 @@
 
 .zoomedIn{
     display: inline;
+}
+.sunburst{
+    display: inline-flex
 }

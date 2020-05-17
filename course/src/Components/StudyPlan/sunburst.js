@@ -277,7 +277,7 @@ function labelTransform(d) {
 
 return (
     <React.Fragment>
-    <div className='sunburstContainer'>
+    <div className='sunburst'>
     {isDetailShown && 
               <StudyplanDetailContext.Provider value={{isDetailShown, setDetailShown}}>
                 <StudyPlanDetails sentCourse={selectedCourse}/>

@@ -1,0 +1,39 @@
+
+
+.progressbarContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    margin-top: 20px;
+}
+
+.progress-bar {
+    width: 350px;
+    height: 20px;
+    border-radius: 50px;
+    border: none;
+    background-color: #efefef;
+}
+
+.range {
+    background:#84A98C;
+    height: 100%;
+    border-radius: inherit;
+    transition: width .3s ease-in;
+}
+
+.toggle-buttons button {
+    margin: 0 10px;
+    padding: 7px 20px;
+    border-radius: 5px;
+    outline: 0;
+    cursor: pointer;
+}
+
+.toggle-buttons button:hover {
+    color: white;
+    background: #666;
+}

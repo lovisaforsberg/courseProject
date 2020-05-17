@@ -2,6 +2,7 @@ import React from "react";
 import Checkbox from "./checkbox"
 import "./filterForm.css"
 import { Multiselect } from 'multiselect-react-dropdown';
+const searchIcon = require("./searchIcon2.png")
 
 const FilterForm = ({ searchValue, handleChangeValue, handleCheckboxes, checkedItems, handleOnChangeCampus}) => {
   
@@ -71,7 +72,7 @@ const campusOptions = [
 
     <div className="filterContainer">
       <div className="row">
-      <div className='searchIcon'></div>
+
         <input
           type="text"
           name="search_text"
@@ -80,7 +81,6 @@ const campusOptions = [
           placeholder="Search for courses"
           className="textInput"
           id="textInput"
-      
         />
       </div>
       <div className="row container">

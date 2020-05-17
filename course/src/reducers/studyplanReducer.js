@@ -72,9 +72,9 @@ const addCourse = (course, year, period) =>{
   if(courseExist(courseObject.name, obj_period.children) === false){
     obj_period.children.push(courseObject)
   }
-  else{
+  /*else{
     alert('course already exists')
-  }
+  }*/
 
   console.log("Adding course!")
   return initialstate
@@ -120,9 +120,10 @@ const addPeriods = (period, year, bach, course)=>{
       bach.children.find(({name}) => name === y_str).children[period-1].children
       .push({name: course.Code, courseName:course.Name, size:course.ConnectedRound[p_str], fromBach_allInfo:course})
     }
+    /*
     else{
       alert('course already exists')
-    }
+    }*/
   }
 }
 
@@ -187,10 +188,38 @@ const moveCourse = (course, moveTo)=>{
   return initialstate
 
 }
+
+const RemoveBachelor = () =>{
+  //  console.log(program)
+  //  const bachelor_courses = initialstate.children.find(({name}) => name === 'bachelor');
+   // program.map(element => {
+  //    element.Electivity[0].Courses.map(course =>{ //all bachelor courses
+   //     var courseObject = {code:course.Code, level: course.bach_mas, year: course.year, period: course.period}
+    
+     //  deleteCourse(courseObject)
+     // })
+     const bachelor_courses = initialstate.children[0]
+     const bachelor_years = bachelor_courses.children
+     //const bachelor_period = bachelor_years.children
+     //obj_period.children.splice(i, 1)
+     bachelor_years.map(year =>{
+        const periods = year.children
+        periods.map(period =>{
+            const courses = period.children
+            console.log(courses)
+            for(var i = courses.length-1; i >= 0; i--){
+                  courses.splice(i, 1)
+              }
+        })
+    })
+    
+    console.log('remove bachelor courses')
+    return initialstate
+}
+
 const EMPTY = empty_dataset()
 export const initialstate = JSON.parse(localStorage.getItem("sunburstData"))||EMPTY;
-console.log(JSON.parse(localStorage.getItem("sunburstData")))
-console.log(initialstate)
+
 
 export const studyplanReducer = (state,action) =>{
     switch (action.type){
@@ -207,10 +236,15 @@ export const studyplanReducer = (state,action) =>{
            AddBachelor(action.fetchedProg);
             const newState3 = {...state}
             return newState3;
+      case 'REMOVE_BACHELOR':
+            // AddBachelor(action.fetchedProg, action.track);
+            RemoveBachelor(action.selectedProgram);
+            const newState4 = {...state}
+            return newState4; 
       case 'MOVE_COURSE':
            moveCourse(action.course, action.moveTo);
-            const newState4 = {...state}
-            return newState4;
+            const newState5 = {...state}
+            return newState5;
         default:
             return state;
         }

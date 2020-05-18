@@ -55,8 +55,6 @@ function openTab(tabToOpen){
 
 const CourseDetail=({sentCourse})=> {
 
-    const courseRef = useRef();
-
     const clickedCourse = (course) =>{
         console.log(course)
         dispatch({type: 'ADD_COURSE', course})
@@ -95,8 +93,7 @@ const CourseDetail=({sentCourse})=> {
             .replace(/<ul>/g, '').replace(/<\/ul>/g, '')
             .replace(/<li>/g, '').replace(/<\/li>/g, ', ')
             .replace(/<br \/>/g, ', ')
-            .replace(/&#8217;/g, "'")
-            
+            .replace(/&#8217;/g, "'")    
         }
         else{
             courseInfo.about = "description missing"
@@ -109,8 +106,7 @@ const CourseDetail=({sentCourse})=> {
             .replace(/<ul>/g, '').replace(/<\/ul>/g, '')
             .replace(/<li>/g, '').replace(/<\/li>/g, ', ')
             .replace(/<br \/>/g, ', ')
-            .replace(/&#8217;/g, "'")
-            
+            .replace(/&#8217;/g, "'")    
         }
         else{
             courseInfo.prerequisites = "prerequisites missing"
@@ -126,13 +122,42 @@ const CourseDetail=({sentCourse})=> {
             courseInfo.level = sentCourse.education_level}
         else{courseInfo.level = '-'}
         if('period' in sentCourse){
-            courseInfo.givenPeriods = sentCourse.period.filter( onlyUnique ); }
+            courseInfo.givenPeriods = sentCourse.period.filter(onlyUnique); }
         else{courseInfo.givenPeriods = []}
         courseInfo.language = sentCourse.language
         courseInfo.campus = sentCourse.campus
         courseInfo.color = sentCourse.color
+        
+        // FIND PERIOD INFO
+        let periodInfo = []
+        let allRounds = []
+        fetchedCourse.roundInfos.map(Round =>{
+            if (Round.round.campus.name === sentCourse.campus){
+                allRounds.push(Round) 
+            }
+        })
+        allRounds.filter(function(item){
+        var i = periodInfo.findIndex(x => (x.round.courseRoundTerms[0].formattedPeriodsAndCredits == item.round.courseRoundTerms[0].formattedPeriodsAndCredits));
+        if(i <= -1){periodInfo.push(item);}
+        return null;
+        });
+        console.log(periodInfo)
 
-       // console.log(courseInfo)
+        // ADD PERIOD INFO TO COURSEINFO
+        let rounds = []
+        periodInfo.map(round=>{
+            let courseRound ={amountLecture: round.lectureCount,
+            amountExercise: round.excerciseCount,
+            roundResp: round.ldapResponsibles,
+            roundTeachers: round.ldapTeachers,
+            tutoringTime: round.round.tutoringTimeOfDay,
+            periodsDivision: round.round.courseRoundTerms[0].formattedPeriodsAndCredits,
+            courseRoundTerms: round.round.courseRoundTerms[0]}
+            rounds.push(courseRound)
+        })
+        courseInfo.periodInfo = rounds
+
+        console.log(courseInfo)
 
 
         return(
@@ -162,7 +187,12 @@ const CourseDetail=({sentCourse})=> {
                         <p className='infoTextLine'><strong>Language: </strong>{courseInfo.language}</p>
                         <p className='infoTextLine'><strong>Subject(s): </strong>{courseInfo.subjects.map(sub=>{return sub+', '})}</p>
                         <p className='infoTextLine'><strong>The course is given at: </strong>{courseInfo.campus}</p>
-                        <p className='infoTextLine'><strong>Given in period(s): </strong>{courseInfo.givenPeriods.map(per=>{return per+', '})}</p>
+                        {/*<p className='infoTextLine'><strong>Given in period(s): </strong>{courseInfo.givenPeriods.map(per=>{return per+', '})}</p>*/}
+                       
+                        <p className='infoTextLine'><strong>Given in period(s): </strong>{courseInfo.periodInfo.map(per=>{
+                            return <div><li>{per.periodsDivision}</li></div>
+                            })}</p>
+                        <p className='infoTextLine italicText'>Some courses will span between multiply periods</p>
 
 
                         <br/>

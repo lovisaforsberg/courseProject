@@ -131,6 +131,7 @@ const CourseDetail=({sentCourse})=> {
         // FIND PERIOD INFO
         let periodInfo = []
         let allRounds = []
+        console.log(fetchedCourse)
         fetchedCourse.roundInfos.map(Round =>{
             if (Round.round.campus.name === sentCourse.campus){
                 allRounds.push(Round) 
@@ -190,11 +191,20 @@ const CourseDetail=({sentCourse})=> {
                         {/*<p className='infoTextLine'><strong>Given in period(s): </strong>{courseInfo.givenPeriods.map(per=>{return per+', '})}</p>*/}
                        
                         <p className='infoTextLine'><strong>Given in period(s): </strong>{courseInfo.periodInfo.map(per=>{
-                            return <div><li>{per.periodsDivision}</li></div>
+                            if( (per.periodsDivision).length > 15){
+                                return <div><li>{per.periodsDivision.replace(',', ' +')}</li></div>
+
+                            //return <div><li>{per.periodsDivision_array[0]+ ' '+ per.periodsDivision_array[1]}</li></div>
+                            }
+                            else{
+                                return <div><li>{per.periodsDivision.substring(0,2)}</li></div>
+                            }
+
                             })}</p>
+                        
                         <p className='infoTextLine italicText'>Some courses will span between multiply periods</p>
 
-
+                       
                         <br/>
                         <p className='infoTextLine'><strong>Prerequisites: </strong>{courseInfo.prerequisites}</p>
                         <p className='infoTextLine'><strong>Contact for information: </strong>{courseInfo.contactName}</p>

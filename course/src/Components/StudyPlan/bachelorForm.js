@@ -180,8 +180,8 @@ return(
         <div className="buttonContainer">
 
         <button className="addBachelorButton" onClick={handleSubmit}>ADD TO PLAN</button>
-        {clicked ? <button className="removeBachelorButton" onClick={handleRemove}>Remove all bachelor courses</button>:null}
-
+       {/* {clicked ? <button className="removeBachelorButton" onClick={handleRemove}>Remove all bachelor courses</button>:null} */}
+       <button className="removeBachelorButton" onClick={handleRemove}>Remove all bachelor courses</button>
         </div>
         </form>  
         {isPopupShown && 

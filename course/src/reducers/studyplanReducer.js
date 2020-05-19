@@ -7,7 +7,7 @@ const empty_dataset = ()=>{
     var dataset = {}
   
    let courses_per = { 
-    year1P1: [{name:'123', courseName:'hejhej', size:6}], year1P2: [], year1P3: [], year1P4: [],
+    year1P1: [], year1P2: [], year1P3: [], year1P4: [],
     year2P1: [], year2P2: [], year2P3: [], year2P4: [],
     year3P1: [], year3P2: [], year3P3: [], year3P4: [],
     year4P1: [], year4P2: [], year4P3: [], year4P4: [],
@@ -39,43 +39,66 @@ function courseExist(name, arr) {
   
 const addCourse = (course, year, period) =>{
 
-    let level = '';
+  let level = '';
+  if(year == "Year 1" || year == "Year 2" || year == "Year 3"){
+    level='bachelor'
+  }
+  else if(year === "Year 4" || year === "Year 5"){
+    level ='master'
+  }
 
-    if(year == "Year 1" || year == "Year 2" || year == "Year 3"){
-        level='bachelor'
+const obj_lev = initialstate.children.find( ({ name }) => name === level);
+const obj_year = obj_lev.children.find(({name}) => name === year);
+
+var courseObject1 = {}
+courseObject1.name = course.course_code
+courseObject1.courseName = course.title
+courseObject1.size = period[Object.keys(period)[0]];
+courseObject1.allInfo = course
+
+const obj_period1 = obj_year.children.find(({name}) => name === Object.keys(period)[0]);
+if(courseExist(courseObject1.name, obj_period1.children) === false){
+  obj_period1.children.push(courseObject1)
+
+  //if course i multiply period
+  // check lenght of object
+    if(Object.getOwnPropertyNames(period).length > 1){
+      var courseObject2 = {}
+      courseObject2.name = course.course_code
+      courseObject2.courseName = course.title
+      courseObject2.size = period[Object.keys(period)[1]];
+      courseObject2.allInfo = course
+      const obj_period2 = obj_year.children.find(({name}) => name === Object.keys(period)[1]);
+      obj_period2.children.push(courseObject2)
     }
-    else if(year === "Year 4" || year === "Year 5"){
-        level ='master'
+    else{
+      console.log('course in one period')
     }
- 
+  }
+  else{
+    console.log('course already exists')
+  }
+
+ /*
+
   var courseObject = {}
   courseObject.name = course.course_code
   courseObject.courseName = course.title
   courseObject.size = course.size
   courseObject.allInfo = course
-  
-  /*
-  else{
-    var courseObject = {}
-    courseObject.name = course.course_code
-    courseObject.courseName = course.title
-    courseObject.size = course.size
-    courseObject.allInfo = course.allInfo
-    console.log(courseObject)
-  }
-  */
 
-  const obj_lev = initialstate.children.find( ({ name }) => name === level);
-  const obj_year = obj_lev.children.find(({name}) => name === year);
+
+
   const obj_period = obj_year.children.find(({name}) => name === period);
   //console.log(obj_period)
   if(courseExist(courseObject.name, obj_period.children) === false){
     obj_period.children.push(courseObject)
   }
-  /*else{
-    alert('course already exists')
-  }*/
-
+  else{
+    console.log('course already exists')
+  }
+*/
+  console.log(courseObject2)
   console.log("Adding course!")
   return initialstate
   }
@@ -118,7 +141,7 @@ const addPeriods = (period, year, bach, course)=>{
   if(p_str in course.ConnectedRound){
     if(courseExist(course.Code, bach.children.find(({name}) => name === y_str).children[period-1].children) === false){
       bach.children.find(({name}) => name === y_str).children[period-1].children
-      .push({name: course.Code, courseName:course.Name, size:course.ConnectedRound[p_str], fromBach_allInfo:course})
+      .push({name: course.Code, courseName:course.Name, size:course.ConnectedRound[p_str] /*, fromBach_allInfo:course*/})
     }
     /*
     else{
@@ -219,7 +242,6 @@ const RemoveBachelor = () =>{
 
 const EMPTY = empty_dataset()
 export const initialstate = JSON.parse(localStorage.getItem("sunburstData"))||EMPTY;
-
 
 export const studyplanReducer = (state,action) =>{
     switch (action.type){

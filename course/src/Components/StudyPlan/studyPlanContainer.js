@@ -5,6 +5,7 @@ import NavBar from '../Navbar'
 import {useFetchCourses} from '../../Data/useFetchCourses'
 import StudyplanContext from '../../store'
 import {ProgressBarContainer} from './progressbar'
+import {RadarChart} from './radarChart/radarChart'
 import "./bachelorForm.css"
 
 
@@ -34,6 +35,9 @@ const StudyPlanContainer = () => {
             </div>
             <div className="sunburstContainer">
             <Sunburst></Sunburst>
+            </div>
+            <div className="radarChartContainer">
+            <RadarChart></RadarChart>
             </div>
         </div>
         

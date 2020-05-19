@@ -53,15 +53,20 @@ function openTab(tabToOpen){
 
 const StudyPlanDetails=({sentCourse})=> {
     
+    console.log(sentCourse)
+
     const handleSubmit = (e) =>{
-        console.log("submit hejhej")
-        changeCourse()
+        if(period === '' || year === '' || (period ==='' && year==='')){
+            alert('you need to choose both year and period')
+        }
+        else{
+            changeCourse()
+        }
         e.preventDefault()
     }
 
     const changeCourse = () =>{
         let course = courseInfo
-        console.log(course)
         //const courseObject = {code: sentCourse.name, level: sentCourse.level, year: sentCourse.year, period: sentCourse.period}
         const moveTo = {year: year, period: period}
         dispatch({type: 'MOVE_COURSE', course, moveTo})
@@ -79,13 +84,16 @@ const StudyPlanDetails=({sentCourse})=> {
     const [courseInfo, setCourseInfo] = useState({})
 
     const showPopup = (courseInfo) =>{
-        console.log(courseInfo)
         setPopupShown(true);
 
     }
 
     const [year,setYear] = useInput('');
     const [period,setPeriod] = useInput('');
+
+    const years = ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5',]
+    const periods = ['P1', 'P2', 'P3', 'P4']
+
 
     useEffect(()=>{
 
@@ -105,7 +113,6 @@ const StudyPlanDetails=({sentCourse})=> {
         .then((responseJSON) => {
            // do stuff with responseJSON here...
            const fetchedCourse = responseJSON
-           console.log(fetchedCourse.roundInfos)
            let info = {}
            info.title = fetchedCourse.course.title
            info.course_code = fetchedCourse.course.courseCode
@@ -170,6 +177,7 @@ const StudyPlanDetails=({sentCourse})=> {
                             defaultValue={courseInfo.year}
                             onChange={e =>setYear(e)}
                             >
+                            
                             <option key='School year' disabled={true} value={courseInfo.year}>
                                 Year
                                 </option>
@@ -188,6 +196,20 @@ const StudyPlanDetails=({sentCourse})=> {
                             <option key="5" value="Year 5">
                                 Year 5
                             </option> 
+                            
+                            {/*
+                            {years.map(y=>{
+                                if(y === courseInfo.year){
+                                    return( 
+                                        <option key={y.substr(-1)} value={y} selected>{y}</option>
+                                    )}
+                                else{
+                                    return(
+                                        <option key={y.substr(-1)} value={y}>{y}</option>
+                                    )
+                                }
+                            })}
+                        */}
 
                         </select>
                         <select

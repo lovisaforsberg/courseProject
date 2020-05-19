@@ -29,7 +29,7 @@ const ProgressBar = (props) => {
     levels.map(level =>{
         level.children.map(year =>{
             year.children.map(period=>{
-                console.log(period)
+                //console.log(period)
                 period.children.map(course=>{
                     count+=course.size
                 })
@@ -37,12 +37,12 @@ const ProgressBar = (props) => {
                 })
             })
         })
-        console.log(count/300)
+       // console.log(count/300)
    return ((count/300))
   }
   export const ProgressBarContainer = () => {
     const useStudyplanReducer= useReducer(studyplanReducer,initialstate)
-    console.log(initialstate)
+   // console.log(initialstate)
 
     let [percentRange, setProgress] = useState(0);
 

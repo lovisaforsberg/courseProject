@@ -10,7 +10,6 @@ const Popup = ({sentCourse}) =>{
 const [year,setYear] = useInput('');
 const [period,setPeriod] = useInput('');
 const [level, setLevel] = useState('');
-console.log(sentCourse)
 
 sentCourse.givenPeriods.map(period =>{
     console.log(period)
@@ -36,22 +35,25 @@ const closePopup = () =>{
 
 const handleSubmit = (e) =>{
     console.log("submit")
-    sunburstAction()
-    closePopup()
+    if(period === '' || year === '' || (period ==='' && year==='')){
+        alert('you need to choose both year and period')
+    }
+    else{
+        sunburstAction()
+        closePopup()
+    }
     e.preventDefault()
 }
 
 const sunburstAction = () =>{
-    const courseObject = {course: sentCourse, year: year, period: period}
-    console.log(courseObject)
+    const period_list = period.split(', ')
+    var period_obj = {}
+    period_list.map(per =>{
+        period_obj[per.substring(0,2)] = parseFloat(per.substring(4,7))
+    })
+    const courseObject = {course: sentCourse, year: year, period: period_obj}
     dispatch({type: 'ADD_COURSE', courseObject})
 }
-
-
-
-
-console.log(year)
-console.log(period)
 
 
 return(
@@ -107,6 +109,7 @@ return(
             <option key='School year' disabled={true} value={period}>
                 Period
             </option>
+            {/*
             {
             sorted_periods.map(period =>{
                 return(
@@ -115,6 +118,14 @@ return(
             </option>)
             })
             }
+        */}
+        {sentCourse.periodInfo.map(per =>{
+            return(
+                <option key={per.periodsDivision} value ={per.periodsDivision}>
+                    {per.periodsDivision.replace(',', ' +')}
+                </option>
+            )
+        })}
         </select>
         </div>
         <button className="addButton" style={{backgroundColor:sentCourse.color}}onClick={handleSubmit}>ADD TO PLAN</button>

@@ -23,3 +23,7 @@ select:focus{
 
 }
 
+.descriptionText{
+    font-style: italic;
+}
+

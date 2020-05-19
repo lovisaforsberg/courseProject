@@ -1,0 +1,11 @@
+.radarContainer{
+    display:flex;
+    justify-content: center;
+}
+
+#radarChart{
+    display: flex;
+    height: 500px;
+    padding: 20px;
+
+}

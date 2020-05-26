@@ -58,7 +58,6 @@ const DisplayData=({dataprop})=> {
         nodes = pack(root).descendants(),
         view;
     
-    var currentZoom = d3.event.transform.k;
 
   
     var circle = g.selectAll("circle")
@@ -70,7 +69,7 @@ const DisplayData=({dataprop})=> {
         .on("click", function(d) {return d.children !== undefined ? 
           (zoom(d), 
           d3.event.stopPropagation(),
-          console.log(currentZoom)
+          console.log('hej')
           ):
           //do this when clicking the course node
           ( showDetail(d.data), 

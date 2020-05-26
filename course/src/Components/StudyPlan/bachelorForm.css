@@ -14,6 +14,15 @@
     justify-content: center;
    
 }
+.radarChartContainer{
+    display: flex;
+    justify-content: center;
+}
+
+.sunBurstRadar{
+    display: flex;
+    justify-content: flex-end;
+}
 
 .studyplanAll{
     display: flex;

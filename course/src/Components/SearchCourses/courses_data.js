@@ -17,24 +17,15 @@ const DisplayData=({dataprop})=> {
     const [selectedCourse, setSelectedCourse] = useState('')
 
     const showDetail = (course)=>{
-      //e.preventDefault();
-      //console.log(course)
-      //console.log(typeof course)
       setSelectedCourse(course)
       setDetailShown(true);
     }
 
     const hideDetail = ()=>{
-      //e.preventDefault();
-      //console.log(course)
-      //console.log(typeof course)
       setDetailShown(false);
     }
 
     var data = useContext(DataContext);
-    //console.log(dataprop)
-    //console.log(filter)
-   
 
     useEffect(()=>{
 
@@ -47,16 +38,17 @@ const DisplayData=({dataprop})=> {
       diameter = +svg.attr("width"),
       g = svg.append("g").attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
   
+      /*
   var color = d3.scaleLinear()
       .domain([-1, 5])
       .range(["hsl(152,80%,80%)", "hsl(228,30%,40%)"])
       .interpolate(d3.interpolateHcl);
+      */
   
   var pack = d3.pack()
       .size([diameter - margin, diameter - margin])
       .padding(2);
   
-   //var root = filterData(dataprop, filter)
   var root = dataprop
     root = d3.hierarchy(root)
         .sum(function(d) { return d.size; })
@@ -65,17 +57,20 @@ const DisplayData=({dataprop})=> {
     var focus = root,
         nodes = pack(root).descendants(),
         view;
+    
+    var currentZoom = d3.event.transform.k;
+
   
     var circle = g.selectAll("circle")
       .data(nodes)
       .enter().append("circle")
         .attr("class", function(d) { return d.parent ? d.children ? "node" : "node node--leaf" : "node node--root"; })
         //.style("fill", function(d) { return d.children ? color(d.depth) : '#eec1bc'; })
-        .style('fill', function(d){return d.data.color})
+        .style('fill', function(d){return d.children === undefined ? 'transparent' : d.data.color})
         .on("click", function(d) {return d.children !== undefined ? 
           (zoom(d), 
           d3.event.stopPropagation(),
-          console.log(d)
+          console.log(currentZoom)
           ):
           //do this when clicking the course node
           ( showDetail(d.data), 
@@ -137,7 +132,8 @@ const DisplayData=({dataprop})=> {
     zoomTo([root.x, root.y, root.r * 2 + margin]);
   
     function zoom(d) {
-      var focus0 = focus; focus = d;
+      var focus0 = focus; 
+      focus = d;
   
       var transition = d3.transition()
           .duration(d3.event.altKey ? 7500 : 750)

@@ -5,6 +5,8 @@ import StudyplanContext from "../../store"
 import "./bachelorForm.css"
 import usePersistedState from '../../Data/usePersistedState';
 import ExplanationPopup from './explanationPopup'
+import {useFetchCourses} from '../../Data/useFetchCourses'
+import {setSendDataToStudyPlan} from '../../Data/setSendData'
 
 export const PopupContextExplain = createContext({})
 
@@ -25,18 +27,26 @@ const [isPopupShown, setPopupShown] = useState(false)
 //const [yearState, setYearState] = usePersistedState(year,'year')
 
 const [state,dispatch] = useContext(StudyplanContext);
+const [isLoading, setIsLoading] = useState(true)
+
 
 
 const showPopup = () =>{
   setPopupShown(true);
 
 }
+function setUrl(course_code){
+  const proxy = 'https://cors-anywhere.herokuapp.com/'
+  const urlCourse = 'https://api.kth.se/api/kopps/v2/course/'+course_code+'/detailedinformation?l=en'
+  const full_url = proxy+urlCourse
+  return full_url
+}
 
 const removeBachelor = () =>{
   dispatch({type:'REMOVE_BACHELOR',selectedProgram})
 }
 
-const addBachelor = (prog, year) =>{
+const addBachelorORG = (prog, year) =>{
     const proxy = 'https://cors-anywhere.herokuapp.com/'
     const urlProg = 'http://api.kth.se/api/kopps/v2/programme/academic-year-plan/'+prog+'/'+year
     //const [fetchedProg, loadningFetch] = useFetchCourses(proxy+urlProg)
@@ -51,6 +61,56 @@ const addBachelor = (prog, year) =>{
      setSelectedProgram(fetchedProg)
   });
     
+  }
+
+  function flattenAndFetch (fetchedProg){
+    const allCourses = []
+    const more_info = []
+    console.log('in flatten function')
+    fetchedProg.map(year =>{
+      year.Electivity[0].Courses.map(course=>{
+        if(!("SpecCode" in year)){
+          allCourses.push(course)
+        }
+      })  
+    })
+    console.log(allCourses)
+    const promises = allCourses.map(item =>{
+      return fetch(setUrl(item.Code))
+      .then(response=> {
+      return response.json()
+    })  
+  })
+
+  Promise.all(promises).then(results => {
+    results.map(course =>{
+      let sendData = setSendDataToStudyPlan(course)
+      more_info.push(sendData)
+    })
+
+    dispatch({type: 'ADD_BACHELOR', fetchedProg, more_info})
+    setSelectedProgram(fetchedProg)
+    console.log(fetchedProg)
+ })
+
+
+}
+
+  const addBachelor = (prog, year) =>{
+    const proxy = 'https://cors-anywhere.herokuapp.com/'
+    const urlProg = 'http://api.kth.se/api/kopps/v2/programme/academic-year-plan/'+prog+'/'+year
+    //const [fetchedProg, loadningFetch] = useFetchCourses(proxy+urlProg)
+
+    var x = fetch(proxy+urlProg)
+    .then((response) => response.json())
+    .then((responseJSON) => {
+        // do stuff with responseJSON here...
+        var fetchedProg = responseJSON.Specs
+        //console.log(flatten(fetchedProg))
+        console.log('first fetch')
+        flattenAndFetch(fetchedProg)
+  })
+
   }
 
   async function fetchUrl() {

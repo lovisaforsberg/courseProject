@@ -1,4 +1,4 @@
-import React, {useState,useRef, useReducer, useEffect, useContext} from "react";
+import React, {useState,useRef, useReducer, useEffect, createContext, useContext} from "react";
 import Sunburst from "./sunburst";
 import BachelorForm from "./bachelorForm"
 import NavBar from '../Navbar'
@@ -8,13 +8,17 @@ import {ProgressBarContainer} from './progressbar'
 import {RadarChart} from './radarChart/radarChart'
 import "./bachelorForm.css"
 
+export const ZoomedInContext = createContext({})
+
 
 const StudyPlanContainer = () => {
     const contextValue = useContext(StudyplanContext);
 
+    const [ZoomedData, setZoomedData] = useState(contextValue[0])
 
     return(
         <>
+    <ZoomedInContext.Provider value={{ZoomedData, setZoomedData}}>
 
         <NavBar></NavBar>
         <div className="studyplanAll">
@@ -33,13 +37,18 @@ const StudyPlanContainer = () => {
             <div className="progressbarContainer">
             <ProgressBarContainer></ProgressBarContainer>
             </div>
-            <div className="sunburstContainer">
-            <Sunburst></Sunburst>
+            <div className='sunBurstRadar'>
+                <div className="sunburstContainer">
+                <Sunburst></Sunburst>
+                </div>
+                <div className="radarChartContainer">
+                <RadarChart></RadarChart>
+                </div>
             </div>
-            <div className="radarChartContainer">
-            <RadarChart></RadarChart>
-            </div>
+            
         </div>
+
+    </ZoomedInContext.Provider>
         
 
         </>

@@ -6,6 +6,7 @@
 #radarChart{
     display: flex;
     height: 500px;
+    width: 450px;
     padding: 20px;
-
+    justify-content: center;
 }

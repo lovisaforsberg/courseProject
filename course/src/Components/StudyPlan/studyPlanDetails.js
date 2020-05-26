@@ -75,6 +75,7 @@ const StudyPlanDetails=({sentCourse})=> {
     }
 
     const [state,dispatch] = useContext(StudyplanContext);
+    
     const detail_context = useContext(StudyplanDetailContext)
 
     const {detailShow, setDetailShown} = detail_context
@@ -140,7 +141,7 @@ const StudyPlanDetails=({sentCourse})=> {
         if(isLoading === false){
          return(
             <>
-            <div className="infoContainer">
+            <div className="infoContainer" style={{marginRight:'0px'}}>
                 <header className="infoHeadline" style={{backgroundColor:courseInfo.color}}>
                     <div>
                         <h4 id="textHeadline">{courseInfo.title} ({courseInfo.course_code})</h4>

@@ -4,6 +4,7 @@ import {useFetchCourses} from '../../Data/useFetchCourses'
 import {DetailContext} from './courses_data'
 import Popup from "./popup"
 import StudyplanContext from "../../store"
+import {setSendData} from '../../Data/setSendData'
 
 export const PopupContext = createContext({})
 
@@ -74,7 +75,9 @@ const CourseDetail=({sentCourse})=> {
 
     const [fetchedCourse, loadningFetch] = useFetchCourses(proxy+setUrl(sentCourse.name))
     if(loadningFetch === false){  
+        let courseInfo = setSendData(fetchedCourse, sentCourse)
         //console.log(fetchedCourse)
+        /*
         let courseInfo = {}
         courseInfo.title = fetchedCourse.course.title
         courseInfo.course_code = fetchedCourse.course.courseCode
@@ -159,7 +162,7 @@ const CourseDetail=({sentCourse})=> {
         courseInfo.periodInfo = rounds
 
         console.log(courseInfo)
-
+        */
 
         return(
             <>

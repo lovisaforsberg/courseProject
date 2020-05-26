@@ -7,6 +7,7 @@ import './sunburst.css'
 import {useFetchCourses} from '../../Data/useFetchCourses'
 import {useInput} from "../SearchCourses/useInput"
 import StudyPlanDetails from './studyPlanDetails'
+import {ZoomedInContext} from './studyPlanContainer'
 
 //import useFetch from "../../Data/useFetch"
 //import {SunburstContext} from "../../Data/sunburst-context"
@@ -19,7 +20,14 @@ const useCourse = () =>{
   return contextValue;
 }
 
+
+
+
 const Sunburst = ()=> {
+  
+  const zoom_context = useContext(ZoomedInContext)
+  const {ZoomedData, setZoomedData} = zoom_context
+
   //let sunBurstData = useCourse()
   const [data, dispatch] = useCourse()
   //console.log(data)
@@ -51,6 +59,11 @@ const Sunburst = ()=> {
     dispatch({type: 'DELETE_COURSE', courseObject})
     
   }
+
+  const getZoomed = () =>{
+
+  }
+
 /*
   const AddBachelor = (prog, year, track) =>{
     const proxy = 'https://cors-anywhere.herokuapp.com/'
@@ -74,6 +87,7 @@ const d3Container = useRef(null)
 
 
 useEffect(()=>{
+  console.log(data)
 
 d3.select(".root_sunburst").selectAll('*').remove()
   
@@ -223,7 +237,8 @@ function clicked(p) {
   }
   
   
-  console.log(p)
+  console.log(p.data)
+  setZoomedData(p.data)
 
   root.each(d => d.target = {
     x0: Math.max(0, Math.min(1, (d.x0 - p.x0) / (p.x1 - p.x0))) * 2 * Math.PI,
@@ -273,7 +288,7 @@ function labelTransform(d) {
 }
 
 
-},[data,dispatch])
+},[data])
 
 return (
     <React.Fragment>

@@ -10,6 +10,8 @@ export const StudyplanProvider = ({children}) =>{
     
   useEffect(() => {
     localStorage.setItem("sunburstData", JSON.stringify(initialstate))
+    console.log(JSON.parse(localStorage.getItem("sunburstData")))
+
   }, [useStudyplanReducer]);
     return(
     <StudyplanContext.Provider

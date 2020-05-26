@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import {useFetchCourses} from '../Data/useFetchCourses'
 import { cross } from "d3";
+import {setSendData} from '../Data/setSendData'
 
 const empty_dataset = ()=>{
     var dataset = {}
@@ -30,6 +31,13 @@ const empty_dataset = ()=>{
     
   return dataset
   }
+
+function setUrl(course_code){
+    const proxy = 'https://cors-anywhere.herokuapp.com/'
+    const urlCourse = 'https://api.kth.se/api/kopps/v2/course/'+course_code+'/detailedinformation?l=en'
+    const full_url = proxy+urlCourse
+    return full_url
+}
 
 function courseExist(name, arr) {
   return arr.some(function(el) {
@@ -135,43 +143,53 @@ async function fetchAll(prog, year){
   
 }
 
-const addPeriods = (period, year, bach, course)=>{
+const addPeriods = (period, year, bach, course, info)=>{
   let p_str = 'P'+(period).toString()
   let y_str = 'Year '+year.toString()
+  let fetched_info = {}
+  info.map(info_course=>{if(info_course.course_code === course.Code){fetched_info = info_course}})
   if(p_str in course.ConnectedRound){
     if(courseExist(course.Code, bach.children.find(({name}) => name === y_str).children[period-1].children) === false){
       bach.children.find(({name}) => name === y_str).children[period-1].children
-      .push({name: course.Code, courseName:course.Name, size:course.ConnectedRound[p_str] /*, fromBach_allInfo:course*/})
+        .push({name: course.Code, 
+          courseName:course.Name, 
+          size:course.ConnectedRound[p_str], /*, fromBach_allInfo:course*/
+          allInfo: fetched_info
+
+
+          })
     }
-    /*
+    
     else{
-      alert('course already exists')
-    }*/
+      console.log('course already exists')
+    }
   }
 }
 
 
-
-const AddBachelor = (fetch, track) =>{
+const AddBachelor = (fetch, additionalInfo) =>{
+  console.log(additionalInfo)
   const bachelor_courses = initialstate.children.find(({name}) => name === 'bachelor');
   fetch.map(element => {
     element.Electivity[0].Courses.map(course =>{
+
       if("ConnectedRound" in course){
       //  if(element.SpecCode === track || !("SpecCode" in element)){
           if(!("SpecCode" in element)){
           if(element.StudyYear === 1){
             for(var i = 1; i < 5; i++){
-                addPeriods(i, element.StudyYear, bachelor_courses, course)
+                addPeriods(i, element.StudyYear, bachelor_courses, course, additionalInfo)
             }
           }
+          
           if(element.StudyYear === 2){
             for(var i = 1; i < 5; i++){
-                addPeriods(i, element.StudyYear, bachelor_courses, course)
+                addPeriods(i, element.StudyYear, bachelor_courses, course, additionalInfo)
             }
           }
           if(element.StudyYear === 3){
             for(var i = 1; i < 5; i++){
-                addPeriods(i, element.StudyYear, bachelor_courses, course)
+                addPeriods(i, element.StudyYear, bachelor_courses, course, additionalInfo)
             }
           }
         }
@@ -179,6 +197,7 @@ const AddBachelor = (fetch, track) =>{
     })
   })
   console.log('add bachelor courses')
+  console.log(initialstate)
   return initialstate
 }
 
@@ -229,7 +248,7 @@ const RemoveBachelor = () =>{
         const periods = year.children
         periods.map(period =>{
             const courses = period.children
-            console.log(courses)
+            //console.log(courses)
             for(var i = courses.length-1; i >= 0; i--){
                   courses.splice(i, 1)
               }
@@ -241,7 +260,12 @@ const RemoveBachelor = () =>{
 }
 
 const EMPTY = empty_dataset()
+console.log(JSON.parse(localStorage.getItem("sunburstData")))
 export const initialstate = JSON.parse(localStorage.getItem("sunburstData"))||EMPTY;
+
+//export const initialstate = empty_dataset()
+
+
 
 export const studyplanReducer = (state,action) =>{
     switch (action.type){
@@ -255,7 +279,7 @@ export const studyplanReducer = (state,action) =>{
             return newState2;
       case 'ADD_BACHELOR':
            // AddBachelor(action.fetchedProg, action.track);
-           AddBachelor(action.fetchedProg);
+           AddBachelor(action.fetchedProg, action.more_info);
             const newState3 = {...state}
             return newState3;
       case 'REMOVE_BACHELOR':

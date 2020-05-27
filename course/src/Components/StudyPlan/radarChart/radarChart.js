@@ -99,29 +99,31 @@ const useCourse = () =>{
 
  
 export const RadarChart = () => {
+	const useStudyplanReducer = useReducer(studyplanReducer, initialstate)
 
 	const zoom_context = useContext(ZoomedInContext)
 	const {ZoomedData, setZoomedData} = zoom_context
 	let zoomDataObj = ZoomedData
 	console.log(zoomDataObj)
+	console.log(initialstate)
 
 	const [data, dispatch] = useCourse()
 	//const data_copy = Object.assign({},data)
 
-	const [allSubjectsAxis, setallSubjectsAxis] = useState(createAxesAll(data))
-
-    const subjectData = createData(allSubjectsAxis, zoomDataObj)
-	console.log(subjectData)
+	//const [allSubjectsAxis, setallSubjectsAxis] = useState(createAxesAll(initialstate))
+	//const subjectData = createData(allSubjectsAxis, zoomDataObj)
+    
+	//console.log(subjectData)
 	
-    //console.log(course_data)
-    //const data = createData(course_data)
+
     const d3Container = useRef(null)
 
 
 
 
     useEffect(()=>{
- 
+		const allSubjectsAxis = createAxesAll(initialstate)
+		const subjectData = createData(allSubjectsAxis, zoomDataObj)
 /////////////////////////////////////////////////////////
 /////////////// The Radar Chart Function ////////////////
 /////////////////////////////////////////////////////////
@@ -476,7 +478,7 @@ var margin = { top: 50, right: 80, bottom: 50, left: 80 },
 
 
 
-    }, [subjectData, data, dispatch])
+    }, [useStudyplanReducer])
     
 
     return (

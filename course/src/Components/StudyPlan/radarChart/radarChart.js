@@ -106,9 +106,9 @@ export const RadarChart = () => {
 	console.log(zoomDataObj)
 
 	const [data, dispatch] = useCourse()
-	const data_copy = Object.assign({},data)
+	//const data_copy = Object.assign({},data)
 
-	const [allSubjectsAxis, setallSubjectsAxis] = useState(createAxesAll(data_copy))
+	const [allSubjectsAxis, setallSubjectsAxis] = useState(createAxesAll(data))
 
     const subjectData = createData(allSubjectsAxis, zoomDataObj)
 	console.log(subjectData)
@@ -476,7 +476,7 @@ var margin = { top: 50, right: 80, bottom: 50, left: 80 },
 
 
 
-    }, [subjectData])
+    }, [subjectData, data, dispatch])
     
 
     return (

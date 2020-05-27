@@ -32,12 +32,36 @@ const DisplayData=({dataprop})=> {
       d3.select(".root_circle").selectAll('*').remove()
       d3.select(".legend").selectAll('*').remove()
 
-
       var svg = d3.select(d3Container.current),
       margin = 20,
       diameter = +svg.attr("width"),
       g = svg.append("g").attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
-  
+      
+      const wrap = (text, width) => {
+        text.each(function() {
+          var text = d3.select(this),
+            words = text.text().split(/\s+/).reverse(),
+            word,
+            line = [],
+            lineNumber = 0,
+            lineHeight = 1.4, // ems
+            y = text.attr("y"),
+            x = text.attr("x"),
+            dy = parseFloat(text.attr("dy")),
+            tspan = text.text(null).append("tspan").attr("x", x).attr("y", y).attr("dy", dy + "em");
+    
+          while (word = words.pop()) {
+            line.push(word);
+            tspan.text(line.join(" "));
+            if (tspan.node().getComputedTextLength() > width) {
+              line.pop();
+              tspan.text(line.join(" "));
+              line = [word];
+              tspan = text.append("tspan").attr("x", x).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+            }
+          }
+        });
+      }//wrap
       /*
   var color = d3.scaleLinear()
       .domain([-1, 5])
@@ -65,7 +89,13 @@ const DisplayData=({dataprop})=> {
       .enter().append("circle")
         .attr("class", function(d) { return d.parent ? d.children ? "node" : "node node--leaf" : "node node--root"; })
         //.style("fill", function(d) { return d.children ? color(d.depth) : '#eec1bc'; })
-        .style('fill', function(d){return d.children === undefined ? 'transparent' : d.data.color})
+        //.style('fill', function(d){return d.children === undefined ? 'transparent' : d.data.color})
+        .style('fill', function(d){return d.data.color})
+        .attr("r", function(d) {
+          return d.r;
+        })
+
+       /*
         .on("click", function(d) {return d.children !== undefined ? 
           (zoom(d), 
           d3.event.stopPropagation(),
@@ -76,6 +106,7 @@ const DisplayData=({dataprop})=> {
           //console.log(d), console.log(focus), console.log(d.data),
           // stop from zooming out
           d3.event.stopPropagation());})
+          
         .on('mousemove', function(d) {if (focus !== d) { return d3.select(this).attr('class') == "node node--leaf" ?
           
           ( divTooltip.style('left', d3.event.pageX + 10 + 'px'),
@@ -88,36 +119,63 @@ const DisplayData=({dataprop})=> {
           }})
         .on('mouseout', function(d) {
             divTooltip.style('display', 'none')
-          })
-
+          })*/
   
     var text = g.selectAll("text")
       .data(nodes)
       .enter().append("text")
-        .attr("class", "label")
+        //.attr("class", "label")
+        .attr("class", function(d) { return d.parent ? d.children ? "label" : "label label--leaf" : "label label--root"; })
         .attr("text-anchor", "middle")
+        .attr('alignment-baseline', 'baseline')
         .attr('font-family', 'montserrat')
+        .attr('fill', '#404040')
+        .attr('background', 'white')
         .attr('y', 0)
-        .attr('dy', '.35em')
+        .attr('x', 0)
 
-        .on('mouseover', function(d){d3.select(this)
-          .style('font-size', function(d){ return d.children == undefined ? 10: 14})}
-        )
-        .on('mouseout', function(d){d3.select(this)
-          .style('font-size', function(d){ return d.children == undefined ? 5: 10})
+        .attr('dy', '.15em')
+        .attr('cursor', 'default')
+
+        .on('mouseover', function(d){ (d3.select(this)
+          .style('font-size', function(d){ return d.children == undefined ? 13: 15}))
+
+        })
+
+        .on('mousemove', function(d) {if (d.children === undefined) { return d3.select(this).attr('class') == "label label--leaf" ?
+          
+          ( divTooltip.style('left', d3.event.pageX + 10 + 'px'),
+            divTooltip.style('top', d3.event.pageY - 25 + 'px'),
+            divTooltip.style('display', 'inline-block'),
+            divTooltip.html(d.data.fullName))
+            :
+
+           divTooltip.style('display', 'none')
+        }})
+          
+        
+        .on('mouseout', function(d){return ( d3.select(this)
+          .style('font-size', function(d){ return d.children == undefined ? 9: 12})),
+          (divTooltip.style('display', 'none'))
         })
 
         .on("click", function(d) {return d.children !== undefined ? 
           (zoom(d), d3.event.stopPropagation()):
           //do this when clicking the course node
-          (console.log(d.data), 
+          (showDetail(d.data), 
           // stop from zooming out
           d3.event.stopPropagation()); })
         .style("fill-opacity", function(d) { return d.parent === root ? 1 : 0;})
-        .style('font-size', function(d){ return d.children == undefined ? 5: 10})
+        .style('font-size', function(d){ return d.children == undefined ? 9: 12})
+
+      
         //.style("display", function(d) { return d.children !== undefined ? "inline" : "inline"; })
         .style('display', 'inline')
-        .text(function(d) { return d.parent === root ? null : d.data.name; })
+        //.text(function(d) { return d.parent === root ? null : d.data.name; })
+        .text(function(d) { return d.data.name; })
+
+        .call(wrap, 100);
+
 
 
   
@@ -133,6 +191,7 @@ const DisplayData=({dataprop})=> {
     function zoom(d) {
       var focus0 = focus; 
       focus = d;
+      console.log(d)
   
       var transition = d3.transition()
           .duration(d3.event.altKey ? 7500 : 750)
@@ -222,6 +281,7 @@ text
         return d.key
       })
       .attr('width', 150)
+      .attr('cursor', 'default')
 
       legend
       .append('rect')

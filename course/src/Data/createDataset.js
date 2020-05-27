@@ -5,7 +5,7 @@ function createCourseData(dep_list, fall_courses, spring_courses){
     dataset.name = 'all courses'
     dataset.color = '#efefef'
     dataset.children = []
-    console.log(fall_courses)
+    //console.log(fall_courses)
     
     // Education and Communication in Engineering Science verkar inte längre ge någor kurser, 
     // kanske inte finns kvar?

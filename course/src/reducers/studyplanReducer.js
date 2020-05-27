@@ -259,6 +259,7 @@ const RemoveBachelor = () =>{
     return initialstate
 }
 
+
 const EMPTY = empty_dataset()
 console.log(JSON.parse(localStorage.getItem("sunburstData")))
 export const initialstate = JSON.parse(localStorage.getItem("sunburstData"))||EMPTY;

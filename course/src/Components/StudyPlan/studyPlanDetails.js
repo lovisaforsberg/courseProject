@@ -5,6 +5,7 @@ import {StudyplanDetailContext} from './sunburst'
 import PopupStudyPlan from "./popupStudyPlan"
 import StudyplanContext from "../../store"
 import {useInput} from "../SearchCourses/useInput"
+import { Default } from 'react-spinners-css';
 
 
 export const PopupContextDelete = createContext({})
@@ -107,6 +108,7 @@ const StudyPlanDetails=({sentCourse})=> {
         setCourseInfo(sentCourse.allInfo)
         setLoading(false)
     }
+    /*
     else{
         const course_url = setUrl(sentCourse.name)
         var x = fetch(course_url)
@@ -134,6 +136,7 @@ const StudyPlanDetails=({sentCourse})=> {
            setLoading(false)
         });
     }
+    */
    
 
 
@@ -163,6 +166,8 @@ const StudyPlanDetails=({sentCourse})=> {
                     <div className="infoText">
                         <p className='infoTextLine' style={{fontSize:'15px', marginBottom:'4px'}}><strong>Credits: </strong>{courseInfo.size} hp</p>
                         <p className='infoTextLine'><strong>Educational Level: </strong>{courseInfo.level}</p>
+                        <p className='infoTextLine'><strong>Main Subjects: </strong>{courseInfo.subjects.map(sub=>{return sub +', '})}</p>
+
 
                         <br/>
                         <a className='infoTextLine' href={courseInfo.urlSocial} target="_blank">Link to KTH social</a>
@@ -328,7 +333,9 @@ const StudyPlanDetails=({sentCourse})=> {
     else{
         return(
             <>
-            <h1>course detail loading</h1>
+            <div className='loadingSpinner'>
+                <Default color='#404040' />  
+            </div>
             </>
         )
     }

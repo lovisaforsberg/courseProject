@@ -5,6 +5,8 @@ import {DetailContext} from './courses_data'
 import Popup from "./popup"
 import StudyplanContext from "../../store"
 import {setSendData} from '../../Data/setSendData'
+import { Default } from 'react-spinners-css';
+
 
 export const PopupContext = createContext({})
 
@@ -185,7 +187,7 @@ const CourseDetail=({sentCourse})=> {
 
                 </div>
                 <div id='information_tab' className='tab'>
-                    <div className="infoText">
+                    <div className="infoText overflowText">
                         <p className='infoTextLine' style={{fontSize:'15px', marginBottom:'4px'}}><strong>Credits: </strong>{courseInfo.size} hp</p>
                         <p className='infoTextLine'><strong>Educational Level: </strong>{courseInfo.level.charAt(0)+courseInfo.level.slice(1).toLowerCase()}</p>
                         <p className='infoTextLine'><strong>Language: </strong>{courseInfo.language}</p>
@@ -218,7 +220,7 @@ const CourseDetail=({sentCourse})=> {
                 </div>
                 <div id='about_tab' className='tab' style={{display:'none'}}>
                     <div className="infoText">
-                        <p><strong>About: </strong>{courseInfo.about}</p>
+                        <p className= 'aboutText'><strong>About: </strong>{courseInfo.about}</p>
                     </div>
                 </div>
                 <div id='exam_tab' className='tab' style={{display:'none'}}>
@@ -226,7 +228,7 @@ const CourseDetail=({sentCourse})=> {
                         <p className='infoTextLine' style={{fontSize:'15px', marginBottom:'4px'}}><strong>Examination:</strong></p>
                         <span className='infoTextLine'>{courseInfo.examinationForm.map(moment =>{
                             return <div><li><strong>{moment.examCode}</strong>{': '+moment.title+', '+moment.credits+' hp'}</li>
-                            <span style={{fontWeight:'300', marginLeft:15}} className='infoTextLine'>{'Grading scale: '+moment.gradeScaleCode}</span>
+                            <p style={{fontWeight:'300', marginLeft:15}} className='infoTextLine'>{'Grading scale: '+moment.gradeScaleCode}</p>
                             </div>
                         })}
                         </span>
@@ -269,7 +271,10 @@ const CourseDetail=({sentCourse})=> {
     else{
         return(
             <>
-            <h1>course detail loading</h1>
+            <div className='loadingSpinner'>
+                <Default color='#404040' />  
+            </div>
+            
             </>
         )
     }

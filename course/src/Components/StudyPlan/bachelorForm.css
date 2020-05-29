@@ -1,12 +1,13 @@
 .bachelorContainer{
         padding-top:20px;
-        margin-left: 150px;
+        margin-left: 110px;
         text-align: center;
         font-family: 'Montserrat', sans-serif;
         font-size: small;  
         justify-content: space-between; 
         box-shadow: 0px 3px 10px rgb(224, 224, 224);
         height:150px;
+       /* background-color: #e2e0e0;*/
 
 }
 .sunburstContainer{

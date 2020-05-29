@@ -1,26 +1,49 @@
 .sidenav {
     height: 100%;
-    width: 160px;
+    width: 120px;
     position: fixed;
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: #111;
+    background-color: #efefef;
     overflow-x: hidden;
     padding-top: 20px;
+    /*box-shadow: 0px 3px 10px rgb(224, 224, 224);*/
+
   }
   
   .sidenav a {
-    padding: 6px 8px 6px 16px;
+    padding: 10px 10px 10px 10px;
     text-decoration: none;
     font-size: 25px;
-    color: #818181;
+    /*color: #818181;*/
+    color: #404040;
     display: block;
   }
   
   .sidenav a:hover {
-    color: #f1f1f1;
+    /*color: #a5a5a5;*/
+    color: #818181;
+
   }
+
+  .iconContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.is-active{
+  background-color: #ffffff;
+}
+
+.navbarIcon{
+  font-size: 40px;
+  cursor: pointer;
+
+}
   
   
   @media screen and (max-height: 450px) {

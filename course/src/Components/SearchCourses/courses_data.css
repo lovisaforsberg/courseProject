@@ -23,7 +23,7 @@
 .circleContainer{
     display: flex;
     justify-content: center;
-    align-items: flex-end;
+    align-items: center;
 }
 
 .node{

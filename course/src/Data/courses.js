@@ -4,6 +4,8 @@ import DisplayData from "../Components/SearchCourses/courses_data"
 import {createCourseData} from "./createDataset"
 import CoursesContainer from "../Components/SearchCourses/coursesContainer"
 import NavBar from "../Components/Navbar"
+import { Default } from 'react-spinners-css';
+
 
 const proxy = 'https://cors-anywhere.herokuapp.com/'
 const urlCourses = 'https://api.kth.se/api/kopps/v2/courses?l=en'
@@ -28,7 +30,6 @@ let filteredprops = {}
 
 if(loadingFallCourses === false && loadingSpringCourses === false){
   props = createCourseData(allDepartments, allFallCourses, allSpringCourses)
-  console.log(props)
 
 
   return (
@@ -43,6 +44,9 @@ if(loadingFallCourses === false && loadingSpringCourses === false){
 else{
   return (
     <>
+    <div className='loadingSpinner'>
+      <Default color='#404040' />  
+    </div>
     </>
   )
 }

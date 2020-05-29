@@ -19,6 +19,12 @@ p{
   font-size: 12px;
   line-height: 18px;
 }
+li{
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 18px;
+  color: #404040 !important;
+}
 
 a{
   font-weight: normal;
@@ -26,6 +32,11 @@ a{
   line-height: 18px;
   color: #404040;
 }
+a:hover{
+  color:'#818181';
+}
+
+
 .modal-overlay {
   position: fixed;
   top: 0;

@@ -11,6 +11,8 @@ const [year,setYear] = useInput('');
 const [period,setPeriod] = useInput('');
 const [level, setLevel] = useState('');
 
+const [isAdded, setisAdded] = useState(false)
+
 sentCourse.givenPeriods.map(period =>{
     console.log(period)
 })
@@ -40,7 +42,9 @@ const handleSubmit = (e) =>{
     }
     else{
         sunburstAction()
-        closePopup()
+        setisAdded(true)
+        setTimeout(closePopup, 1500)
+        //closePopup()
     }
     e.preventDefault()
 }
@@ -55,6 +59,7 @@ const sunburstAction = () =>{
     dispatch({type: 'ADD_COURSE', courseObject})
 }
 
+if(isAdded === false){
 
 return(
     ReactDOM.createPortal(
@@ -136,6 +141,31 @@ return(
   </React.Fragment>, document.body
 )
 )
+}
+else{
+    return(
+        ReactDOM.createPortal(
+        <React.Fragment>
+        <div className="modal-overlay"/>
+        <div className="modal-wrapper" aria-modal aria-hidden tabIndex={-1} role="dialog">
+          <div className="modal">
+            <div className="modal-header">
+              <button type="button" className="modal-close-button" data-dismiss="modal" aria-label="Close" onClick={closePopup}>
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+        
+            <div className="row headline">
+                {sentCourse.course_code} IS ADDED
+            </div>
+           
+         
+          </div>
+        </div>
+      </React.Fragment>, document.body
+        ))
+
+}
 
 }
 export default Popup;

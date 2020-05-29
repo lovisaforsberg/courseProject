@@ -34,11 +34,18 @@
     text-align: left;
     padding: 15px;
     margin-bottom: 10px;
+    max-height: 250px;
+    overflow-y: scroll;
+   
 }
 .infoTextLine{
     margin-top: 2px;
     margin-bottom: 2px;
 }
+.infoTextLine:hover{
+    background-color: white;
+}
+
 .italicText{
     font-style: italic;
 }
@@ -55,8 +62,9 @@
 .FooterIcon{
     font-size: 30px;
     cursor: pointer;
-
 }
+
+
 .FooterText{
     margin-top: 2px;
     font-size: 10px;
@@ -68,6 +76,7 @@
     justify-content: center;
     align-items: center;
 }
+
 
 .cross_icon{
     cursor: pointer;
@@ -108,4 +117,29 @@
     border-color: #404040;
     font-weight: bold;
   }
+
+  .loadingSpinner{
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+
+  }
+
+  /*
+  .aboutText{
+      max-height: 150px;
+      overflow-y: scroll;
+  }*/
+
+  ::-webkit-scrollbar {
+    -webkit-appearance: none;
+    border-radius: 4px;
+    width: 7px;
+    background-color: rgba(66, 65, 65, 0.05);
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(66, 65, 65, 0.5);
+  }
+
   

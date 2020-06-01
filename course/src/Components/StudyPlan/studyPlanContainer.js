@@ -9,15 +9,23 @@ import {RadarChart} from './radarChart/radarChart'
 import "./bachelorForm.css"
 
 export const ZoomedInContext = createContext({})
+export const BachelorNameContext = createContext({})
 
 
 const StudyPlanContainer = () => {
     const contextValue = useContext(StudyplanContext);
 
     const [ZoomedData, setZoomedData] = useState(contextValue[0])
+    const [BachelorName, setBachelorName] = useState(JSON.parse(localStorage.getItem("nameData"))||"")
+    console.log(contextValue[0])
+
+    /*useEffect(()=>{
+        localStorage.setItem("nameData", JSON.stringify(BachelorName))
+    },[])*/
 
     return(
         <>
+    <BachelorNameContext.Provider value={{BachelorName, setBachelorName}}>
     <ZoomedInContext.Provider value={{ZoomedData, setZoomedData}}>
 
         <NavBar></NavBar>
@@ -34,6 +42,9 @@ const StudyPlanContainer = () => {
                     <BachelorForm></BachelorForm>
                 </div>
             </div>
+            <div className="bachelorNameContainer">
+                {BachelorName}
+            </div>
             <div className="progressbarContainer">
             <ProgressBarContainer></ProgressBarContainer>
             </div>
@@ -49,6 +60,7 @@ const StudyPlanContainer = () => {
         </div>
 
     </ZoomedInContext.Provider>
+    </BachelorNameContext.Provider>
         
 
         </>

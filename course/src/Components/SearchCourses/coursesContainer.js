@@ -28,7 +28,6 @@ const CoursesContainer = () => {
 
   
     const handleFilterCourses = event => {
-      console.log('search text')
       const name = event.target.name;
       const newValue = event.target.value;
       setFilterInput({[name]: newValue });

@@ -7,6 +7,7 @@ import usePersistedState from '../../Data/usePersistedState';
 import ExplanationPopup from './explanationPopup'
 import {useFetchCourses} from '../../Data/useFetchCourses'
 import {setSendDataToStudyPlan} from '../../Data/setSendData'
+import {BachelorNameContext} from './studyPlanContainer'
 
 export const PopupContextExplain = createContext({})
 
@@ -28,6 +29,11 @@ const [isPopupShown, setPopupShown] = useState(false)
 
 const [state,dispatch] = useContext(StudyplanContext);
 const [isLoading, setIsLoading] = useState(true)
+//const [bachelorName, setBachelorName] = useState("")
+
+const name_context = useContext(BachelorNameContext)
+const {BachelorName, setBachelorName} = name_context
+console.log(BachelorName)
 
 
 
@@ -88,6 +94,7 @@ const addBachelorORG = (prog, year) =>{
       more_info.push(sendData)
     })
 
+
     dispatch({type: 'ADD_BACHELOR', fetchedProg, more_info})
     setSelectedProgram(fetchedProg)
     console.log(fetchedProg)
@@ -107,8 +114,10 @@ const addBachelorORG = (prog, year) =>{
         // do stuff with responseJSON here...
         var fetchedProg = responseJSON.Specs
         //console.log(flatten(fetchedProg))
-        console.log('first fetch')
+    
+        getBachelorName(prog) //sets the title of the chosen program
         flattenAndFetch(fetchedProg)
+
   })
 
   }
@@ -169,10 +178,23 @@ const handleRemove = (e) =>{
 const handleSubmit = (e) =>{
     console.log("submit")
     addBachelor(prog, year)
+    console.log(prog)
+    console.log(year)
     setClicked(true)
     e.preventDefault()
 }
 
+const getBachelorName = (chosenProg) =>{
+  allProgs.map(bachelor =>{
+      if (chosenProg == bachelor.code){
+        console.log(bachelor.title)
+        setBachelorName(bachelor.title)
+        
+      }
+  })
+  localStorage.setItem("nameData", JSON.stringify(BachelorName))
+  console.log(BachelorName) 
+}
 
 /*
 useEffect(()=>{

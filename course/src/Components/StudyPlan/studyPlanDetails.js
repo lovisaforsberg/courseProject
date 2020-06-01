@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useRef, createContext } from 'react';
+import React, { useContext, useEffect, useState, useRef, createContext, useReducer } from 'react';
 import './studyPlanDetails.css'
 import {useFetchCourses} from '../../Data/useFetchCourses'
 import {StudyplanDetailContext} from './sunburst'
@@ -6,6 +6,8 @@ import PopupStudyPlan from "./popupStudyPlan"
 import StudyplanContext from "../../store"
 import {useInput} from "../SearchCourses/useInput"
 import { Default } from 'react-spinners-css';
+import {ZoomedInContext} from "./studyPlanContainer"
+import {studyplanReducer,initialstate} from "../../reducers/studyplanReducer"
 
 
 export const PopupContextDelete = createContext({})
@@ -64,6 +66,7 @@ const StudyPlanDetails=({sentCourse})=> {
             changeCourse()
         }
         e.preventDefault()
+        setZoomedData(initialstate)
     }
 
     const changeCourse = () =>{
@@ -74,6 +77,11 @@ const StudyPlanDetails=({sentCourse})=> {
         setDetailShown(false)
 
     }
+    const useStudyplanReducer = useReducer(studyplanReducer, initialstate)
+
+	const zoom_context = useContext(ZoomedInContext)
+	const {ZoomedData, setZoomedData} = zoom_context
+	let zoomDataObj = ZoomedData
 
     const [state,dispatch] = useContext(StudyplanContext);
     

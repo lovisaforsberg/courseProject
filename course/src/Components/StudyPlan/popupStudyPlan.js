@@ -1,8 +1,10 @@
-import React, {useContext, useState, useImperativeHandle} from 'react';
+import React, {useContext, useState, useImperativeHandle, useReducer} from 'react';
 import ReactDOM from 'react-dom';
 import { PopupContextDelete } from './studyPlanDetails';
 import StudyplanContext from "../../store"
 import "./popupStudyPlan.css"
+import {ZoomedInContext} from "./studyPlanContainer"
+import {studyplanReducer,initialstate} from "../../reducers/studyplanReducer"
 
 const PopupStudyPlan = ({sentCourse}) =>{
 
@@ -11,6 +13,11 @@ const {popupShow, setPopupShown} = popup_context
 const {detailShow, setDetailShown} = detail_context
 
 const [state,dispatch] = useContext(StudyplanContext);
+const useStudyplanReducer = useReducer(studyplanReducer, initialstate)
+
+	const zoom_context = useContext(ZoomedInContext)
+	const {ZoomedData, setZoomedData} = zoom_context
+	let zoomDataObj = ZoomedData
 
 const [isAdded, setisAdded] = useState(false)
 
@@ -24,6 +31,7 @@ const handleSubmit = (course)=>{
   setisAdded(true)
   setTimeout(closePopup, 1000)
   removeCourse(course)
+  setZoomedData(initialstate)
 
 
 }
@@ -52,7 +60,7 @@ return(
         Do you want to remove {sentCourse.course_code} from your study plan?
         </div>
         <p className='descriptionText'>Remember: this will only remove {sentCourse.course_code} from {sentCourse.period}, {sentCourse.year} <br/>
-        if the course is spanned between multiply periods, you need to remove them seperatly</p>
+        if the course spans over multiple periods, you need to remove them seperatly</p>
         
         <button className="addButton" style={{backgroundColor:sentCourse.color}} onClick={()=>handleSubmit(sentCourse)}>YES</button>
         <button className="addButton" style={{backgroundColor:'grey'}} onClick={closePopup}>NO</button>

@@ -57,6 +57,7 @@ const Sunburst = ()=> {
     const level = d.parent.parent.parent.data.name
     const courseObject = {code:d.data.name, level: level, year: year, period: period}
     dispatch({type: 'DELETE_COURSE', courseObject})
+
     
   }
 

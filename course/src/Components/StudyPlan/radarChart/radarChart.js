@@ -122,6 +122,7 @@ export const RadarChart = () => {
 
 
     useEffect(()=>{
+		setZoomedData(zoomDataObj)
 		const allSubjectsAxis = createAxesAll(initialstate)
 		const subjectData = createData(allSubjectsAxis, zoomDataObj)
 /////////////////////////////////////////////////////////
@@ -478,7 +479,7 @@ var margin = { top: 50, right: 80, bottom: 50, left: 80 },
 
 
 
-    }, [useStudyplanReducer])
+    }, [useStudyplanReducer, zoomDataObj, dispatch])
     
 
     return (

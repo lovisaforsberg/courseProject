@@ -72,18 +72,16 @@ const campusOptions = [
 
     <div className="filterContainer">
       <div className="row">
-      <form onSubmit={e=>handleChangeValue(e)}>
+      
         <input
           type="text"
           name="search_text"
           value={searchValue.search_text}
-          //onChange={e=>handleChangeValue(e)}
+          onChange={e=>handleChangeValue(e)}
           placeholder="Search for courses"
           className="textInput"
           id="textInput"
         />
-        <input type="submit"/>
-      </form>
       </div>
       <div className="row container">
         <div className="filterItem dropdown">

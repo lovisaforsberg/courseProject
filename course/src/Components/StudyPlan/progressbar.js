@@ -72,19 +72,20 @@ const handleMouseLeave = () =>{
     const {ZoomedData, setZoomedData} = zoom_context
    
     let zoomDataObj = ZoomedData
-    
+    console.log(zoomDataObj)
+
     const useStudyplanReducer= useReducer(studyplanReducer,initialstate)
 
     let [percentRange, setProgress] = useState(0);
     let [share, setShare] = useState(0)
 
     useEffect(()=>{
-
-    setShare(countCredits(zoomDataObj))
-
+        setZoomedData(zoomDataObj)
+    let countedCredits = countCredits(zoomDataObj)
+    setShare(countedCredits)
     setProgress(share)
 
-    },[useStudyplanReducer, zoomDataObj])
+    },[useStudyplanReducer, zoomDataObj, initialstate])
   
     return (
         <>

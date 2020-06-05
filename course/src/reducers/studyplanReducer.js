@@ -155,8 +155,6 @@ const addPeriods = (period, year, bach, course, info)=>{
           courseName:course.Name, 
           size:course.ConnectedRound[p_str], /*, fromBach_allInfo:course*/
           allInfo: fetched_info
-
-
           })
     }
     
@@ -167,8 +165,12 @@ const addPeriods = (period, year, bach, course, info)=>{
 }
 
 
-const AddBachelor = (fetch, additionalInfo) =>{
+const AddBachelor = (fetch, additionalInfo, bachelor_name) =>{
   console.log(additionalInfo)
+  console.log(bachelor_name)
+  console.log(initialstate.children[0]) //= bachelor object
+  const bachelor_obj = initialstate.children[0]
+  bachelor_obj.bachelor_name = bachelor_name;
   const bachelor_courses = initialstate.children.find(({name}) => name === 'bachelor');
   fetch.map(element => {
     element.Electivity[0].Courses.map(course =>{
@@ -231,7 +233,7 @@ const moveCourse = (course, moveTo)=>{
 
 }
 
-const RemoveBachelor = () =>{
+const RemoveBachelor = (bach_name) =>{
   //  console.log(program)
   //  const bachelor_courses = initialstate.children.find(({name}) => name === 'bachelor');
    // program.map(element => {
@@ -241,6 +243,7 @@ const RemoveBachelor = () =>{
      //  deleteCourse(courseObject)
      // })
      const bachelor_courses = initialstate.children[0]
+     delete bachelor_courses.bachelor_name
      const bachelor_years = bachelor_courses.children
      //const bachelor_period = bachelor_years.children
      //obj_period.children.splice(i, 1)
@@ -280,12 +283,13 @@ export const studyplanReducer = (state,action) =>{
             return newState2;
       case 'ADD_BACHELOR':
            // AddBachelor(action.fetchedProg, action.track);
-           AddBachelor(action.fetchedProg, action.more_info);
+           AddBachelor(action.fetchedProg, action.more_info, action.bach_name);
+           console.log(action.bach_name)
             const newState3 = {...state}
             return newState3;
       case 'REMOVE_BACHELOR':
             // AddBachelor(action.fetchedProg, action.track);
-            RemoveBachelor(action.selectedProgram);
+            RemoveBachelor(action.selectedProgram, action.bach_name);
             const newState4 = {...state}
             return newState4; 
       case 'MOVE_COURSE':

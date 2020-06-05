@@ -78,7 +78,7 @@ const CourseDetail=({sentCourse})=> {
     const [fetchedCourse, loadningFetch] = useFetchCourses(proxy+setUrl(sentCourse.name))
     if(loadningFetch === false){  
         let courseInfo = setSendData(fetchedCourse, sentCourse)
-        //console.log(fetchedCourse)
+        console.log(courseInfo)
         /*
         let courseInfo = {}
         courseInfo.title = fetchedCourse.course.title
@@ -195,9 +195,11 @@ const CourseDetail=({sentCourse})=> {
                         <p className='infoTextLine'><strong>The course is given at: </strong>{courseInfo.campus}</p>
                         {/*<p className='infoTextLine'><strong>Given in period(s): </strong>{courseInfo.givenPeriods.map(per=>{return per+', '})}</p>*/}
                        
-                        <p className='infoTextLine'><strong>Given in period(s): </strong>{courseInfo.periodInfo.map(per=>{
-                            if( (per.periodsDivision).length > 15){
-                                return <div><li>{per.periodsDivision.replace(',', ' +')}</li></div>
+                        <p className='infoTextLine'><strong>Given in period(s): </strong>
+                        {courseInfo.periodInfo.map(per=>{
+                            if( (per.periodsDivision).length > 15){ //given in multiple periods
+                                return <><div><li>{per.periodsDivision.replace(',', ' +')}</li></div>
+                                <p className='infoTextLine italicText'>Note that this course round spans between multiple periods</p></>
 
                             //return <div><li>{per.periodsDivision_array[0]+ ' '+ per.periodsDivision_array[1]}</li></div>
                             }
@@ -207,7 +209,7 @@ const CourseDetail=({sentCourse})=> {
 
                             })}</p>
                         
-                        <p className='infoTextLine italicText'>Some courses will span between multiply periods</p>
+                     
 
                        
                         <br/>

@@ -92,6 +92,7 @@ const StudyPlanDetails=({sentCourse})=> {
 
     const [isLoading, setLoading] = useState(true)
     const [courseInfo, setCourseInfo] = useState({})
+    const [differentCredits, setDifferentCredits] = useState(false)
 
     const showPopup = (courseInfo) =>{
         setPopupShown(true);
@@ -104,6 +105,16 @@ const StudyPlanDetails=({sentCourse})=> {
     const years = ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5',]
     const periods = ['P1', 'P2', 'P3', 'P4']
 
+    const isCreditsDifferent = (courseSent, infoCourse) =>{
+        console.log(infoCourse.size)
+        console.log(courseSent.size)
+    if(courseSent.size == infoCourse.size){
+        return false
+    }
+    else{
+        return true
+    }
+    }
 
     useEffect(()=>{
 
@@ -116,6 +127,11 @@ const StudyPlanDetails=({sentCourse})=> {
         setCourseInfo(sentCourse.allInfo)
         setLoading(false)
     }
+    if(courseInfo != {}){
+    isCreditsDifferent(sentCourse, courseInfo)
+    }
+
+    
     /*
     else{
         const course_url = setUrl(sentCourse.name)
@@ -172,7 +188,13 @@ const StudyPlanDetails=({sentCourse})=> {
                 */}
                 <div id='information_tab' className='tab'>
                     <div className="infoText">
-                        <p className='infoTextLine' style={{fontSize:'15px', marginBottom:'4px'}}><strong>Credits: </strong>{courseInfo.size} hp</p>
+                        {isCreditsDifferent(sentCourse, courseInfo)?
+                        <>
+                        <p className='infoTextLine' style={{fontSize:'15px', marginBottom:'4px'}}><strong>Credits in this period: </strong>{sentCourse.size}</p>
+                        <p className='infoTextLine' style={{fontSize:'15px', marginBottom:'4px'}}><strong>Total credits: </strong>{courseInfo.size}</p>
+                        </>
+                        : <p className='infoTextLine' style={{fontSize:'15px', marginBottom:'4px'}}><strong>Credits: </strong>{courseInfo.size}</p>
+                        }
                         <p className='infoTextLine'><strong>Educational Level: </strong>{courseInfo.level}</p>
                         <p className='infoTextLine'><strong>Main Subjects: </strong>{courseInfo.subjects.map(sub=>{return sub +', '})}</p>
 
@@ -298,6 +320,7 @@ const StudyPlanDetails=({sentCourse})=> {
                             <option key='period' disabled={true} value={courseInfo.period}>
                                 Select Period
                             </option>
+                            
                             <option key="P1" value="P1">
                                 P1
                             </option> 
@@ -328,7 +351,7 @@ const StudyPlanDetails=({sentCourse})=> {
                 </footer>
 
             </div>
-            {console.log(isPopupShown)}
+         
                 {isPopupShown && 
                 <PopupContextDelete.Provider value={{ popup_context: {isPopupShown, setPopupShown}, detail_context: {detailShow, setDetailShown} }}>
                   <PopupStudyPlan sentCourse={courseInfo}/>

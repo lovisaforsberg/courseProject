@@ -29,11 +29,11 @@ const [isPopupShown, setPopupShown] = useState(false)
 
 const [state,dispatch] = useContext(StudyplanContext);
 const [isLoading, setIsLoading] = useState(true)
-//const [bachelorName, setBachelorName] = useState("")
+const [bachelorName, setBachelorName] = useState("")
 
-const name_context = useContext(BachelorNameContext)
+/*const name_context = useContext(BachelorNameContext)
 const {BachelorName, setBachelorName} = name_context
-console.log(BachelorName)
+console.log(BachelorName)*/
 
 
 
@@ -48,8 +48,10 @@ function setUrl(course_code){
   return full_url
 }
 
-const removeBachelor = () =>{
-  dispatch({type:'REMOVE_BACHELOR',selectedProgram})
+const removeBachelor = (prog) =>{
+  let bach_name = getBachelorName(prog)
+  console.log(bach_name)
+  dispatch({type:'REMOVE_BACHELOR',selectedProgram, bach_name})
 }
 
 const addBachelorORG = (prog, year) =>{
@@ -69,7 +71,7 @@ const addBachelorORG = (prog, year) =>{
     
   }
 
-  function flattenAndFetch (fetchedProg){
+  function flattenAndFetch (fetchedProg, prog){
     const allCourses = []
     const more_info = []
     console.log('in flatten function')
@@ -94,8 +96,9 @@ const addBachelorORG = (prog, year) =>{
       more_info.push(sendData)
     })
 
-
-    dispatch({type: 'ADD_BACHELOR', fetchedProg, more_info})
+    let bach_name = getBachelorName(prog)
+    console.log(bach_name)
+    dispatch({type: 'ADD_BACHELOR', fetchedProg, more_info, bach_name})
     setSelectedProgram(fetchedProg)
     console.log(fetchedProg)
  })
@@ -115,8 +118,8 @@ const addBachelorORG = (prog, year) =>{
         var fetchedProg = responseJSON.Specs
         //console.log(flatten(fetchedProg))
     
-        getBachelorName(prog) //sets the title of the chosen program
-        flattenAndFetch(fetchedProg)
+         //sets the title of the chosen program
+        flattenAndFetch(fetchedProg, prog)
 
   })
 
@@ -152,6 +155,7 @@ const addBachelorORG = (prog, year) =>{
 
   useEffect (() =>{
     fetchUrl()
+   // localStorage.setItem("nameData", JSON.stringify(BachelorName))
   },[])
 
 
@@ -170,7 +174,7 @@ const handleRemove = (e) =>{
   console.log("remove")
   //dispatch({type: 'REMOVE_BACHELOR'})
   console.log(selectedProgram)
-  removeBachelor()
+  removeBachelor(prog)
   setClicked(false)
   e.preventDefault()
 }
@@ -185,22 +189,21 @@ const handleSubmit = (e) =>{
 }
 
 const getBachelorName = (chosenProg) =>{
+  let bachelor_name = ""
   allProgs.map(bachelor =>{
       if (chosenProg == bachelor.code){
         console.log(bachelor.title)
         setBachelorName(bachelor.title)
-        
+        bachelor_name = bachelor.title
+       // localStorage.setItem("nameData", JSON.stringify(bachelor.title))
       }
   })
-  localStorage.setItem("nameData", JSON.stringify(BachelorName))
-  console.log(BachelorName) 
+  console.log(bachelor_name)  
+  return bachelor_name
 }
+ 
 
-/*
-useEffect(()=>{
-  setProgState(prog)
-  setYearState(year)
-},[prog,year])*/
+
 
 return(
     <React.Fragment>

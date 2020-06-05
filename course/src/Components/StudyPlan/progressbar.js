@@ -18,6 +18,7 @@ const ProgressBar = (props) => {
 const [show, setShow] = useState(false)
 
 const percent = props.percentRange*100/300
+const credits = props.share.toFixed(1)
 const handleMouseEnter = () =>{
     setShow(true)
     console.log(show)
@@ -29,9 +30,9 @@ const handleMouseLeave = () =>{
 
     return (
         <div className="progbar_container">
-        <div className="hoverDiv" style={props.percentRange > 100?{width:'120px'}:{width:'110px'}}>
+        <div className="hoverDiv" style={credits > 99?{width:'120px'}:{width:'110px'}}>
             <div className="hoverText">
-        {show? props.percentRange + " credits":null} 
+        {show? credits + " credits":null} 
             </div>
         </div>
         <div className="progress-bar">
@@ -61,9 +62,10 @@ const handleMouseLeave = () =>{
     flat(data, allData)
 
     allData.map(course=>{
+        console.log(course.size)
         count+=course.size
     })
-
+    console.log(count)
    return (count)
   }
 
@@ -82,6 +84,7 @@ const handleMouseLeave = () =>{
     useEffect(()=>{
         setZoomedData(zoomDataObj)
     let countedCredits = countCredits(zoomDataObj)
+    console.log(countedCredits)
     setShare(countedCredits)
     setProgress(share)
 
@@ -90,7 +93,7 @@ const handleMouseLeave = () =>{
     return (
         <>
         <div className="ProgressContainer" >      
-            <ProgressBar percentRange={percentRange}/>
+            <ProgressBar percentRange={percentRange} share={share}/>
         </div>
         </>
     );

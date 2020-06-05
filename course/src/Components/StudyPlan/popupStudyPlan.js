@@ -60,7 +60,7 @@ return(
         Do you want to remove {sentCourse.course_code} from your study plan?
         </div>
         <p className='descriptionText'>Remember: this will only remove {sentCourse.course_code} from {sentCourse.period}, {sentCourse.year} <br/>
-        if the course spans over multiple periods, you need to remove them seperatly</p>
+        If the course spans over multiple periods, you need to remove them separatley</p>
         
         <button className="addButton" style={{backgroundColor:sentCourse.color}} onClick={()=>handleSubmit(sentCourse)}>YES</button>
         <button className="addButton" style={{backgroundColor:'grey'}} onClick={closePopup}>NO</button>

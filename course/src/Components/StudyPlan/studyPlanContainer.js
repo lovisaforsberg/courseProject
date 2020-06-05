@@ -7,25 +7,29 @@ import StudyplanContext from '../../store'
 import {ProgressBarContainer} from './progressbar'
 import {RadarChart} from './radarChart/radarChart'
 import "./bachelorForm.css"
+import {studyplanReducer,initialstate} from "../../reducers/studyplanReducer"
 
 export const ZoomedInContext = createContext({})
-export const BachelorNameContext = createContext({})
+//export const BachelorNameContext = createContext({})
 
 
 const StudyPlanContainer = () => {
     const contextValue = useContext(StudyplanContext);
 
     const [ZoomedData, setZoomedData] = useState(contextValue[0])
-    const [BachelorName, setBachelorName] = useState(JSON.parse(localStorage.getItem("nameData"))||"")
+    //const [BachelorName, setBachelorName] = useState("")
     console.log(contextValue[0])
-
-    /*useEffect(()=>{
+    //const useStudyplanReducer= useReducer(studyplanReducer,initialstate)
+/*
+    useEffect(()=>{
         localStorage.setItem("nameData", JSON.stringify(BachelorName))
-    },[])*/
+        setBachelorName(JSON.parse(localStorage.getItem("nameData")))
+        console.log(JSON.parse(localStorage.getItem("nameData")))
+    },[useStudyplanReducer])*/
 
     return(
         <>
-    <BachelorNameContext.Provider value={{BachelorName, setBachelorName}}>
+  {/*  <BachelorNameContext.Provider value={{BachelorName, setBachelorName}}>*/}
     <ZoomedInContext.Provider value={{ZoomedData, setZoomedData}}>
 
         <NavBar></NavBar>
@@ -42,10 +46,13 @@ const StudyPlanContainer = () => {
                     <BachelorForm></BachelorForm>
                 </div>
             </div>
+            <div className="notTopBar">
             <div className="bachelorNameContainer">
-                {BachelorName}
+                {/*BachelorName*/}
+                {initialstate.children[0].bachelor_name}
             </div>
             <div className="progressbarContainer">
+                <div className="progBarHeadline">Sum of credits</div>
             <ProgressBarContainer></ProgressBarContainer>
             </div>
             <div className='sunBurstRadar'>
@@ -56,11 +63,11 @@ const StudyPlanContainer = () => {
                 <RadarChart></RadarChart>
                 </div>
             </div>
-            
+            </div>
         </div>
 
     </ZoomedInContext.Provider>
-    </BachelorNameContext.Provider>
+ {/*   </BachelorNameContext.Provider>*/}
         
 
         </>

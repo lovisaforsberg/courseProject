@@ -20,5 +20,5 @@
 }
 .sunburst{
     display: inline-flex;
-    align-items: flex-start;
+    align-items: center;
 }

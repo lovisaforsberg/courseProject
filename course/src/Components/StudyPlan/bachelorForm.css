@@ -23,6 +23,7 @@
     margin-top: 20px;
     display: flex;
     justify-content: center;
+    font-size:25px;
 }
 
 .sunBurstRadar{
@@ -132,6 +133,7 @@ outline:0;
     font-size: 15px;
     font-weight: bold;
 }
+
 .questionIcon{
     width:25px;
 }
@@ -141,4 +143,10 @@ outline:0;
     font-size:10px;
     margin-top:3px;
     max-width: 300px;
+}
+.progressbarContainer{
+    margin-top: 20px;
+    display: block;
+    justify-content: center;
+    text-align: center;
 }

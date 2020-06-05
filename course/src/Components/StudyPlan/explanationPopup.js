@@ -24,7 +24,7 @@ const closePopup = () =>{
                 </div>
                 <div className="ExplanationText">Enter the name of your program and the start year of your studies in order to 
                     automatically add all compulsory bachelor courses in your program into the study plan.
-                    You can always remove and move the courses after adding them. To add track specific or masters courses, 
+                    You can always remove- and move the courses after adding them. To add track specific or masters courses, 
                     please use the search functionality and add them manually. </div>
             </div>
         </div>

@@ -1,9 +1,12 @@
-import React, {useState, useEffect, useReducer, useRef, useContext} from 'react';
+import React, {useState, useEffect, useReducer, useRef, useContext, createContext} from 'react';
 import * as d3 from 'd3'
 import StudyplanContext from "../../../store"
 import {ZoomedInContext} from '../studyPlanContainer'
 import {studyplanReducer,initialstate} from "../../../reducers/studyplanReducer"
+import ExplanationPopup from './../explanationPopup'
 import './radarChart.css';
+import explanationTexts from "./../../../Data/explanationTexts.json"
+import { PopupContextExplainRadar } from './../../../App'
 
 
   function add(arr, subject, size) {
@@ -92,6 +95,7 @@ return all_data
 
 }
 
+
 const useCourse = () =>{
     const contextValue = useContext(StudyplanContext);
     return contextValue;
@@ -99,6 +103,22 @@ const useCourse = () =>{
 
  
 export const RadarChart = () => {
+
+	//const [isPopupShown, setPopupShown] = useState(false)
+
+	const [show, setShow] = useState(false)
+
+	const {popup_context_radar} = useContext(PopupContextExplainRadar)
+
+	const {isPopupShownRadar, setPopupShownRadar} = popup_context_radar
+
+		const showPopup = () =>{
+		setPopupShownRadar(true);
+		console.log(isPopupShownRadar)
+		}
+
+		
+
 	const useStudyplanReducer = useReducer(studyplanReducer, initialstate)
 
 	const zoom_context = useContext(ZoomedInContext)
@@ -114,7 +134,7 @@ export const RadarChart = () => {
 	//const subjectData = createData(allSubjectsAxis, zoomDataObj)
     
 	//console.log(subjectData)
-	
+
 
     const d3Container = useRef(null)
 
@@ -122,6 +142,7 @@ export const RadarChart = () => {
 
 
     useEffect(()=>{
+
 		setZoomedData(zoomDataObj)
 		const allSubjectsAxis = createAxesAll(initialstate)
 		const subjectData = createData(allSubjectsAxis, zoomDataObj)
@@ -170,7 +191,7 @@ const RadarChart = function RadarChart(parent_selector, data, options) {
 	 levels: 3,				//How many levels or inner circles should there be drawn
 	 maxValue: 0, 			//What is the value that the biggest circle will represent
 	 labelFactor: 1.25, 	//How much farther than the radius of the outer circle should the labels be placed
-	 wrapWidth: 40, 		//The number of pixels after which a label needs to be given a new line
+	 wrapWidth: 60, 		//The number of pixels after which a label needs to be given a new line
 	 opacityArea: 0.35, 	//The opacity of the area of the blob
 	 dotRadius: 3, 			//The size of the colored circles of each blog
 	 opacityCircles: 0.1, 	//The opacity of the circles of each blob
@@ -225,7 +246,7 @@ const RadarChart = function RadarChart(parent_selector, data, options) {
 	let svg = parent.append("svg")
 			.attr("width",  cfg.w + cfg.margin.left + cfg.margin.right)
 			.attr("height", cfg.h + cfg.margin.top + cfg.margin.bottom)
-			.attr("class", "radar");
+			.attr("class", "radar")
 
 	//Append a g element
 	let g = svg.append("g")
@@ -302,7 +323,7 @@ const RadarChart = function RadarChart(parent_selector, data, options) {
 		.attr('fill', '#404040')
 		.attr("dy", "0.15em")
 		.attr("x", (d,i) => rScale(maxValue * cfg.labelFactor) * cos(angleSlice * i - HALF_PI))
-		.attr("y", (d,i) => rScale(maxValue * cfg.labelFactor) * sin(angleSlice * i - HALF_PI))
+		.attr("y", (d,i) => (rScale(maxValue * cfg.labelFactor) * sin(angleSlice * i - HALF_PI))-10)
 		.text(d => d)
 		.call(wrap, cfg.wrapWidth);
 
@@ -422,7 +443,7 @@ const RadarChart = function RadarChart(parent_selector, data, options) {
 				.attr("class", "title")
 				.attr('transform', `translate(${cfg.legend.translateX},${cfg.legend.translateY})`)
 				.attr("x", cfg.w - 70)
-				.attr("y", 10)
+				.attr("y", 0)
 				.attr("font-size", "12px")
 				.attr("fill", "#404040")
 				.text(cfg.legend.title);
@@ -438,7 +459,7 @@ const RadarChart = function RadarChart(parent_selector, data, options) {
 		  .enter()
 		  .append("rect")
 		  .attr("x", cfg.w - 65)
-		  .attr("y", (d,i) => i * 20)
+		  .attr("y", (d,i) => i * 20 -9)
 		  .attr("width", 10)
 		  .attr("height", 10)
 		  .style("fill", (d,i) => cfg.color(i));
@@ -448,11 +469,13 @@ const RadarChart = function RadarChart(parent_selector, data, options) {
 		  .enter()
 		  .append("text")
 		  .attr("x", cfg.w - 52)
-		  .attr("y", (d,i) => i * 20 + 9)
+		  .attr("y", (d,i) => i * 20)
 		  .attr("font-size", "11px")
 		  .attr("fill", "#404040")
 		  .text(d => d);
 	}
+
+
 	return svg;
 }
 
@@ -486,6 +509,10 @@ var margin = { top: 50, right: 80, bottom: 50, left: 80 },
         <>
         <div className='radarContainer'>
             <svg id='radarChart' ref={d3Container}></svg>
+			<i onClick={showPopup} style={{cursor:'pointer'}} className="fas fa-info-circle infoButton_icon"></i>
+			{isPopupShownRadar &&
+					<ExplanationPopup props={explanationTexts.popups.radar_chart}/>
+              }
         </div>
         </>
     )

@@ -30,3 +30,19 @@
     display: flex;
     align-items: center;
 }
+
+.label{
+    font-weight: 600;
+    display:flex;
+    align-items: center;
+}
+
+.legendAndInfo{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.circleInfoBtn{
+    margin-bottom: 100px;
+}

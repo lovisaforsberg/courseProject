@@ -4,6 +4,10 @@ import {filterData} from "./filterData"
 import CourseDetail from './courseDetail'
 import './courses_data.css'
 import {DataContext} from "../../Data/courses"
+import {PopupContextExplainPacked} from './../../App'
+import explanationTexts from "./../../Data/explanationTexts.json"
+import ExplanationPopup from '../StudyPlan/explanationPopup'
+
 
 
 export const DetailContext = createContext({})
@@ -12,9 +16,17 @@ const DisplayData=({dataprop})=> {
     const d3Container = useRef(null)
     const legendContainer = useRef(null)
 
+    const {popup_context_packed} = useContext(PopupContextExplainPacked)
+    const {isPopupShownPacked, setPopupShownPacked} = popup_context_packed
+
+		const showPopup = () =>{
+		setPopupShownPacked(true);
+		}
+
     
     const [isDetailShown, setDetailShown] = useState(false)
     const [selectedCourse, setSelectedCourse] = useState('')
+    const [isExecuted, setExecuted] = useState(false)
 
     const showDetail = (course)=>{
       setSelectedCourse(course)
@@ -48,7 +60,7 @@ const DisplayData=({dataprop})=> {
             y = text.attr("y"),
             x = text.attr("x"),
             dy = parseFloat(text.attr("dy")),
-            tspan = text.text(null).append("tspan").attr("x", x).attr("y", y).attr("dy", dy + "em");
+            tspan = text.text(null).append("tspan").attr("x", x).attr("y", y).attr("dy", dy + "em")
     
           while (word = words.pop()) {
             line.push(word);
@@ -57,7 +69,7 @@ const DisplayData=({dataprop})=> {
               line.pop();
               tspan.text(line.join(" "));
               line = [word];
-              tspan = text.append("tspan").attr("x", x).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+              tspan = text.append("tspan").attr("x", x).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word)
             }
           }
         });
@@ -94,6 +106,7 @@ const DisplayData=({dataprop})=> {
         .attr("r", function(d) {
           return d.r;
         })
+        .attr('align-items', 'center')
 
        /*
         .on("click", function(d) {return d.children !== undefined ? 
@@ -105,9 +118,9 @@ const DisplayData=({dataprop})=> {
           ( showDetail(d.data), 
           //console.log(d), console.log(focus), console.log(d.data),
           // stop from zooming out
-          d3.event.stopPropagation());})
+          d3.event.stopPropagation());})*/
           
-        .on('mousemove', function(d) {if (focus !== d) { return d3.select(this).attr('class') == "node node--leaf" ?
+        /*.on('mousemove', function(d) {if (focus !== d) { return d3.select(this).attr('class') == "node node--leaf" ?
           
           ( divTooltip.style('left', d3.event.pageX + 10 + 'px'),
             divTooltip.style('top', d3.event.pageY - 25 + 'px'),
@@ -120,6 +133,8 @@ const DisplayData=({dataprop})=> {
         .on('mouseout', function(d) {
             divTooltip.style('display', 'none')
           })*/
+
+
   
     var text = g.selectAll("text")
       .data(nodes)
@@ -127,15 +142,18 @@ const DisplayData=({dataprop})=> {
         //.attr("class", "label")
         .attr("class", function(d) { return d.parent ? d.children ? "label" : "label label--leaf" : "label label--root"; })
         .attr("text-anchor", "middle")
+        .attr("position", "relative")
         .attr('alignment-baseline', 'baseline')
         .attr('font-family', 'montserrat')
         .attr('fill', '#404040')
         .attr('background', 'white')
-        .attr('y', 0)
+        .attr('y', function(d){return -(d.r/4)})
         .attr('x', 0)
+        .attr('transform',function(d){return 'translate('+d.r/2+', ' +d.r/2+')'})
+
 
         .attr('dy', '.15em')
-        .attr('cursor', 'default')
+        .attr('cursor', 'pointer')
 
         .on('mouseover', function(d){ (d3.select(this)
           .style('font-size', function(d){ return d.children == undefined ? 13: 15}))
@@ -160,21 +178,40 @@ const DisplayData=({dataprop})=> {
         })
 
         .on("click", function(d) {return d.children !== undefined ? 
-          (zoom(d), d3.event.stopPropagation()):
+          (zoom(d), console.log(d.r), d3.event.stopPropagation()):
           //do this when clicking the course node
           (showDetail(d.data), 
           // stop from zooming out
           d3.event.stopPropagation()); })
         .style("fill-opacity", function(d) { return d.parent === root ? 1 : 0;})
         .style('font-size', function(d){ return d.children == undefined ? 9: 12})
+      
+      
 
       
         //.style("display", function(d) { return d.children !== undefined ? "inline" : "inline"; })
         .style('display', 'inline')
         //.text(function(d) { return d.parent === root ? null : d.data.name; })
         .text(function(d) { return d.data.name; })
+       // .call(getBBox)  
 
-        .call(wrap, 100);
+        .call(wrap, 100)
+
+      var textBackground =  g.selectAll("text")
+      .insert('svg:rect', 'text')
+        .attr({
+            'x': d => d.bbox.x,
+            'y': d => d.bbox.y,
+            'width': d => d.bbox.width,
+            'height': d => d.bbox.height,
+            'class': "bbox"
+        });
+    
+        function getBBox(selection) {
+          selection.each(function(d) {
+              d.bbox = this.getBBox();
+          });
+      };
 
 
 
@@ -184,7 +221,11 @@ const DisplayData=({dataprop})=> {
     svg
         .style("background", 'transparent')
         .attr('class', 'root_circle')
+        //.enter()
+        //.call(function() { zoom(root); })
         .on("click", function() { zoom(root); });
+    
+    zoom(focus)
   
     zoomTo([root.x, root.y, root.r * 2 + margin]);
   
@@ -194,7 +235,8 @@ const DisplayData=({dataprop})=> {
       console.log(d)
   
       var transition = d3.transition()
-          .duration(d3.event.altKey ? 7500 : 750)
+          //.duration(d3.event.altKey ? 7500 : 750)
+          .duration(750)
           .tween("zoom", function(d) {
             var i = d3.interpolateZoom(view, [focus.x, focus.y, focus.r * 2 + margin]);
             return function(t) { zoomTo(i(t)); };
@@ -214,6 +256,7 @@ text
         .on("start", function(d) { if (d.parent === focus) this.style.display = "inline"; })
         .on("end", function(d) { if (d.parent !== focus) this.style.display = "none"; });
         }
+
   
     function zoomTo(v) {
       var k = diameter / v[2]; view = v;
@@ -304,7 +347,13 @@ text
                 </DetailContext.Provider> 
               }
               <svg id='packedCircle' width={600} height={600} radius={600/2} ref={d3Container}></svg>
-              <svg id='legend' width={100} height={270} ref={legendContainer}></svg>
+              <div className='legendAndInfo'>
+                <i onClick={showPopup} style={{cursor:'pointer'}} className="fas fa-info-circle circleInfoBtn infoButton_icon"></i>
+                {isPopupShownPacked &&
+					        <ExplanationPopup props={explanationTexts.popups.packed_circle}/>
+                }
+                <svg id='legend' width={100} height={270} ref={legendContainer}></svg>
+              </div>
             </div>
 
 

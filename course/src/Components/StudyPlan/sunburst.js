@@ -152,7 +152,7 @@ const path = g.append("g")
       (divTooltip.style('left', d3.event.pageX + 10 + 'px'),
       divTooltip.style('top', d3.event.pageY - 25 + 'px'),
       divTooltip.style('display', 'inline-block'),
-      divTooltip.html(d.data.name+': '+d.data.courseName)):null
+      divTooltip.html(d.data.name+': '+d.data.allInfo.title)):null
       
     })
     .on('mouseout', function(d) {

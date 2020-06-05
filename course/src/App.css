@@ -98,7 +98,7 @@ a:hover{
 }
 
 .modal-wrapperE {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   z-index: 1050;
@@ -115,7 +115,7 @@ a:hover{
   background: white;
   box-shadow: 0px 3px 10px rgb(224, 224, 224);
   position: relative;
-  margin-top: 20px;
+  margin-top: 50px;
   margin-right: 100px;
   border-radius: 4px;
   width: 200px;
@@ -129,7 +129,7 @@ a:hover{
   justify-content: flex-end;
 }
 .modal-overlayE {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   z-index: 1040;
@@ -145,4 +145,44 @@ a:hover{
   cursor: pointer;
   border: none;
   background-color: transparent;
+}
+
+
+/*RADAR MODAL*/
+.modalE_radar {
+  z-index: 100;
+  text-align: center;
+  background: white;
+  box-shadow: 0px 3px 10px rgb(224, 224, 224);
+  position: relative;
+  margin-top: 280px;
+  margin-right: 20px;
+  border-radius: 4px;
+  width: 200px;
+  height: auto;
+  padding:10px;
+  float:right;
+}
+
+/*PACKED MODAL*/
+.modalE_packed {
+  z-index: 100;
+  text-align: center;
+  background: white;
+  box-shadow: 0px 3px 10px rgb(224, 224, 224);
+  position: relative;
+  margin-top: 280px;
+  margin-right: 20px;
+  border-radius: 4px;
+  width: 200px;
+  height: auto;
+  padding:10px;
+  float:right;
+}
+
+
+
+.infoButton_icon{
+  font-size: 20px;
+  color:'#efefef';
 }

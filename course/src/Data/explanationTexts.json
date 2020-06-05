@@ -1,0 +1,31 @@
+{
+    "popups": {
+        "bachelor_form": {
+            "text": "Enter the name of your program and the start year of your studies in order to automatically add all compulsory bachelor courses in your program into the study plan. You can always remove and move the courses after adding them. To add track specific or masters courses, please use the search functionality and add them manually.",
+            "class1": "modal-overlayE",
+            "class2": "modal-wrapperE",
+            "class3": "modalE",
+            "class4": "modal-headerE",
+            "classBth": "modal-close-buttonE"
+
+        },
+        "radar_chart": {
+            "text": "The chart shows how many credits of each subject you have taken. Remember that all courses don't have accurate subject, and that the subject 'Technology' are not included in the chart ",
+            "class1": "modal-overlayE",
+            "class2": "modal-wrapperE",
+            "class3": "modalE_radar",
+            "class4": "modal-headerE",
+            "classBth": "modal-close-buttonE"
+        },
+        "packed_circle": {
+            "text1": " first step",
+            "text2": " second step",
+            "class1": "modal-overlayE",
+            "class2": "modal-wrapperE",
+            "class3": "modalE_packed",
+            "class4": "modal-headerE",
+            "classBth": "modal-close-buttonE"
+        }
+    }
+}
+

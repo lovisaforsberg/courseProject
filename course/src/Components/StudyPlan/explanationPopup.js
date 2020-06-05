@@ -1,19 +1,37 @@
 import React, {useContext} from 'react'
 import './explanationPopup.css'
-import { PopupContextExplain } from './bachelorForm'
+//import { PopupContextExplain } from './bachelorForm'
+//import { PopupContextExplainRadar } from './radarChart/radarChart'
+import { PopupContextExplainBachelor } from './../../App'
+import { PopupContextExplainRadar } from './../../App'
+import {PopupContextExplainPacked} from './../../App'
+
+
+
 import ReactDOM from 'react-dom';
 
-const ExplanationPopup = () =>{
-    const {popup_context} = useContext(PopupContextExplain)
-    const {popupShow, setPopupShown} = popup_context 
+const ExplanationPopup = (props) =>{
+    const {popup_context_bachelor} = useContext(PopupContextExplainBachelor)
+    const {popupShowBachelor, setPopupShownBachelor} = popup_context_bachelor
+
+    const {popup_context_radar} = useContext(PopupContextExplainRadar)
+    const {popupShowRadar, setPopupShownRadar} = popup_context_radar
+
+    const {popup_context_packed} = useContext(PopupContextExplainPacked)
+    const {popupShowPacked, setPopupShownPacked} = popup_context_packed
+
 
     
 const closePopup = () =>{
-    setPopupShown(false)
+    setPopupShownBachelor(false)
+    setPopupShownRadar(false)
+    setPopupShownPacked(false)
+
 }
     return(
         ReactDOM.createPortal(
         <React.Fragment>
+           {/*
         <div className="modal-overlayE"/>
             <div className="modal-wrapperE" aria-modal aria-hidden tabIndex={-1} role="dialog">
             <div className="modalE">
@@ -28,6 +46,24 @@ const closePopup = () =>{
                     please use the search functionality and add them manually. </div>
             </div>
         </div>
+        */}
+        
+         <div className={props.props.class1}/>
+            <div className={props.props.class2} aria-modal aria-hidden tabIndex={-1} role="dialog">
+            <div className={props.props.class3}>
+                <div className={props.props.class4}>
+                {/*
+                <button type="button" className={props.props.classBtn} data-dismiss="modalE" aria-label="Close" onClick={closePopup}>
+                    <span aria-hidden="true">&times;</span>
+                </button>*/}
+                 <div className={props.props.classBtn}>
+                        <i onClick={closePopup} className="cross_icon fas fa-times"></i>
+                    </div>
+                </div>
+                <div className="ExplanationText">{props.props.text}</div>
+            </div>
+        </div>
+
         </React.Fragment>, document.body
         )
     )

@@ -8,8 +8,11 @@ import ExplanationPopup from './explanationPopup'
 import {useFetchCourses} from '../../Data/useFetchCourses'
 import {setSendDataToStudyPlan} from '../../Data/setSendData'
 import {BachelorNameContext} from './studyPlanContainer'
+import explanationTexts from "./../../Data/explanationTexts.json"
+import { PopupContextExplainBachelor } from './../../App'
 
-export const PopupContextExplain = createContext({})
+
+//export const PopupContextExplain = createContext({})
 
 const questionIcon = require('./questionmark.png')
 
@@ -23,7 +26,7 @@ const [allProgs, setAllProgs] = useState([])
 const [clicked, setClicked] = usePersistedState(false,'clicked')
 const [selectedProgram, setSelectedProgram] = useState({})
 const [show, setShow] = useState(false)
-const [isPopupShown, setPopupShown] = useState(false)
+//const [isPopupShown, setPopupShown] = useState(false)
 //const [progState, setProgState] = usePersistedState(prog,'prog')
 //const [yearState, setYearState] = usePersistedState(year,'year')
 
@@ -35,12 +38,15 @@ const [bachelorName, setBachelorName] = useState("")
 const {BachelorName, setBachelorName} = name_context
 console.log(BachelorName)*/
 
+const {popup_context_bachelor} = useContext(PopupContextExplainBachelor)
 
+const {isPopupShownBachelor, setPopupShownBachelor} = popup_context_bachelor
 
 const showPopup = () =>{
-  setPopupShown(true);
-
+  setPopupShownBachelor(true);
+  console.log(isPopupShownBachelor)
 }
+
 function setUrl(course_code){
   const proxy = 'https://cors-anywhere.herokuapp.com/'
   const urlCourse = 'https://api.kth.se/api/kopps/v2/course/'+course_code+'/detailedinformation?l=en'
@@ -209,10 +215,12 @@ return(
     <React.Fragment>
     
         <form>
-        {show?<ExplanationPopup/>:null}
+        {isPopupShownBachelor?<ExplanationPopup props={explanationTexts.popups.bachelor_form}/>:null}
         <div className="row bachelorHeadline">
           Add your bachelor courses to study plan
-          <img src={questionIcon} className="questionIcon" onClick={showPopup} style={{cursor:'pointer'}}></img>
+          {/*<img src={questionIcon} className="questionIcon" onClick={showPopup} style={{cursor:'pointer'}}></img>*/}
+          <i onClick={showPopup} style={{cursor:'pointer'}} className="fas fa-info-circle infoButton_icon"></i>
+
         </div>
         <div className="row">
         <select
@@ -269,10 +277,8 @@ return(
        <button className="removeBachelorButton" onClick={handleRemove}>Remove all bachelor courses</button>
         </div>
         </form>  
-        {isPopupShown && 
-                <PopupContextExplain.Provider value={{ popup_context: {isPopupShown, setPopupShown}}}>
-                  <ExplanationPopup/>
-                </PopupContextExplain.Provider>
+        {isPopupShownBachelor && 
+                  <ExplanationPopup props={explanationTexts.popups.bachelor_form}/>
 
               }
         

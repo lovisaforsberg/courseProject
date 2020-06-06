@@ -58,6 +58,10 @@
     padding-top: 15px;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+    cursor: pointer;
+}
+.infoFooter:hover{
+    background-color:#d3d3d3;
 }
 .FooterIcon{
     font-size: 30px;
@@ -75,6 +79,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
 
@@ -141,3 +146,13 @@
     border-radius: 4px;
     background-color: rgba(66, 65, 65, 0.5);
   }
+
+  .studyplanIcon{
+    cursor: pointer;
+    width: 40px;
+    height:40px;
+    background: url("studyIcon.png") no-repeat;
+    background-size: 40px 40px;
+    display: inline-block;
+  }
+ 

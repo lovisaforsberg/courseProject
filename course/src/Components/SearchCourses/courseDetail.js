@@ -241,16 +241,17 @@ const CourseDetail=({sentCourse})=> {
                 </div>
                 
 
-                <footer className="infoFooter" >
-                <div className='iconContainer'>
-                    {/* WHEN NOT SELECTED */}
+                <footer className="infoFooter" onClick={showPopup} >
+               {/* <div className='iconContainer'>
+          
                     <i className="FooterIcon far fa-heart"></i>
-                    {/* WHEN SELECTED */}
-                    {/*<i class="FooterIcon fas fa-heart"></i>*/}
+               
+                    <i class="FooterIcon fas fa-heart"></i>
                     <p className='FooterText'>Save for later</p> 
-                </div>
+                </div>*/}
                 <div className='iconContainer'>
-                    <i onClick={showPopup} className="FooterIcon fas fa-graduation-cap"></i>
+                    <div className="studyplanIcon"></div>
+                    {/*<i onClick={showPopup} className="FooterIcon fas fa-graduation-cap"></i>*/}
                    <p className='FooterText'>Add to study plan</p>
                 </div>
                 </footer>

@@ -342,9 +342,9 @@ const StudyPlanDetails=({sentCourse})=> {
 
                 
 
-                <footer className="infoFooter" >
+                <footer className="infoFooter" onClick={showPopup} >
                 <div className='iconContainer'>
-                    <i onClick={showPopup} className="FooterIcon fas fa-trash"></i>
+                    <i className="FooterIcon fas fa-trash"></i>
                     {/*<i onClick={()=>removeCourse(courseInfo)} className="FooterIcon fas fa-trash"></i>*/}
                     <p className='FooterText'>Remove from study plan</p>
                 </div>

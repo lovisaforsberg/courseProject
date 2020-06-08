@@ -26,6 +26,24 @@ const StudyPlanContainer = () => {
         setBachelorName(JSON.parse(localStorage.getItem("nameData")))
         console.log(JSON.parse(localStorage.getItem("nameData")))
     },[useStudyplanReducer])*/
+    const isEmpty = (data) =>{
+        const course_array = []
+        data.children.map(part =>{
+            part.children.map(year =>{
+                year.children.map(period =>{
+                    period.children.map(course=>{
+                        course_array.push(course)
+                    })
+                })
+            }) //children t bach eller master
+        })
+        if(course_array.length == 0){
+            return true
+        }
+        else{
+            return false
+        }
+    }
 
     return(
         <>
@@ -36,33 +54,47 @@ const StudyPlanContainer = () => {
         <div className="studyplanAll">
             <div className="bachelorContainer">
                 <div className="sunburstContainerH1">
-                    <div id="headline">YOUR STUDYPLAN</div>
+                    <div id="headline">YOUR STUDY PLAN</div>
                     <ul>
-                        <span>An overview of your education - make sure your education takes you where you want to be
-                        </span>
+                        <span id="headline2">An overview of the composition of courses, credits and covered subjects in your education </span>
+                    </ul>
+                    <ul>
+                    <span id='headline3'>Start planning and customizing your educational path by adding your bachelor-, master- and elective courses to the study plan.</span>
                     </ul>
                 </div>
+                {isEmpty(contextValue[0]) ? null:
+                <div className="chosenBachelor">
+                    <div className='bachelorHeadline'>Chosen bachelor:</div>
+                {initialstate.children[0].bachelor_name}, {initialstate.children[0].start_year}
+                </div>
+                    }
                 <div className="sunburstContainerForm">
                     <BachelorForm></BachelorForm>
                 </div>
             </div>
             <div className="notTopBar">
-            <div className="bachelorNameContainer">
-                {/*BachelorName*/}
-                {initialstate.children[0].bachelor_name}
-            </div>
+
+            {isEmpty(contextValue[0]) ? 
+                <div className='noDataContainer'>EMPTY</div>
+                :
+                <>
             <div className="progressbarContainer">
-                <div className="progBarHeadline">Sum of credits</div>
             <ProgressBarContainer></ProgressBarContainer>
             </div>
             <div className='sunBurstRadar'>
+                
+                
                 <div className="sunburstContainer">
                 <Sunburst></Sunburst>
                 </div>
                 <div className="radarChartContainer">
                 <RadarChart></RadarChart>
                 </div>
+            
+                
             </div>
+            </>
+            }
             </div>
         </div>
 

@@ -16,7 +16,7 @@ const Navbar = () =>{
 
         <div className = "sidenav">
             <div className="project_introduction">
-                <img src={logo2} style={{width:'100px'}}></img>
+                <img src={logo2} style={{width:'80px'}}></img>
                 <div className="logo_text">
                 Coursearch
                 </div>

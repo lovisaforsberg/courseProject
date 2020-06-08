@@ -165,12 +165,13 @@ const addPeriods = (period, year, bach, course, info)=>{
 }
 
 
-const AddBachelor = (fetch, additionalInfo, bachelor_name) =>{
+const AddBachelor = (fetch, additionalInfo, bachelor_name, start_year) =>{
   console.log(additionalInfo)
   console.log(bachelor_name)
   console.log(initialstate.children[0]) //= bachelor object
   const bachelor_obj = initialstate.children[0]
   bachelor_obj.bachelor_name = bachelor_name;
+  bachelor_obj.start_year = start_year
   const bachelor_courses = initialstate.children.find(({name}) => name === 'bachelor');
   fetch.map(element => {
     element.Electivity[0].Courses.map(course =>{
@@ -283,7 +284,7 @@ export const studyplanReducer = (state,action) =>{
             return newState2;
       case 'ADD_BACHELOR':
            // AddBachelor(action.fetchedProg, action.track);
-           AddBachelor(action.fetchedProg, action.more_info, action.bach_name);
+           AddBachelor(action.fetchedProg, action.more_info, action.bach_name, action.start_year);
            console.log(action.bach_name)
             const newState3 = {...state}
             return newState3;

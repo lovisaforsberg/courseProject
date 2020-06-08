@@ -10,13 +10,18 @@ import {setSendDataToStudyPlan} from '../../Data/setSendData'
 import {BachelorNameContext} from './studyPlanContainer'
 import explanationTexts from "./../../Data/explanationTexts.json"
 import { PopupContextExplainBachelor } from './../../App'
+import {ZoomedInContext} from "../StudyPlan/studyPlanContainer"
+import PopupAdded from "./popupAdded"
 
-
+export const PopupContextAdded = createContext({})
 //export const PopupContextExplain = createContext({})
 
 const questionIcon = require('./questionmark.png')
 
 const BachelorForm = () =>{
+
+  const contextValue = useContext(StudyplanContext);
+  const data_to_map = contextValue[0]
 
 const [prog,setProg] = useInput('');
 const [year,setYear] = useInput('');
@@ -33,6 +38,8 @@ const [show, setShow] = useState(false)
 const [state,dispatch] = useContext(StudyplanContext);
 const [isLoading, setIsLoading] = useState(true)
 const [bachelorName, setBachelorName] = useState("")
+
+const [isAdded, setIsAdded] = useState(false)
 
 /*const name_context = useContext(BachelorNameContext)
 const {BachelorName, setBachelorName} = name_context
@@ -104,7 +111,8 @@ const addBachelorORG = (prog, year) =>{
 
     let bach_name = getBachelorName(prog)
     console.log(bach_name)
-    dispatch({type: 'ADD_BACHELOR', fetchedProg, more_info, bach_name})
+    let start_year = year
+    dispatch({type: 'ADD_BACHELOR', fetchedProg, more_info, bach_name, start_year})
     setSelectedProgram(fetchedProg)
     console.log(fetchedProg)
  })
@@ -184,13 +192,22 @@ const handleRemove = (e) =>{
   setClicked(false)
   e.preventDefault()
 }
-
+const closePopup = () =>{
+  setIsAdded(false)
+}
 const handleSubmit = (e) =>{
     console.log("submit")
-    addBachelor(prog, year)
-    console.log(prog)
-    console.log(year)
-    setClicked(true)
+    if(prog === '' || year === '' || (prog ==='' && year==='')){
+      alert('You need to select borh Program and Year')
+  }
+  else{
+      addBachelor(prog, year)
+      setIsAdded(true)
+      getBachelorName(prog)
+      setTimeout(closePopup, 10000)
+      setClicked(true)
+      //closePopup()
+  }
     e.preventDefault()
 }
 
@@ -205,13 +222,35 @@ const getBachelorName = (chosenProg) =>{
       }
   })
   console.log(bachelor_name)  
+  setBachelorName(bachelor_name)
   return bachelor_name
+}
+
+
+const isEmpty = (data) =>{
+  const course_array = []
+  data.children.map(part =>{
+      part.children.map(year =>{
+          year.children.map(period =>{
+              period.children.map(course=>{
+                  course_array.push(course)
+              })
+          })
+      }) //children t bach eller master
+  })
+  if(course_array.length == 0){
+      return true
+  }
+  else{
+      return false
+  }
 }
  
 
 
 
 return(
+
     <React.Fragment>
     
         <form>
@@ -230,7 +269,8 @@ return(
           className='program'
         >
             <option key='Program' disabled={true} value={prog}>
-                Program
+                {isEmpty(data_to_map) ? 'Program' :data_to_map.children[0].bachelor_name}
+           
             </option>
 
             {allProgs.map(bachelor =>{
@@ -248,7 +288,7 @@ return(
           className='year'
         >
             <option key='year' disabled={true} value={year}>
-                Year
+            {isEmpty(data_to_map) ? 'Year' :data_to_map.children[0].start_year}
             </option>
             <option key='HT16' value='HT16'>
                 HT16
@@ -268,11 +308,11 @@ return(
        
         </div>
         <div id="masterText">
-        You can add the courses in your masters program manually using the search function 
+        If you wish to change bachelor program, remember to remove all bachelor courses, using the remove button below, before selecting the new bachelor.
         </div>
         <div className="buttonContainer">
 
-        <button className="addBachelorButton" onClick={handleSubmit}>ADD TO PLAN</button>
+        <button className="addBachelorButton" onClick={handleSubmit}>Add to plan</button>
        {/* {clicked ? <button className="removeBachelorButton" onClick={handleRemove}>Remove all bachelor courses</button>:null} */}
        <button className="removeBachelorButton" onClick={handleRemove}>Remove all bachelor courses</button>
         </div>
@@ -281,6 +321,12 @@ return(
                   <ExplanationPopup props={explanationTexts.popups.bachelor_form}/>
 
               }
+             {console.log(isAdded)}
+        {isAdded && 
+           <PopupContextAdded.Provider value={{isAdded,setIsAdded}}>
+           <PopupAdded bachelor={bachelorName} year={year}/>
+         </PopupContextAdded.Provider>
+        }
         
      
 

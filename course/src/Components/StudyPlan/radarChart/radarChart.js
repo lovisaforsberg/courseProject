@@ -509,10 +509,11 @@ var margin = { top: 50, right: 80, bottom: 50, left: 80 },
         <>
         <div className='radarContainer'>
             <svg id='radarChart' ref={d3Container}></svg>
-			<i onClick={showPopup} style={{cursor:'pointer'}} className="fas fa-info-circle infoButton_icon"></i>
 			{isPopupShownRadar &&
 					<ExplanationPopup props={explanationTexts.popups.radar_chart}/>
               }
+			<i onClick={showPopup} style={{cursor:'pointer'}} className="fas fa-info-circle infoButton_icon"></i>
+
         </div>
         </>
     )

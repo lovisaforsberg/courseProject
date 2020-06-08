@@ -1,6 +1,8 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import {withRouter, NavLink, Link } from 'react-router-dom'
 import "./Navbar.css"
+import HowItWorks from './HowItWorks/HowItWorks'
+import {HowItWorksModal} from './../App'
 
 let logo = require("./course_logo.png");
 let logo2 = require("./course_logo2.png");
@@ -9,10 +11,17 @@ let activeSearchBtn = require("./searchBtnHover.png");
 let studyBtn = require("./studyIcon.png");
 
 const Navbar = () =>{
+    const {HW_modal} = useContext(HowItWorksModal)
+    const {isHWShown, setHWShown} = HW_modal
+
+    const OpenHW = ()=>{
+        setHWShown(true)
+    }
 
     const [active, setActive] = useState()
 
     return(
+        <>
 
         <div className = "sidenav">
             <div className="project_introduction">
@@ -36,8 +45,18 @@ const Navbar = () =>{
                     <p>Studyplan</p> 
                 </div>
             </NavLink>
+            
+            <div id='studyNav' className='iconContainer' onClick={OpenHW}>
+                {/*<img src={studyBtn} style={{width:'60px'}}></img>*/}
+                <div className="studyCard"></div>
+                    <p>How it Works</p> 
+                </div>
         
         </div>
+        {isHWShown &&
+        <HowItWorks></HowItWorks>
+        }
+        </>
           
     )
 } 

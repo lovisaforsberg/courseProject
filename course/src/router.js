@@ -8,6 +8,7 @@ import Courses from "./Data/courses"
 import DisplayData from "./Components/SearchCourses/courses_data"
 import SearchView from "./Views/search-view"
 import StudyplanContainer from  "./Components/StudyPlan/studyPlanContainer"
+import HowItWorks from './Components/HowItWorks/HowItWorks'
 const Router = () => {
   return (
     <Switch>

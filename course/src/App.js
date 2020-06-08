@@ -12,6 +12,8 @@ export const PopupContextExplainBachelor = createContext({})
 export const PopupContextExplainRadar = createContext({})
 export const PopupContextExplainPacked = createContext({})
 
+export const HowItWorksModal = createContext({})
+
 
 
 function App() {
@@ -20,6 +22,9 @@ function App() {
   const [isPopupShownBachelor, setPopupShownBachelor] = useState(false)
   const [isPopupShownRadar, setPopupShownRadar] = useState(false)
   const [isPopupShownPacked, setPopupShownPacked] = useState(false)
+
+  const [isHWShown, setHWShown] = useState(false)
+
 
 
   const hidePopup = () => {
@@ -41,10 +46,14 @@ function App() {
       <PopupContextExplainBachelor.Provider value={{ popup_context_bachelor: {isPopupShownBachelor, setPopupShownBachelor}}}>
       <PopupContextExplainRadar.Provider value={{ popup_context_radar: {isPopupShownRadar, setPopupShownRadar}}}>
       <PopupContextExplainPacked.Provider value={{ popup_context_packed: {isPopupShownPacked, setPopupShownPacked}}}>
+      <HowItWorksModal.Provider value={{ HW_modal: {isHWShown, setHWShown}}}>
+
 
         <StudyplanProvider>
         <Router />
         </StudyplanProvider>
+        
+      </HowItWorksModal.Provider>
       </PopupContextExplainPacked.Provider>
       </PopupContextExplainRadar.Provider>
       </PopupContextExplainBachelor.Provider>

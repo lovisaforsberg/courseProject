@@ -1,0 +1,51 @@
+.guideContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.aboutContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.imageDiv{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    align-self: center;
+
+}
+
+.hw_headline{
+    text-align: center;
+    justify-content: center;
+    margin: 10px;
+}
+
+.hw_date{
+    width: 250px;
+    text-align: center;
+    justify-content: center;
+    margin-right: 12px;
+    margin-left: 12px;
+}
+
+.modal{
+    max-width: 900px;
+    margin-top: 70px;
+}
+
+.howitworksText{
+    display: flex;
+    align-self: flex-start;
+    font-size: 25px;
+}
+
+.modal-header{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}

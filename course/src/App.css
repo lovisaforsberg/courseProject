@@ -26,6 +26,7 @@ li{
   color: #404040 !important;
 }
 
+
 a{
   font-weight: normal;
   font-size: 12px;
@@ -70,13 +71,14 @@ a:hover{
   border-radius: 10px;
   max-width: 500px;
   padding: 2rem;
+  flex-direction: column;
 }
 
 .modal-header {
     display: flex;
-    justify-content: flex-end;
-    width: 20px;
+    justify-content: space-between;
     float: right;
+    position: relative;
 }
 
 .modal-close-button {
@@ -126,6 +128,7 @@ a:hover{
 .modal-headerE {
   display: flex;
   justify-content: flex-end;
+  margin-bottom: 10px;
 }
 
 .modal-overlayE {
@@ -163,6 +166,11 @@ a:hover{
   padding:10px;
   float:right;
 }
+.modal-headerE_radar {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+}
 
 /*PACKED MODAL*/
 .modalE_packed {
@@ -171,13 +179,18 @@ a:hover{
   background: white;
   box-shadow: 0px 3px 10px rgb(224, 224, 224);
   position: relative;
-  margin-top: 280px;
-  margin-right: 20px;
+  margin-top: 260px;
+  margin-right: 240px;
   border-radius: 4px;
   width: 200px;
   height: auto;
   padding:10px;
   float:right;
+}
+.modal-headerE_packed {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 10px;
 }
 
 

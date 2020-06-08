@@ -48,8 +48,7 @@ const Navbar = () =>{
             
             <div id='studyNav' className='iconContainer' onClick={OpenHW}>
                 {/*<img src={studyBtn} style={{width:'60px'}}></img>*/}
-                <div className="studyCard"></div>
-                    <p>How it Works</p> 
+                <i class="fas fa-question HWBtn"></i>
                 </div>
         
         </div>

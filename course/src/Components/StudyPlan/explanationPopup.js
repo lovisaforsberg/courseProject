@@ -61,7 +61,11 @@ const closePopup = () =>{
                     </div>
                 </div>
                 <div className="ExplanationText">{props.props.text}</div>
+                <br/>
                 <div className="ExplanationText">{props.props.text2}</div>
+                <br/>
+                <div className="ExplanationText">{props.props.text3}</div>
+
             </div>
         </div>
 

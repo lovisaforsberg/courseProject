@@ -1,4 +1,5 @@
 import React, {useState,useRef, useReducer, useEffect, createContext, useContext} from "react";
+import {Card, Icon, Image} from 'semantic-ui-react'
 import Sunburst from "./sunburst";
 import BachelorForm from "./bachelorForm"
 import NavBar from '../Navbar'
@@ -8,6 +9,10 @@ import {ProgressBarContainer} from './progressbar'
 import {RadarChart} from './radarChart/radarChart'
 import "./bachelorForm.css"
 import {studyplanReducer,initialstate} from "../../reducers/studyplanReducer"
+
+var one = require('./../HowItWorks/one.png')
+var two = require('./../HowItWorks/two.png')
+var three = require('./../HowItWorks/three.png')
 
 export const ZoomedInContext = createContext({})
 //export const BachelorNameContext = createContext({})
@@ -75,7 +80,65 @@ const StudyPlanContainer = () => {
             <div className="notTopBar">
 
             {isEmpty(contextValue[0]) ? 
-                <div className='noDataContainer'>EMPTY</div>
+                <div className='noDataContainer'>
+                    {/*EMPTY*/}
+                    <i className='emptyText' style={{marginBottom:'20px', fontSize:'12px' }}>
+                        Your studyplan is currently emply, start adding courses to plan your education!</i>
+                    <div className='guideContainer'>
+  
+                        <div className='aboutContainer'>
+                            <div className='imageDiv'>
+                            <img className='responsive' src={one} wrapped ui={false} />
+                            <Card.Content>
+                                <Card.Header className='hw_headline'><strong>Add a Bachelor</strong></Card.Header>
+                                <Card.Meta>
+                                <p className='hw_date'>
+                                Select a bachelor program and starting year to add all courses automaticlly. 
+                                You can remove or move courses later.
+                                </p>
+                                </Card.Meta>
+                            </Card.Content>
+                            </div>
+
+                            <div className='imageDiv'>
+                            <img
+                                className='responsive'
+                                id='image'
+                                src={two}
+                                wrapped
+                                ui={false}
+                            />
+                            <Card.Content>
+                                <Card.Header className='hw_headline'><strong>Search for courses</strong></Card.Header>
+                                <Card.Meta>
+                                <p className='hw_date'>
+                                Use the search function to find courses. 
+                                Add the course to your study plan if you have or plan to take the course.
+                                </p>
+                                </Card.Meta>
+                            </Card.Content>
+                            </div>
+
+                            <div className='imageDiv'>
+                            <img
+                                className='responsive'
+                                src={three}
+                                wrapped
+                                ui={false}
+                            />
+                            <Card.Content>
+                                <Card.Header className='hw_headline'><strong>Get an Overview</strong></Card.Header>
+                                <Card.Meta>
+                                <p className='hw_date'>
+                                Click on a course to make changes and discover the main topics and subjects of your education
+                                </p>
+                                </Card.Meta>
+                            </Card.Content>
+                            </div>
+                        </div>
+                        </div>
+                
+                </div>
                 :
                 <>
             <div className="progressbarContainer">

@@ -62,10 +62,8 @@ const handleMouseLeave = () =>{
     flat(data, allData)
 
     allData.map(course=>{
-        console.log(course.size)
         count+=course.size
     })
-    console.log(count)
    return (count)
   }
 

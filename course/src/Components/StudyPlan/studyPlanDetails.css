@@ -5,7 +5,7 @@
     border-radius: 10px;
     font-family: 'montserrat';
     flex-direction:column;
-    margin-left: 250px;
+    margin-left: 120px !important;
     margin-right: 0px;
     align-self: flex-start;
 }

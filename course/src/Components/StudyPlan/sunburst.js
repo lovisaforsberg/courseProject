@@ -153,7 +153,12 @@ const path = g.append("g")
       (divTooltip.style('left', d3.event.pageX + 10 + 'px'),
       divTooltip.style('top', d3.event.pageY - 25 + 'px'),
       divTooltip.style('display', 'inline-block'),
-      divTooltip.html(d.data.name+': '+d.data.allInfo.title)):null
+      divTooltip.html(d.data.name+': '+d.data.allInfo.title)):
+      
+      (divTooltip.style('left', d3.event.pageX + 10 + 'px'),
+      divTooltip.style('top', d3.event.pageY - 25 + 'px'),
+      divTooltip.style('display', 'inline-block'),
+      divTooltip.html(d.parent.data.name+': '+d.data.name))
       
     })
     .on('mouseout', function(d) {
@@ -185,6 +190,8 @@ const label = g.append("g")
   .selectAll("text")
   .data(root.descendants().slice(1))
   .enter().append("text")
+    .attr('font-size', '8px')
+    .attr('font-family', 'montserrat')
     .attr("dy", "0.35em")
     .attr("fill-opacity", d => +labelVisible(d.current))
     .attr("transform", d => labelTransform(d.current))

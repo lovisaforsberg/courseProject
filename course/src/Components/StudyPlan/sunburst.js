@@ -94,7 +94,7 @@ d3.select(".root_sunburst").selectAll('*').remove()
   
 //setData(data)
 
-const width = 400
+const width = 350
 const radius = width / 10
 
 
@@ -300,7 +300,7 @@ return (
                 <StudyPlanDetails sentCourse={selectedCourse}/>
                 </StudyplanDetailContext.Provider> 
               }
-        <svg id='sunBurst' width={400} height={400} radius={400/2} ref={d3Container}></svg>
+        <svg id='sunBurst' width={350} height={350} radius={350/2} ref={d3Container}></svg>
     </div>
         
     </React.Fragment>

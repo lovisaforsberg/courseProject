@@ -185,8 +185,8 @@ const RadarChart = function RadarChart(parent_selector, data, options) {
 	}//wrap
 
 	const cfg = {
-	 w: 600,				//Width of the circle
-	 h: 600,				//Height of the circle
+	 w: 700,				//Width of the circle
+	 h: 700,				//Height of the circle
 	 margin: {top: 20, right: 20, bottom: 20, left: 20}, //The margins of the SVG
 	 levels: 3,				//How many levels or inner circles should there be drawn
 	 maxValue: 0, 			//What is the value that the biggest circle will represent
@@ -480,11 +480,11 @@ const RadarChart = function RadarChart(parent_selector, data, options) {
 }
 
 var margin = { top: 50, right: 80, bottom: 50, left: 80 },
-				width = Math.min(700, window.innerWidth / 4) - margin.left - margin.right,
+				width = Math.min(1000, window.innerWidth / 4) - margin.left - margin.right,
                 height = Math.min(width, window.innerHeight - margin.top - margin.bottom);
                 
                 var radarChartOptions2 = {
-                    w: 290,
+                    w: 350,
                     h: 350,
                     margin: margin,
                     maxValue: 30,

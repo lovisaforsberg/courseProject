@@ -1,7 +1,8 @@
 {
     "popups": {
         "bachelor_form": {
-            "text": "Enter the name of your program and the start year of your studies in order to automatically add all compulsory bachelor courses in your program into the study plan. You can always remove and move the courses after adding them. To add track specific or masters courses, please use the search functionality and add them manually.",
+            "text": "Enter the name of your program and the start year of your studies in order to automatically add all compulsory bachelor courses in your program into the study plan. You can always remove and move the courses after adding them.",
+            "text2": "To add track specific or masters courses, please use the search functionality and add them manually.",
             "class1": "modal-overlayE",
             "class2": "modal-wrapperE",
             "class3": "modalE",
@@ -10,20 +11,22 @@
 
         },
         "radar_chart": {
-            "text": "The chart shows how many credits of each subject you have taken. Remember that all courses don't have accurate subject, and that the subject 'Technology' are not included in the chart ",
+            "text": "The chart shows how many credits of each subject you have taken.",
+            "text2": " Remember that all courses don't have accurate subject, and that the subject 'Technology' are not included in the chart",
             "class1": "modal-overlayE",
             "class2": "modal-wrapperE",
             "class3": "modalE_radar",
-            "class4": "modal-headerE",
+            "class4": "modal-headerE_radar",
             "classBth": "modal-close-buttonE"
         },
         "packed_circle": {
-            "text": " first step",
-            "text2": " second step",
+            "text": "Click on the text to zoom in and outside of the text to zoom out to the beginning",
+            "text2": "When zoomed in to the courses, hover over the course code to get the name of the course and click on the text to get more details",
+            "text3": "When clicked on a course, you get more detailed information and choose to add the course to your study plan",
             "class1": "modal-overlayE",
             "class2": "modal-wrapperE",
             "class3": "modalE_packed",
-            "class4": "modal-headerE",
+            "class4": "modal-headerE_packed",
             "classBth": "modal-close-buttonE"
         }
     }

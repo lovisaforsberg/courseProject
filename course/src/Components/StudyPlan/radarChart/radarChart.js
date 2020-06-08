@@ -185,8 +185,8 @@ const RadarChart = function RadarChart(parent_selector, data, options) {
 	}//wrap
 
 	const cfg = {
-	 w: 700,				//Width of the circle
-	 h: 700,				//Height of the circle
+	 w: 1000,				//Width of the circle
+	 h: 1000,				//Height of the circle
 	 margin: {top: 20, right: 20, bottom: 20, left: 20}, //The margins of the SVG
 	 levels: 3,				//How many levels or inner circles should there be drawn
 	 maxValue: 0, 			//What is the value that the biggest circle will represent
@@ -244,13 +244,17 @@ const RadarChart = function RadarChart(parent_selector, data, options) {
 
 	//Initiate the radar chart SVG
 	let svg = parent.append("svg")
-			.attr("width",  cfg.w + cfg.margin.left + cfg.margin.right)
-			.attr("height", cfg.h + cfg.margin.top + cfg.margin.bottom)
+			//.attr("width",  cfg.w + cfg.margin.left + cfg.margin.right)
+			//.attr("height", cfg.h + cfg.margin.top + cfg.margin.bottom)
+			//.attr('width', '550px')
+			//.attr('height', '550px')
 			.attr("class", "radar")
 
 	//Append a g element
 	let g = svg.append("g")
-			.attr("transform", "translate(" + (cfg.w/2 + cfg.margin.left) + "," + (cfg.h/2 + cfg.margin.top) + ")");
+			//.attr("transform", "translate(" + (cfg.w/2 + cfg.margin.left) + "," + (cfg.h/2 + cfg.margin.top) + ")");
+			.attr("transform", "translate(" + (cfg.w/2 + cfg.margin.left) + ",280)");
+
 
 	/////////////////////////////////////////////////////////
 	////////// Glow filter for some extra pizzazz ///////////
@@ -443,7 +447,7 @@ const RadarChart = function RadarChart(parent_selector, data, options) {
 				.attr("class", "title")
 				.attr('transform', `translate(${cfg.legend.translateX},${cfg.legend.translateY})`)
 				.attr("x", cfg.w - 70)
-				.attr("y", 0)
+				.attr("y", -10)
 				.attr("font-size", "12px")
 				.attr("fill", "#404040")
 				.text(cfg.legend.title);
@@ -459,7 +463,7 @@ const RadarChart = function RadarChart(parent_selector, data, options) {
 		  .enter()
 		  .append("rect")
 		  .attr("x", cfg.w - 65)
-		  .attr("y", (d,i) => i * 20 -9)
+		  .attr("y", (d,i) => i * 20 -19)
 		  .attr("width", 10)
 		  .attr("height", 10)
 		  .style("fill", (d,i) => cfg.color(i));
@@ -469,7 +473,7 @@ const RadarChart = function RadarChart(parent_selector, data, options) {
 		  .enter()
 		  .append("text")
 		  .attr("x", cfg.w - 52)
-		  .attr("y", (d,i) => i * 20)
+		  .attr("y", (d,i) => (i * 20)-10)
 		  .attr("font-size", "11px")
 		  .attr("fill", "#404040")
 		  .text(d => d);

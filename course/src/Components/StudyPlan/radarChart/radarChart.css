@@ -5,9 +5,15 @@
 
 #radarChart{
     display: flex;
-    height: 500px;
-    width: 450px;
-    padding: 20px;
-    justify-content: center;
+    height: 550px;
+    width: 550px;
+    padding: 20px, 20px, 0px, 20px;
+    align-content: flex-end;
+    flex-direction: column;
+}
+
+.radar{
+    height: 550px;
+    width: 550px;
 }
 

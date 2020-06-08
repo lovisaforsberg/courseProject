@@ -73,8 +73,10 @@ a:hover{
 }
 
 .modal-header {
-  display: flex;
-  justify-content: flex-end;
+    display: flex;
+    justify-content: flex-end;
+    width: 20px;
+    float: right;
 }
 
 .modal-close-button {

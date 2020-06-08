@@ -1,9 +1,13 @@
 .headline{
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     font-size: 25px;
 }
 .headline2{
     margin-bottom: 10px;
+}
+.headlineAdd{
+    margin-bottom: 15px;
+    font-size: 20px;
 }
 .dropdown{
     margin-left: 20px;
@@ -37,6 +41,14 @@ select:focus{
     width:200px;
     height:40px;
     cursor: pointer;
+
+}
+.waitText{
+    font-size: 14px;
+    font-style: italic;
+}
+.headlineAdd p{
+    font-size:20px;
 
 }
 

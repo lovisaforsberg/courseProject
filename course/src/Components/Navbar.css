@@ -1,6 +1,6 @@
 .sidenav {
     height: 100%;
-    width: 120px;
+    width: 100px;
     position: fixed;
     z-index: 1;
     /*top: 0;*/
@@ -56,33 +56,35 @@
 
 .logo_text{
   /*color:#C9AED2;*/
+  font-size: 14px;
   color:#8D5496;
+  margin-bottom: 30px;
 }
   
   @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}
-    .sidenav a {font-size: 18px;}
+    .sidenav a {font-size: 16px;}
   }
 
   .searchCard {
-    width: 50px;
-    height:50px;
+    width: 30px;
+    height:30px;
     background: url("searchBtn.png") no-repeat;
-    background-size: 50px 50px;
+    background-size: 30px 30px;
     display: inline-block;
 }
 .searchCard:hover {
     background: url("searchBtnHover.png") no-repeat;
-    background-size: 50px 50px;
+    background-size: 30px 30px;
 }
 .studyCard {
-  width: 60px;
-  height:60px;
+  width: 40px;
+  height:40px;
   background: url("studyIcon.png") no-repeat;
-  background-size: 60px 60px;
+  background-size: 40px 40px;
   display: inline-block;
 }
 .studyCard:hover {
   background: url("studyIconHover.png") no-repeat;
-  background-size: 60px 60px;
+  background-size: 40px 40px;
 }

@@ -19,8 +19,8 @@ console.log(added_context)
         <React.Fragment>
         <div className="modal-overlay"/>
         <div className="modal-wrapper" aria-modal aria-hidden tabIndex={-1} role="dialog">
-          <div className="modal">
-            <div className="modal-header">
+          <div className="modalHW">
+            <div className="modal-headerAdd">
               <button type="button" className="modal-close-button" data-dismiss="modal" aria-label="Close"  onClick={closePopup}>
                 <span aria-hidden="true">&times;</span>
               </button>

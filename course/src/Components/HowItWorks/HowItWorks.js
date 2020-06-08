@@ -23,8 +23,8 @@ const HowItWorks = () =>{
     
     <div className="modal-overlay"/>
     <div className="modal-wrapper" aria-modal aria-hidden tabIndex={-1} role="dialog">
-      <div className="modal">
-        <div className="modal-header">
+      <div className="modalHW">
+        <div className="modal-headerHW">
           <h1 className='howitworksText'>
             <strong>HOW IT WORKS</strong>
            </h1>

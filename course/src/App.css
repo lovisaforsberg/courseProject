@@ -80,6 +80,11 @@ a:hover{
     float: right;
     position: relative;
 }
+.modal-headerAdd{
+  display: flex;
+  justify-content: flex-end;
+  float:right;
+}
 
 .modal-close-button {
   font-size: 1.6rem;

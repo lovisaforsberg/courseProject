@@ -450,7 +450,7 @@ const RadarChart = function RadarChart(parent_selector, data, options) {
 				.attr("y", -10)
 				.attr("font-size", "12px")
 				.attr("fill", "#404040")
-				.text(cfg.legend.title);
+				//.text(cfg.legend.title);
 		}
 		let legend = legendZone.append("g")
 			.attr("class", "legend")
@@ -516,7 +516,7 @@ var margin = { top: 50, right: 80, bottom: 50, left: 80 },
 			{isPopupShownRadar &&
 					<ExplanationPopup props={explanationTexts.popups.radar_chart}/>
               }
-			<i onClick={showPopup} style={{cursor:'pointer'}} className="fas fa-info-circle infoButton_icon"></i>
+			<i onClick={showPopup} style={{cursor:'pointer'}} className="far fa-question-circle infoButton_icon"></i>
 
         </div>
         </>

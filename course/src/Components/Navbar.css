@@ -51,14 +51,15 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
+  margin-top: 25px;
 }
 
 .logo_text{
   /*color:#C9AED2;*/
   font-size: 14px;
   color:#8D5496;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
 }
   
   @media screen and (max-height: 450px) {

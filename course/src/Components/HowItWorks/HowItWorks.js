@@ -39,11 +39,11 @@ const HowItWorks = () =>{
         <div className='imageDiv'>
           <img className='responsive' src={one} wrapped ui={false} />
           <Card.Content>
-            <Card.Header className='hw_headline'><strong>Add a Bachelor</strong></Card.Header>
+            <Card.Header className='hw_headline'><strong>Add bachelor courses</strong></Card.Header>
             <Card.Meta>
               <p className='hw_date'>
-              Select a bachelor program and starting year to add all courses automaticlly. 
-              You can remove or move courses later.
+              Select a bachelor program and the starting year to add all bachelor courses to the study plan automatically. 
+              If needed, you can remove and/or move courses later.
               </p>
             </Card.Meta>
           </Card.Content>
@@ -61,8 +61,8 @@ const HowItWorks = () =>{
             <Card.Header className='hw_headline'><strong>Search for courses</strong></Card.Header>
             <Card.Meta>
               <p className='hw_date'>
-              Use the search function to find courses. 
-              Add the course to your study plan if you have or plan to take the course.
+              Use the search function to find master-, track specific-, or elective courses of your interest. 
+              Click on a course to get detailed information about the course and to add it to your study plan.
               </p>
             </Card.Meta>
           </Card.Content>
@@ -76,10 +76,12 @@ const HowItWorks = () =>{
             ui={false}
           />
           <Card.Content>
-            <Card.Header className='hw_headline'><strong>Get an Overview</strong></Card.Header>
+            <Card.Header className='hw_headline'><strong>Get an overview</strong></Card.Header>
             <Card.Meta>
               <p className='hw_date'>
-              Click on a course to make changes and discover the main topics and subjects of your education
+              In the study plan you get an overview of your education.
+              Click on a year or period to discover the covered subjects and the sum of credits.
+              Click on a course to move or remove it.
               </p>
             </Card.Meta>
           </Card.Content>

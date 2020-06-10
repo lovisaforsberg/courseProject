@@ -2,7 +2,7 @@
     "popups": {
         "bachelor_form": {
             "text": "Enter the name of your program and the start year of your studies in order to automatically add all compulsory bachelor courses in your program into the study plan. You can always remove and move the courses after adding them.",
-            "text2": "To add track specific or masters courses, please use the search functionality and add them manually.",
+            "text2": "To add track specific, master, and elective courses, please use the search function and add them manually.",
             "class1": "modal-overlayE",
             "class2": "modal-wrapperE",
             "class3": "modalE",
@@ -11,8 +11,9 @@
 
         },
         "radar_chart": {
-            "text": "The chart shows how many credits of each subject you have taken.",
-            "text2": " Remember that all courses don't have accurate subject, and that the subject 'Technology' are not included in the chart",
+            "text":"The left chart shows all courses you have added to your study plan. Click on a course to make changes.",
+            "text2": "The rightmost chart shows how many credits of each subject your courses cover.",
+            "text3": "Remember that all courses don't have accurate subjects, and that the subject 'technology' is not included in the chart.",
             "class1": "modal-overlayE",
             "class2": "modal-wrapperE",
             "class3": "modalE_radar",
@@ -20,9 +21,9 @@
             "classBth": "modal-close-buttonE"
         },
         "packed_circle": {
-            "text": "Click on the text to zoom in and outside of the text to zoom out to the beginning",
-            "text2": "When zoomed in to the courses, hover over the course code to get the name of the course and click on the text to get more details",
-            "text3": "When clicked on a course, you get more detailed information and choose to add the course to your study plan",
+            "text": "Click on the names to zoom in and anywhere else to zoom out to the top.",
+            "text2": "When zoomed in to the courses, hover over the course code to get the name of the course and click on the course code to get more details.",
+            "text3": "When clicking on a course, you get more detailed information and te choice to add the course to your study plan.",
             "class1": "modal-overlayE",
             "class2": "modal-wrapperE",
             "class3": "modalE_packed",

@@ -348,7 +348,7 @@ text
               }
               <svg id='packedCircle' width={600} height={600} radius={600/2} ref={d3Container}></svg>
               <div className='legendAndInfo'>
-                <i onClick={showPopup} style={{cursor:'pointer'}} className="fas fa-info-circle circleInfoBtn infoButton_icon"></i>
+                <i onClick={showPopup} style={{cursor:'pointer'}} className="far fa-question-circle circleInfoBtn infoButton_icon"></i>
                 {isPopupShownPacked &&
 					        <ExplanationPopup props={explanationTexts.popups.packed_circle}/>
                 }

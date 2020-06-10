@@ -258,7 +258,7 @@ return(
         <div className="row bachelorHeadline">
           Add your bachelor courses to study plan
           {/*<img src={questionIcon} className="questionIcon" onClick={showPopup} style={{cursor:'pointer'}}></img>*/}
-          <i onClick={showPopup} style={{cursor:'pointer'}} className="fas fa-info-circle infoButton_icon"></i>
+          <i onClick={showPopup} style={{cursor:'pointer'}} className="far fa-question-circle infoButton_icon"></i>
 
         </div>
         <div className="row">

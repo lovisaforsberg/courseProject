@@ -58,7 +58,6 @@ const CoursesContainer = () => {
         setCheckedItemsCampus({...checkedItemsCampus,[selectedItem.value]:true})
       }
     setFilterInput({['campus']: checkedItemsCampus})
-    console.log(checkedItemsCampus)
   }
 
    useEffect(()=>{
@@ -68,8 +67,7 @@ const CoursesContainer = () => {
 
    },[filterInput, checkedItems, checkedItemsCampus])
  
-   console.log(data)
-   console.log(filteredData)
+  
 
   return (
 

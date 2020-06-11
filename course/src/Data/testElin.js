@@ -56,7 +56,6 @@ const TestElin = () =>{
                     year3P1: [], year3P2: [], year3P3: [], year3P4: [],}
 
       list.forEach(element => {
-        console.log(element)
            element.Electivity[0].Courses.forEach(course =>{
                if("ConnectedRound" in course){
                 if(!("SpecCode" in element)){

@@ -21,11 +21,9 @@ const percent = props.percentRange*100/300
 const credits = props.share.toFixed(1)
 const handleMouseEnter = () =>{
     setShow(true)
-    console.log(show)
 }
 const handleMouseLeave = () =>{
     setShow(false)
-    console.log(show)
 }
 
     return (
@@ -72,7 +70,6 @@ const handleMouseLeave = () =>{
     const {ZoomedData, setZoomedData} = zoom_context
    
     let zoomDataObj = ZoomedData
-    console.log(zoomDataObj)
 
     const useStudyplanReducer= useReducer(studyplanReducer,initialstate)
 
@@ -82,7 +79,6 @@ const handleMouseLeave = () =>{
     useEffect(()=>{
         setZoomedData(zoomDataObj)
     let countedCredits = countCredits(zoomDataObj)
-    console.log(countedCredits)
     setShare(countedCredits)
     setProgress(share)
 

@@ -76,13 +76,11 @@ function createAxesZoom(all, zoomed){
 	})
 
 
-	console.log(axes)
 
     return(axes)
 }
 
 function createData(all, Zoomed){
-	console.log(Zoomed)
     let all_data = [
         {name: 'all courses', 
         axes: all},
@@ -114,7 +112,6 @@ export const RadarChart = () => {
 
 		const showPopup = () =>{
 		setPopupShownRadar(true);
-		console.log(isPopupShownRadar)
 		}
 
 		
@@ -124,8 +121,7 @@ export const RadarChart = () => {
 	const zoom_context = useContext(ZoomedInContext)
 	const {ZoomedData, setZoomedData} = zoom_context
 	let zoomDataObj = ZoomedData
-	console.log(zoomDataObj)
-	console.log(initialstate)
+
 
 	const [data, dispatch] = useCourse()
 	//const data_copy = Object.assign({},data)
@@ -156,7 +152,6 @@ const cos = Math.cos;
 const HALF_PI = Math.PI / 2;
 
 const RadarChart = function RadarChart(parent_selector, data, options) {
-    console.log(data)
 	//Wraps SVG text - Taken from http://bl.ocks.org/mbostock/7555321
 	const wrap = (text, width) => {
 	  text.each(function() {

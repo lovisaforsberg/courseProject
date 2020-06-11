@@ -59,7 +59,6 @@ function openTab(tabToOpen){
 const CourseDetail=({sentCourse})=> {
 
     const clickedCourse = (course) =>{
-        console.log(course)
         dispatch({type: 'ADD_COURSE', course})
         
       }
@@ -70,7 +69,6 @@ const CourseDetail=({sentCourse})=> {
     const [isPopupShown, setPopupShown] = useState(false)
 
     const showPopup = (courseInfo) =>{
-        console.log(courseInfo)
         setPopupShown(true);
 
     }
@@ -78,7 +76,6 @@ const CourseDetail=({sentCourse})=> {
     const [fetchedCourse, loadningFetch] = useFetchCourses(proxy+setUrl(sentCourse.name))
     if(loadningFetch === false){  
         let courseInfo = setSendData(fetchedCourse, sentCourse)
-        console.log(courseInfo)
         /*
         let courseInfo = {}
         courseInfo.title = fetchedCourse.course.title
@@ -257,7 +254,6 @@ const CourseDetail=({sentCourse})=> {
                 </footer>
 
             </div>
-            {console.log(isPopupShown)}
                 {isPopupShown && 
                 <PopupContext.Provider value={{isPopupShown, setPopupShown}}>
                   <Popup sentCourse={courseInfo}/>

@@ -51,7 +51,6 @@ const {isPopupShownBachelor, setPopupShownBachelor} = popup_context_bachelor
 
 const showPopup = () =>{
   setPopupShownBachelor(true);
-  console.log(isPopupShownBachelor)
 }
 
 function setUrl(course_code){
@@ -63,7 +62,6 @@ function setUrl(course_code){
 
 const removeBachelor = (prog) =>{
   let bach_name = getBachelorName(prog)
-  console.log(bach_name)
   dispatch({type:'REMOVE_BACHELOR',selectedProgram, bach_name})
 }
 
@@ -78,7 +76,6 @@ const addBachelorORG = (prog, year) =>{
      // do stuff with responseJSON here...
      const fetchedProg = responseJSON.Specs
      dispatch({type: 'ADD_BACHELOR', fetchedProg})
-     console.log(fetchedProg)
      setSelectedProgram(fetchedProg)
   });
     
@@ -87,7 +84,6 @@ const addBachelorORG = (prog, year) =>{
   function flattenAndFetch (fetchedProg, prog){
     const allCourses = []
     const more_info = []
-    console.log('in flatten function')
     fetchedProg.map(year =>{
       year.Electivity[0].Courses.map(course=>{
         if(!("SpecCode" in year)){
@@ -95,7 +91,6 @@ const addBachelorORG = (prog, year) =>{
         }
       })  
     })
-    console.log(allCourses)
     const promises = allCourses.map(item =>{
       return fetch(setUrl(item.Code))
       .then(response=> {
@@ -110,11 +105,9 @@ const addBachelorORG = (prog, year) =>{
     })
 
     let bach_name = getBachelorName(prog)
-    console.log(bach_name)
     let start_year = year
     dispatch({type: 'ADD_BACHELOR', fetchedProg, more_info, bach_name, start_year})
     setSelectedProgram(fetchedProg)
-    console.log(fetchedProg)
  })
 
 
@@ -186,9 +179,7 @@ const sorted_periods = sentCourse.givenPeriods.sort(function (a, b) {
 });*/
 
 const handleRemove = (e) =>{
-  console.log("remove")
   //dispatch({type: 'REMOVE_BACHELOR'})
-  console.log(selectedProgram)
   removeBachelor(prog)
   setClicked(false)
   e.preventDefault()
@@ -197,7 +188,6 @@ const closePopup = () =>{
   setIsAdded(false)
 }
 const handleSubmit = (e) =>{
-    console.log("submit")
     if(prog === '' || year === '' || (prog ==='' && year==='')){
       alert('You need to select borh Program and Year')
   }
@@ -216,20 +206,17 @@ const getBachelorName = (chosenProg) =>{
   let bachelor_name = ""
   allProgs.map(bachelor =>{
       if (chosenProg == bachelor.code){
-        console.log(bachelor.title)
         setBachelorName(bachelor.title)
         bachelor_name = bachelor.title
        // localStorage.setItem("nameData", JSON.stringify(bachelor.title))
       }
   })
-  console.log(bachelor_name)  
   setBachelorName(bachelor_name)
   return bachelor_name
 }
 
 
 const isBachelorEmpty = (data) =>{
-  console.log(data)
   const course_array = []
   data.children[0].children.map(year =>{
           year.children.map(period =>{
@@ -322,7 +309,6 @@ return(
                   <ExplanationPopup props={explanationTexts.popups.bachelor_form}/>
 
               }
-             {console.log(isAdded)}
         {isAdded && 
            <PopupContextAdded.Provider value={{isAdded,setIsAdded}}>
            <PopupAdded bachelor={bachelorName} year={year}/>

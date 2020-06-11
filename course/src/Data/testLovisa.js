@@ -92,7 +92,6 @@ const Test = () =>{
         
     
       });
-      console.log(bachelor_courses)
       const years = [{name: 'year1', children: [bachelor_courses.year1P1, bachelor_courses.year1P2, bachelor_courses.year1P3, bachelor_courses.year1P4]}, 
                       {name: 'year2', children: [bachelor_courses.year2P1, bachelor_courses.year2P2, bachelor_courses.year2P3, bachelor_courses.year2P4]}, 
                       {name: 'year3', children: [bachelor_courses.year3P1, bachelor_courses.year3P2, bachelor_courses.year3P3, bachelor_courses.year3P4]}]
@@ -109,7 +108,6 @@ const Test = () =>{
         fetchAll();
 
      // const data = createDataset(prog_list);
-      console.log(data)
 
       var data = {
         "name": "TOPICS", "children": [{
@@ -124,7 +122,6 @@ const Test = () =>{
             "children": [{"name": "Sub A1", "size": 4}, {"name": "Sub A2", "size": 4}]
         }]
     };
-    console.log(data)
 
        const width = 932;
        const radius = width / 8;

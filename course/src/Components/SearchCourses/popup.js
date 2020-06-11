@@ -14,7 +14,7 @@ const [level, setLevel] = useState('');
 const [isAdded, setisAdded] = useState(false)
 
 sentCourse.givenPeriods.map(period =>{
-    console.log(period)
+    //console.log(period)
 })
 const sorted_periods = sentCourse.givenPeriods.sort(function (a, b) {
     if (a > b) {
@@ -36,7 +36,6 @@ const closePopup = () =>{
 }
 
 const handleSubmit = (e) =>{
-    console.log("submit")
     if(period === '' || year === '' || (period ==='' && year==='')){
         alert('you need to choose both year and period')
     }

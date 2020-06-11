@@ -165,7 +165,7 @@ const CourseDetail=({sentCourse})=> {
 
         return(
             <>
-            <div className="infoContainer">
+            <div className="infoContainerSearch">
                 <header className="infoHeadline" style={{backgroundColor:courseInfo.color}}>
                     <div>
                         <h4 id="textHeadline">{courseInfo.title} ({courseInfo.course_code})</h4>

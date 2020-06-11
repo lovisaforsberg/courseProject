@@ -30,7 +30,7 @@ const Sunburst = ()=> {
 
   //let sunBurstData = useCourse()
   const [data, dispatch] = useCourse()
-  //console.log(data)
+
   
 
   const [isDetailShown, setDetailShown] = useState(false)

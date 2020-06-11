@@ -65,7 +65,7 @@ const CoursesContainer = () => {
     setData(dataGlobal)
     setFilteredData(filterData(data, filterInput, checkedItems, checkedItemsCampus))
     setIsLoaded(true)
-    console.log(filteredData)
+    //console.log(filteredData)
 
    },[filterInput, checkedItems, checkedItemsCampus])
  

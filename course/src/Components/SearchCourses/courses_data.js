@@ -17,7 +17,6 @@ export const DetailContext = createContext({})
 const DisplayData=({dataprop})=> {
     const d3Container = useRef(null)
     const legendContainer = useRef(null)
-  console.log(dataprop)
     const {popup_context_packed} = useContext(PopupContextExplainPacked)
     const {isPopupShownPacked, setPopupShownPacked} = popup_context_packed
 
@@ -47,14 +46,14 @@ const DisplayData=({dataprop})=> {
       }
       else{
         if(data.children.length == 0){
-          console.log("no search items found")
+          //console.log("no search items found")
           setNoCourses(true)
         }
         else{
           setNoCourses(false)
         }
       }
-      console.log(data)
+     // console.log(data)
       /*
       if(data == 0){
         setNoCourses(true)
@@ -369,7 +368,7 @@ text
 
   return (
     <>
-  {console.log(noCourses)}
+  
   {noCourses?
     <div className="noCoursesText">
       Oh no! No courses macthes your search. 

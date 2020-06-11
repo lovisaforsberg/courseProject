@@ -103,6 +103,7 @@ const addBachelorORG = (prog, year) =>{
       let sendData = setSendDataToStudyPlan(course)
       more_info.push(sendData)
     })
+    closePopup()
 
     let bach_name = getBachelorName(prog)
     let start_year = year
@@ -128,7 +129,7 @@ const addBachelorORG = (prog, year) =>{
     
          //sets the title of the chosen program
         flattenAndFetch(fetchedProg, prog)
-        closePopup()
+       // closePopup()
 
   })
 

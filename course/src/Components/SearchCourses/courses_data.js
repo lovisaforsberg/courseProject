@@ -7,6 +7,8 @@ import {DataContext} from "../../Data/courses"
 import {PopupContextExplainPacked} from './../../App'
 import explanationTexts from "./../../Data/explanationTexts.json"
 import ExplanationPopup from '../StudyPlan/explanationPopup'
+import { Default } from 'react-spinners-css';
+import './courseDetail.css'
 
 
 
@@ -27,6 +29,7 @@ const DisplayData=({dataprop})=> {
     const [isDetailShown, setDetailShown] = useState(false)
     const [selectedCourse, setSelectedCourse] = useState('')
     const [isExecuted, setExecuted] = useState(false)
+    const [isLoaded, setIsLoaded] = useState(false)
 
     const showDetail = (course)=>{
       setSelectedCourse(course)
@@ -40,7 +43,6 @@ const DisplayData=({dataprop})=> {
     var data = useContext(DataContext);
 
     useEffect(()=>{
-
       d3.select(".root_circle").selectAll('*').remove()
       d3.select(".legend").selectAll('*').remove()
 
@@ -233,6 +235,9 @@ const DisplayData=({dataprop})=> {
       var focus0 = focus; 
       focus = d;
       console.log(d)
+      if(d.height != 0){
+      setIsLoaded(true)
+      }
   
       var transition = d3.transition()
           //.duration(d3.event.altKey ? 7500 : 750)
@@ -335,11 +340,22 @@ text
         return d.value
       })
   
-
     },[dataprop])
 
+
   return (
-      <>
+    <>
+    {isLoaded?null:
+    <>
+          <div className='loadingSpinnerBig'>
+          <Default color='#404040' />  
+          </div>
+          <div className="loadingCoursesText">
+          Loading courses...
+          </div>
+          </>
+    }
+      
             <div className='circleContainer'>
               {isDetailShown && 
               <DetailContext.Provider value={{isDetailShown, setDetailShown}}>
@@ -356,8 +372,7 @@ text
               </div>
             </div>
 
-
-      </>
+    </>
   )
 }
 export default DisplayData;

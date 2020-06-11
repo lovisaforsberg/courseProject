@@ -24,6 +24,8 @@ const StudyPlanContainer = () => {
     const [ZoomedData, setZoomedData] = useState(contextValue[0])
     //const [BachelorName, setBachelorName] = useState("")
     console.log(contextValue[0])
+    const [isEmpty, setIsEmpty] = useState(true)
+    const [AllIsEmpty, setAllIsEmpty] = useState(true)
     //const useStudyplanReducer= useReducer(studyplanReducer,initialstate)
 /*
     useEffect(()=>{
@@ -31,24 +33,52 @@ const StudyPlanContainer = () => {
         setBachelorName(JSON.parse(localStorage.getItem("nameData")))
         console.log(JSON.parse(localStorage.getItem("nameData")))
     },[useStudyplanReducer])*/
-    const isEmpty = (data) =>{
-        const course_array = []
-        data.children.map(part =>{
-            part.children.map(year =>{
-                year.children.map(period =>{
-                    period.children.map(course=>{
-                        course_array.push(course)
-                    })
-                })
-            }) //children t bach eller master
-        })
-        if(course_array.length == 0){
-            return true
-        }
-        else{
-            return false
-        }
+    const isBachelorEmpty = (data) =>{
+      console.log(data)
+      const course_array = []
+      console.log(data.children[0])
+      data.children[0].children.map(year =>{
+              year.children.map(period =>{
+                  period.children.map(course=>{
+                      course_array.push(course)
+                  })
+              })
+          }) //children t bach eller master
+      console.log(course_array)
+      if(course_array.length == 0){
+          setIsEmpty(true)
+      }
+      else{
+          setIsEmpty(false)
+      }
     }
+
+    const isAllDataEmpty = (data) =>{
+      console.log(data)
+      const course_array = []
+      data.children.map(part =>{
+          part.children.map(year =>{
+              year.children.map(period =>{
+                  period.children.map(course=>{
+                      course_array.push(course)
+                  })
+              })
+            
+          }) //children t bach eller master
+      })
+      console.log(course_array)
+      if(course_array.length == 0){
+          setAllIsEmpty(true)
+      }
+      else{
+          setAllIsEmpty(false)
+      }
+    }
+   useEffect(()=>{
+    isBachelorEmpty(contextValue[0])
+    isAllDataEmpty(contextValue[0])
+    console.log(isEmpty)
+   }, [contextValue[0]])
 
     return(
         <>
@@ -67,7 +97,7 @@ const StudyPlanContainer = () => {
                     <span id='headline3'>Start planning and customizing your educational path by adding your bachelor, master and elective courses to the study plan.</span>
                     </ul>
                 </div>
-                {isEmpty(contextValue[0]) ? null:
+                {isEmpty ? null:
                 <div className="chosenBachelor">
                     <div className='bachelorHeadline'>Chosen bachelor:</div>
                 {initialstate.children[0].bachelor_name}, {initialstate.children[0].start_year}
@@ -79,7 +109,7 @@ const StudyPlanContainer = () => {
             </div>
             <div className="notTopBar">
 
-            {isEmpty(contextValue[0]) ? 
+            {AllIsEmpty ? 
                 <div className='noDataContainer'>
                     {/*EMPTY*/}
                     <i className='emptyText' style={{marginBottom:'20px', fontSize:'12px' }}>

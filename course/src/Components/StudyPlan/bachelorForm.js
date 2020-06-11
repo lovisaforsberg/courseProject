@@ -38,7 +38,7 @@ const [show, setShow] = useState(false)
 const [state,dispatch] = useContext(StudyplanContext);
 const [isLoading, setIsLoading] = useState(true)
 const [bachelorName, setBachelorName] = useState("")
-
+const [isEmpty, setIsEmpty] = useState(true)
 const [isAdded, setIsAdded] = useState(false)
 
 /*const name_context = useContext(BachelorNameContext)
@@ -169,8 +169,9 @@ const addBachelorORG = (prog, year) =>{
 
   useEffect (() =>{
     fetchUrl()
+    isBachelorEmpty(data_to_map)
    // localStorage.setItem("nameData", JSON.stringify(BachelorName))
-  },[])
+  },[data_to_map])
 
 
 /*
@@ -227,24 +228,24 @@ const getBachelorName = (chosenProg) =>{
 }
 
 
-const isEmpty = (data) =>{
+const isBachelorEmpty = (data) =>{
+  console.log(data)
   const course_array = []
-  data.children.map(part =>{
-      part.children.map(year =>{
+  data.children[0].children.map(year =>{
           year.children.map(period =>{
               period.children.map(course=>{
                   course_array.push(course)
               })
           })
-      }) //children t bach eller master
-  })
+      }) 
   if(course_array.length == 0){
-      return true
+      setIsEmpty(true)
   }
   else{
-      return false
+      setIsEmpty(false)
   }
 }
+
  
 
 
@@ -269,7 +270,7 @@ return(
           className='program'
         >
             <option key='Program' disabled={true} value={prog}>
-                {isEmpty(data_to_map) ? 'Program' :data_to_map.children[0].bachelor_name}
+                {isEmpty ? 'Program' :data_to_map.children[0].bachelor_name}
            
             </option>
 
@@ -288,7 +289,7 @@ return(
           className='year'
         >
             <option key='year' disabled={true} value={year}>
-            {isEmpty(data_to_map) ? 'Year' :data_to_map.children[0].start_year}
+            {isEmpty ? 'Year' :data_to_map.children[0].start_year}
             </option>
             <option key='HT16' value='HT16'>
                 HT16

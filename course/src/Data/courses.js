@@ -28,7 +28,7 @@ const [allSpringCourses, loadingSpringCourses] = useFetchCourses(proxy+urlSpring
 let props = {}
 let filteredprops = {}
 
-if(loadingFallCourses === false && loadingSpringCourses === false){
+if(loadingFallCourses === false && loadingSpringCourses === false){ //när den har laddat klart
   props = createCourseData(allDepartments, allFallCourses, allSpringCourses)
 
 
@@ -44,7 +44,7 @@ if(loadingFallCourses === false && loadingSpringCourses === false){
 else{
   return (
     <>
-    <div className='loadingSpinner'>
+    <div className='loadingSpinnerBig1'>
       <Default color='#404040' />  
     </div>
     </>

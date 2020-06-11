@@ -129,7 +129,24 @@
       justify-content: flex-start;
 
   }
+  .loadingSpinnerBig1{
+    margin-top: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
+}
+.loadingSpinnerBig{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+.loadingCoursesText{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
   /*
   .aboutText{
       max-height: 150px;

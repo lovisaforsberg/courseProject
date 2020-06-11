@@ -13,6 +13,12 @@ function onlyUnique(value, index, self) {
     return self.indexOf(value) === index;
 }
 
+function decodeHtmlCharCodes(str) { 
+    return str.replace(/(&#(\d+);)/g, function(match, capture, charCode) {
+      return String.fromCharCode(charCode);
+    });
+  }
+
 function setSendData(fetchedCourse, sentCourse){
 
     let courseInfo = {}
@@ -27,11 +33,14 @@ function setSendData(fetchedCourse, sentCourse){
 
        // if(fetchedCourse.course.infoContactName !== undefined){
         if('recruitmentText' in fetchedCourse.course){
-            courseInfo.about = fetchedCourse.course.recruitmentText
+            let htmlDecode = decodeHtmlCharCodes(fetchedCourse.course.recruitmentText)
+
+            courseInfo.about = htmlDecode
             .replace(/<p>/g, '').replace(/<\/p>/g, '')
             .replace(/<em>/g, '').replace(/<\/em>/g, '')
             .replace(/<ul>/g, '').replace(/<\/ul>/g, '')
             .replace(/<li>/g, '').replace(/<\/li>/g, ', ')
+            .replace(/<strong>/g, '').replace(/<\/strong>/g, ', ')
             .replace(/<br \/>/g, ', ')
             .replace(/&#8217;/g, "'")    
         }
@@ -40,13 +49,17 @@ function setSendData(fetchedCourse, sentCourse){
         }
 
         if('prerequisites' in fetchedCourse.course){
-            courseInfo.prerequisites = fetchedCourse.course.prerequisites
+            let htmlDecode = decodeHtmlCharCodes(fetchedCourse.course.prerequisites)
+
+            courseInfo.prerequisites = htmlDecode
             .replace(/<p>/g, '').replace(/<\/p>/g, '')
             .replace(/<em>/g, '').replace(/<\/em>/g, '')
             .replace(/<ul>/g, '').replace(/<\/ul>/g, '')
             .replace(/<li>/g, '').replace(/<\/li>/g, ', ')
+            .replace(/<strong>/g, '').replace(/<\/strong>/g, ', ')
             .replace(/<br \/>/g, ', ')
             .replace(/&#8217;/g, "'")    
+
         }
         else{
             courseInfo.prerequisites = "prerequisites missing"
@@ -118,26 +131,32 @@ function setSendDataToStudyPlan(fetchedCourse){
 
        // if(fetchedCourse.course.infoContactName !== undefined){
         if('recruitmentText' in fetchedCourse.course){
-            courseInfo.about = fetchedCourse.course.recruitmentText
+            let htmlDecode = decodeHtmlCharCodes(fetchedCourse.course.recruitmentText)
+
+            courseInfo.about = htmlDecode
             .replace(/<p>/g, '').replace(/<\/p>/g, '')
             .replace(/<em>/g, '').replace(/<\/em>/g, '')
             .replace(/<ul>/g, '').replace(/<\/ul>/g, '')
             .replace(/<li>/g, '').replace(/<\/li>/g, ', ')
+            .replace(/<strong>/g, '').replace(/<\/strong>/g, ', ')
             .replace(/<br \/>/g, ', ')
-            .replace(/&#8217;/g, "'")    
+            .replace(/&#8217;/g, "'")     
         }
         else{
             courseInfo.about = "description missing"
         }
 
         if('prerequisites' in fetchedCourse.course){
-            courseInfo.prerequisites = fetchedCourse.course.prerequisites
+            let htmlDecode = decodeHtmlCharCodes(fetchedCourse.course.prerequisites)
+
+            courseInfo.prerequisites = htmlDecode
             .replace(/<p>/g, '').replace(/<\/p>/g, '')
             .replace(/<em>/g, '').replace(/<\/em>/g, '')
             .replace(/<ul>/g, '').replace(/<\/ul>/g, '')
             .replace(/<li>/g, '').replace(/<\/li>/g, ', ')
+            .replace(/<strong>/g, '').replace(/<\/strong>/g, ', ')
             .replace(/<br \/>/g, ', ')
-            .replace(/&#8217;/g, "'")    
+            .replace(/&#8217;/g, "'")  
         }
         else{
             courseInfo.prerequisites = "prerequisites missing"

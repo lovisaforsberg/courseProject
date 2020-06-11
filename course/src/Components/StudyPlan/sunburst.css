@@ -22,3 +22,7 @@
     display: inline-flex;
     align-items: center;
 }
+
+.sunburstLabel_active{
+    font-weight: bold;
+}

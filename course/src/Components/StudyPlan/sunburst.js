@@ -147,7 +147,7 @@ const path = g.append("g")
     .attr("fill", d => { while (d.depth > 2) d = d.parent; if(d.depth==1){return '#e2e0e0'}else{ return d.data.color}; })
     //.attr('fill', function(d) {return color(d.data.name)})
     //.attr("fill-opacity", d => arcVisible(d.current) ? (d.parent ? 1 : 0.8) : 0.4)
-    .attr("fill-opacity", function(d){if(d.depth==2){return 0.8}if(d.depth==3){return 0.7}if(d.depth==4){return 0.5}} )
+    .attr("fill-opacity", function(d){if(d.depth==1){return 0.7}if(d.depth==2){return 0.8}if(d.depth==3){return 0.7}if(d.depth==4){return 0.5}} )
     .attr("d", d => arc(d.current))
     .on('mousemove', function(d) {return d.children === undefined ?
       (divTooltip.style('left', d3.event.pageX + 10 + 'px'),
@@ -161,9 +161,18 @@ const path = g.append("g")
       divTooltip.html(d.parent.data.name+': '+d.data.name))
       
     })
-    .on('mouseout', function(d) {
-      divTooltip.style('display', 'none')
+    .on('mouseover', function(d){
+      //document.getElementById(d.data.name).className.baseVal = 'sunburstLabel_active'
+      d3.select(this).attr("fill-opacity", function(d){if(d.depth==1){return 1}if(d.depth==2){return 1}if(d.depth==3){return 0.9}if(d.depth==4){return 0.7}} )
+
     })
+    .on('mouseout', function(d) { return (
+      divTooltip.style('display', 'none'),
+      d3.select(this).attr("fill-opacity", function(d){if(d.depth==1){return 0.7}if(d.depth==2){return 0.8}if(d.depth==3){return 0.7}if(d.depth==4){return 0.5}} ))
+
+     // document.getElementById(d.data.name).className.baseVal = 'sunburstLabel')
+    })
+
 
 path.filter(d => d.children)
     .style("cursor", "pointer")
@@ -187,9 +196,12 @@ const label = g.append("g")
     .attr("pointer-events", "none")
     .attr("text-anchor", "middle")
     .style("user-select", "none")
+  
   .selectAll("text")
   .data(root.descendants().slice(1))
   .enter().append("text")
+    .attr('id', function(d){return d.data.name})
+    .attr('class', 'sunburstLabel')
     .attr('font-size', '8px')
     .attr('font-family', 'montserrat')
     .attr("dy", "0.35em")

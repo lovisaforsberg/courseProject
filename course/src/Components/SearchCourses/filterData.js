@@ -102,7 +102,6 @@
         result.children.splice(i, 1)
       }
     }
-    console.log(result)
   return result
   
   }

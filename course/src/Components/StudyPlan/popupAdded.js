@@ -8,7 +8,6 @@ const PopupAdded = ({bachelor,year}) =>{
 const added_context = useContext(PopupContextAdded)
 const {isAdded, setIsAdded} = added_context
 
-console.log(added_context)
 
     const closePopup = () =>{
         setIsAdded(false)

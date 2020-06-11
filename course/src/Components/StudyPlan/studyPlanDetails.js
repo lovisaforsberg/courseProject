@@ -56,7 +56,6 @@ function openTab(tabToOpen){
 
 const StudyPlanDetails=({sentCourse})=> {
     
-    console.log(sentCourse)
 
     const handleSubmit = (e) =>{
         if(period === '' || year === '' || (period ==='' && year==='')){
@@ -106,8 +105,7 @@ const StudyPlanDetails=({sentCourse})=> {
     const periods = ['P1', 'P2', 'P3', 'P4']
 
     const isCreditsDifferent = (courseSent, infoCourse) =>{
-        console.log(infoCourse.size)
-        console.log(courseSent.size)
+
     if(courseSent.size == infoCourse.size){
         return false
     }

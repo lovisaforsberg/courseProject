@@ -106,8 +106,7 @@ if(courseExist(courseObject1.name, obj_period1.children) === false){
     console.log('course already exists')
   }
 */
-  console.log(courseObject2)
-  console.log("Adding course!")
+
   return initialstate
   }
 
@@ -121,7 +120,6 @@ if(courseExist(courseObject1.name, obj_period1.children) === false){
         obj_period.children.splice(i, 1)
       }
     }
-    console.log("Deleting course!")
     return initialstate
   }
   
@@ -166,9 +164,7 @@ const addPeriods = (period, year, bach, course, info)=>{
 
 
 const AddBachelor = (fetch, additionalInfo, bachelor_name, start_year) =>{
-  console.log(additionalInfo)
-  console.log(bachelor_name)
-  console.log(initialstate.children[0]) //= bachelor object
+
   const bachelor_obj = initialstate.children[0]
   bachelor_obj.bachelor_name = bachelor_name;
   bachelor_obj.start_year = start_year
@@ -199,8 +195,7 @@ const AddBachelor = (fetch, additionalInfo, bachelor_name, start_year) =>{
       }
     })
   })
-  console.log('add bachelor courses')
-  console.log(initialstate)
+
   return initialstate
 }
 
@@ -229,7 +224,6 @@ const moveCourse = (course, moveTo)=>{
 
   obj_period.children.push(courseObjMove)
 
-  console.log("Moving course!")
   return initialstate
 
 }
@@ -259,13 +253,11 @@ const RemoveBachelor = (bach_name) =>{
         })
     })
     
-    console.log('remove bachelor courses')
     return initialstate
 }
 
 
 const EMPTY = empty_dataset()
-console.log(JSON.parse(localStorage.getItem("sunburstData")))
 export const initialstate = JSON.parse(localStorage.getItem("sunburstData"))||EMPTY;
 
 //export const initialstate = empty_dataset()
@@ -285,7 +277,6 @@ export const studyplanReducer = (state,action) =>{
       case 'ADD_BACHELOR':
            // AddBachelor(action.fetchedProg, action.track);
            AddBachelor(action.fetchedProg, action.more_info, action.bach_name, action.start_year);
-           console.log(action.bach_name)
             const newState3 = {...state}
             return newState3;
       case 'REMOVE_BACHELOR':

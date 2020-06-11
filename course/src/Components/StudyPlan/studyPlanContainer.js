@@ -23,7 +23,6 @@ const StudyPlanContainer = () => {
 
     const [ZoomedData, setZoomedData] = useState(contextValue[0])
     //const [BachelorName, setBachelorName] = useState("")
-    console.log(contextValue[0])
     const [isEmpty, setIsEmpty] = useState(true)
     const [AllIsEmpty, setAllIsEmpty] = useState(true)
     //const useStudyplanReducer= useReducer(studyplanReducer,initialstate)
@@ -34,9 +33,7 @@ const StudyPlanContainer = () => {
         console.log(JSON.parse(localStorage.getItem("nameData")))
     },[useStudyplanReducer])*/
     const isBachelorEmpty = (data) =>{
-      console.log(data)
       const course_array = []
-      console.log(data.children[0])
       data.children[0].children.map(year =>{
               year.children.map(period =>{
                   period.children.map(course=>{
@@ -44,7 +41,6 @@ const StudyPlanContainer = () => {
                   })
               })
           }) //children t bach eller master
-      console.log(course_array)
       if(course_array.length == 0){
           setIsEmpty(true)
       }
@@ -54,7 +50,6 @@ const StudyPlanContainer = () => {
     }
 
     const isAllDataEmpty = (data) =>{
-      console.log(data)
       const course_array = []
       data.children.map(part =>{
           part.children.map(year =>{
@@ -66,7 +61,6 @@ const StudyPlanContainer = () => {
             
           }) //children t bach eller master
       })
-      console.log(course_array)
       if(course_array.length == 0){
           setAllIsEmpty(true)
       }
@@ -77,7 +71,6 @@ const StudyPlanContainer = () => {
    useEffect(()=>{
     isBachelorEmpty(contextValue[0])
     isAllDataEmpty(contextValue[0])
-    console.log(isEmpty)
    }, [contextValue[0]])
 
     return(

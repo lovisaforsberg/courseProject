@@ -180,7 +180,7 @@ const DisplayData=({dataprop})=> {
         })
 
         .on("click", function(d) {return d.children !== undefined ? 
-          (zoom(d), console.log(d.r), d3.event.stopPropagation()):
+          (zoom(d), d3.event.stopPropagation()):
           //do this when clicking the course node
           (showDetail(d.data), 
           // stop from zooming out
@@ -234,7 +234,6 @@ const DisplayData=({dataprop})=> {
     function zoom(d) {
       var focus0 = focus; 
       focus = d;
-      console.log(d)
       if(d.height != 0){
       setIsLoaded(true)
       }
@@ -347,12 +346,14 @@ text
     <>
     {isLoaded?null:
     <>
+      <div className='loadingSpinnerContainer'>
           <div className='loadingSpinnerBig'>
           <Default color='#404040' />  
           </div>
           <div className="loadingCoursesText">
           Loading courses...
           </div>
+        </div>
           </>
     }
       

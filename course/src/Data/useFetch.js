@@ -11,7 +11,6 @@ const useFetch = (url) => {
         type: "SET_DATA",
         payload: data.Specs
       });
-      console.log(data.Specs)
       }
 
     //const [response, setResponse] = useState(null);

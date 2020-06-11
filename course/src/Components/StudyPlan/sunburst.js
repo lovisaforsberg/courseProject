@@ -88,7 +88,6 @@ const d3Container = useRef(null)
 
 
 useEffect(()=>{
-  console.log(data)
 
 d3.select(".root_sunburst").selectAll('*').remove()
   
@@ -258,7 +257,6 @@ function clicked(p) {
   }
   
   
-  console.log(p.data)
   setZoomedData(p.data)
 
   root.each(d => d.target = {

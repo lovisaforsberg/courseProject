@@ -129,14 +129,9 @@
       justify-content: flex-start;
 
   }
-  .loadingSpinnerBig1{
-    margin-top: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 
-}
 .loadingSpinnerBig{
+    padding-top: 50px;
     display: flex;
     align-items: center;
     justify-content: center;

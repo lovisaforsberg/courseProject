@@ -47,6 +47,10 @@
     margin-bottom: 100px;
 }
 
-.loadingSpinnerContainer{
-    padding-top:50px;
+
+.noCoursesText{
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
 }

@@ -2,6 +2,9 @@ import React, {useContext, useState} from 'react';
 import ReactDOM from 'react-dom';
 import "../SearchCourses/popup.css"
 import {PopupContextAdded} from './bachelorForm'
+import { Default } from 'react-spinners-css';
+import '../SearchCourses/courseDetail.css'
+
 
 const PopupAdded = ({bachelor,year}) =>{
 
@@ -28,11 +31,13 @@ const {isAdded, setIsAdded} = added_context
             <div className="row headlineAdd">
             <p>Adding courses from </p>
             <p>{bachelor} {year} </p>
-            <p>to your study plan</p>
+            <p>to your study plan...</p>
             </div>
-          
+            <div className='loadingSpinnerBig'>
+          <Default color='#404040' />  
+          </div>
            <div className="waitText">
-           This can take up to 30 seconds. 
+           This can take up to 60 seconds... 
            </div>
          
           </div>

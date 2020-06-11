@@ -4,8 +4,7 @@ import {filterData} from "./filterData"
 import DisplayData from "./courses_data"
 import {DataContext} from "../../Data/courses"
 import usePersistedState from "../../Data/usePersistedState"
-import { Default } from 'react-spinners-css';
-import './courseDetail.css'
+
 
 const CoursesContainer = () => {
 
@@ -15,6 +14,7 @@ const CoursesContainer = () => {
     const [checkedItemsCampus, setCheckedItemsCampus] = useState({AlbaNova:false, Campus:false, Flemingsberg:false, Kista:false, Solna:false, Södertälje:false})
     //console.log(data)
   const [isLoaded, setIsLoaded] = useState(false)
+
     const [filterInput, setFilterInput] = useReducer(
       (state, newState) => ({ ...state, ...newState }),
       {
@@ -60,10 +60,12 @@ const CoursesContainer = () => {
     setFilterInput({['campus']: checkedItemsCampus})
   }
 
+
    useEffect(()=>{
     setData(dataGlobal)
     setFilteredData(filterData(data, filterInput, checkedItems, checkedItemsCampus))
     setIsLoaded(true)
+    console.log(filteredData)
 
    },[filterInput, checkedItems, checkedItemsCampus])
  
@@ -84,14 +86,12 @@ const CoursesContainer = () => {
         handleOnChangeCampus={handleOnChangeCampus}
 
       />
-      <div>
+
 
         <DisplayData 
             dataprop={filteredData}
             filter={filterInput}
         />
-
-      </div>
 
     </>
     )

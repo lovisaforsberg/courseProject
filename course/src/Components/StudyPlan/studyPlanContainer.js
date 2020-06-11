@@ -111,7 +111,7 @@ const StudyPlanContainer = () => {
   
   <div className='aboutContainer'>
     <div className='imageDiv'>
-      <img className='responsive' src={one} wrapped ui={false} />
+      <img className='responsive' src={one} ui={false} />
       <Card.Content>
         <Card.Header className='hw_headline'><strong>Add bachelor courses</strong></Card.Header>
         <Card.Meta>
@@ -128,7 +128,7 @@ const StudyPlanContainer = () => {
         className='responsive'
         id='image'
         src={two}
-        wrapped
+  
         ui={false}
       />
       <Card.Content>
@@ -146,7 +146,7 @@ const StudyPlanContainer = () => {
       <img
         className='responsive'
         src={three}
-        wrapped
+        
         ui={false}
       />
       <Card.Content>

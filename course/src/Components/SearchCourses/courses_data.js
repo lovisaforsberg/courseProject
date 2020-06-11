@@ -17,7 +17,7 @@ export const DetailContext = createContext({})
 const DisplayData=({dataprop})=> {
     const d3Container = useRef(null)
     const legendContainer = useRef(null)
-
+  console.log(dataprop)
     const {popup_context_packed} = useContext(PopupContextExplainPacked)
     const {isPopupShownPacked, setPopupShownPacked} = popup_context_packed
 
@@ -30,6 +30,7 @@ const DisplayData=({dataprop})=> {
     const [selectedCourse, setSelectedCourse] = useState('')
     const [isExecuted, setExecuted] = useState(false)
     const [isLoaded, setIsLoaded] = useState(false)
+    const [noCourses, setNoCourses] = useState(false)
 
     const showDetail = (course)=>{
       setSelectedCourse(course)
@@ -40,12 +41,36 @@ const DisplayData=({dataprop})=> {
       setDetailShown(false);
     }
 
+    const noCoursesFunction = (data) =>{
+      if(Object.entries(data).length === 0){
+        console.log("no data at all")
+      }
+      else{
+        if(data.children.length == 0){
+          console.log("no search items found")
+          setNoCourses(true)
+        }
+        else{
+          setNoCourses(false)
+        }
+      }
+      console.log(data)
+      /*
+      if(data == 0){
+        setNoCourses(true)
+      }
+      else{
+        setNoCourses(false)
+      }*/
+    }
+
     var data = useContext(DataContext);
 
     useEffect(()=>{
       d3.select(".root_circle").selectAll('*').remove()
       d3.select(".legend").selectAll('*').remove()
 
+      noCoursesFunction(dataprop)
       var svg = d3.select(d3Container.current),
       margin = 20,
       diameter = +svg.attr("width"),
@@ -344,16 +369,20 @@ text
 
   return (
     <>
+  {console.log(noCourses)}
+  {noCourses?
+    <div className="noCoursesText">
+      Oh no! No courses macthes your search. 
+    </div>
+  :null}
     {isLoaded?null:
     <>
-      <div className='loadingSpinnerContainer'>
           <div className='loadingSpinnerBig'>
           <Default color='#404040' />  
           </div>
           <div className="loadingCoursesText">
           Loading courses...
           </div>
-        </div>
           </>
     }
       

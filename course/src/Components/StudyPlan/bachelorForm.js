@@ -108,6 +108,7 @@ const addBachelorORG = (prog, year) =>{
     let start_year = year
     dispatch({type: 'ADD_BACHELOR', fetchedProg, more_info, bach_name, start_year})
     setSelectedProgram(fetchedProg)
+
  })
 
 
@@ -127,6 +128,7 @@ const addBachelorORG = (prog, year) =>{
     
          //sets the title of the chosen program
         flattenAndFetch(fetchedProg, prog)
+        closePopup()
 
   })
 
@@ -195,7 +197,7 @@ const handleSubmit = (e) =>{
       addBachelor(prog, year)
       setIsAdded(true)
       getBachelorName(prog)
-      setTimeout(closePopup, 10000)
+     // setTimeout(closePopup, 10000)
       setClicked(true)
       //closePopup()
   }

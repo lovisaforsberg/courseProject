@@ -7,6 +7,7 @@ import NavBar from "../Components/Navbar"
 import { Default } from 'react-spinners-css';
 
 
+
 const proxy = 'https://cors-anywhere.herokuapp.com/'
 const urlCourses = 'https://api.kth.se/api/kopps/v2/courses?l=en'
 const urlDepartments = 'https://api.kth.se/api/kopps/v2/schools/departments?department_criteria=has_courses&listForActiveCourses=true&l=en'
@@ -44,9 +45,9 @@ if(loadingFallCourses === false && loadingSpringCourses === false){ //när den h
 else{
   return (
     <>
-    <div className='loadingSpinnerBig1'>
+    <div className='loadingSpinnerBig'>
       <Default color='#404040' />  
-    </div>
+  </div>
     </>
   )
 }

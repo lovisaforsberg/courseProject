@@ -371,7 +371,7 @@ text
   
   {noCourses?
     <div className="noCoursesText">
-      Oh no! No courses macthes your search. 
+      Oh no! No courses match your search. 
     </div>
   :null}
     {isLoaded?null:

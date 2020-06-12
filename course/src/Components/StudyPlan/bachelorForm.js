@@ -192,7 +192,7 @@ const closePopup = () =>{
 }
 const handleSubmit = (e) =>{
     if(prog === '' || year === '' || (prog ==='' && year==='')){
-      alert('You need to select borh Program and Year')
+      alert('You need to select both Program and Year')
   }
   else{
       addBachelor(prog, year)
